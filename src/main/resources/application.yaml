@@ -1,0 +1,49 @@
+spring:
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    open-in-view: true
+    properties:
+      hibernate.show_sql: false
+  datasource:
+    password: startertest
+    username: startertest
+    url: jdbc:mysql://localhost:3306/startertest?useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    # init app_user, app_role
+    initialization-mode: always
+    continue-on-error: true
+    hikari:
+      # https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
+      data-source-properties:
+        cachePrepStmts: true
+        useServerPrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useLocalSessionState: true
+        useLocalTransactionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+      pool-name: startertest
+      maximum-pool-size: 5
+  jmx:
+    default-domain: startertest
+---
+spring:
+  profiles: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.show_sql: true
+  datasource:
+    # init app_user, app_role
+    initialization-mode: always
+    continue-on-error: true
