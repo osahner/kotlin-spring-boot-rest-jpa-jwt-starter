@@ -1,17 +1,22 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
-
+**Features**:
+* spring-boot 2.0.0.M7
+* kotlin 1.2.20
+* JWT Authentication/Authorization with spring-security
+* JPA mysql
+* Rest Exception handling
 
 ### Install
 
-* create mysql db
+* **create mysql db**
 ```sql
 CREATE DATABASE starterspringkotlin;
 GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';
 FLUSH PRIVILEGES;
 ```
 
-* compile and run
+* **compile and run**
 ```bash
 mvn install
 mvn spring-boot:run
