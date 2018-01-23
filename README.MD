@@ -1,6 +1,29 @@
+# kotlin-spring-boot-rest-jpa-jwt-starter
+
+
+
+### Install
+
+* create mysql db
 ```sql
-CREATE USER 'startertest'@'localhost' IDENTIFIED BY 'startertest';
-GRANT ALL ON `startertest`.* TO `startertest`@`localhost`;
+CREATE DATABASE starterspringkotlin;
+GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';
+FLUSH PRIVILEGES;
+```
+
+* compile and run
+```bash
+mvn install
+mvn spring-boot:run
+```
+
+### Test
+```bash
+curl http://localhost:8080/api/test
+```
+
+```bash
+curl http://localhost:8080/api/restricted
 ```
 
 ```bash
@@ -8,11 +31,6 @@ curl -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.doe"
 ```
 
 ```bash
-curl http://localhost:8080/api/test
-```
-
-```bash
-curl http://localhost:8080/api/restricted
 curl  -H "Authorization: Bearer ******"  http://localhost:8080/api/restricted
 ```
 

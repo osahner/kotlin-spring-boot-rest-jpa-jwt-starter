@@ -13,6 +13,6 @@ class IndexController {
   fun helloWorld() = "Pong!"
 
   @GetMapping(value = ["/restricted"])
-  @PreAuthorize("hasAuthority('ADMIN_USER')")
+  @PreAuthorize("hasAuthority('STANDARD_USER')")
   fun helloRestrictedWorld() = "Pong!"
 }

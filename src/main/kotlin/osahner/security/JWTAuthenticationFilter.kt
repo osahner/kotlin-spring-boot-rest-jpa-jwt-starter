@@ -35,8 +35,6 @@ class JWTAuthenticationFilter(private val _authenticationManager: Authentication
       val creds = ObjectMapper()
         .readValue(req.inputStream, osahner.domain.User::class.java)
 
-      //log.error("user:{}, pass:{}", creds.username, creds.password)
-
       _authenticationManager.authenticate(
         UsernamePasswordAuthenticationToken(
           creds.username,

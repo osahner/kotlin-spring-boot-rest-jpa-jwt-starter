@@ -13,12 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class AdditionalWebConfig : WebMvcConfigurer {
 
   override fun configurePathMatch(configurer: PathMatchConfigurer) {
-    // turn off all suffix pattern matching
     configurer.isUseSuffixPatternMatch = false
-    // OR
-    // turn on suffix pattern matching ONLY for suffixes
-    // you explicitly register using
-    // configureContentNegotiation(...)
     configurer.isUseRegisteredSuffixPatternMatch = true
   }
 

@@ -46,12 +46,12 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
         .body
         .subject
 
-      val test = Jwts.parser()
+      val claims = Jwts.parser()
         .setSigningKey(SECRET)
         .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
 
       val authorities = ArrayList<GrantedAuthority>()
-      (test.body["auth"] as MutableList<*>).forEach { role -> authorities.add(SimpleGrantedAuthority(role.toString())) }
+      (claims.body["auth"] as MutableList<*>).forEach { role -> authorities.add(SimpleGrantedAuthority(role.toString())) }
 
       return if (user != null) {
         UsernamePasswordAuthenticationToken(user, null, authorities)

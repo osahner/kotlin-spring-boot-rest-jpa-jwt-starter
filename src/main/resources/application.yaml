@@ -1,3 +1,7 @@
+info:
+  app:
+    name: kotlin-spring-boot-rest-jpa-jwt-starter
+    version: 0.0.1-SNAPSHOT
 spring:
   jpa:
     hibernate:
@@ -10,9 +14,9 @@ spring:
     properties:
       hibernate.show_sql: false
   datasource:
-    password: startertest
-    username: startertest
-    url: jdbc:mysql://localhost:3306/startertest?useSSL=false
+    password: starterspringkotlin
+    username: starterspringkotlin
+    url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
     # init app_user, app_role
     initialization-mode: always
