@@ -36,5 +36,5 @@ curl  -H "Authorization: Bearer ******"  http://localhost:8080/api/restricted
 
 
 ```bash
-curl -H "Authorization: Bearer ******" http://localhost:8080/actuator/healt
+curl -H "Authorization: Bearer ******" http://localhost:8080/actuator/health
 ```
