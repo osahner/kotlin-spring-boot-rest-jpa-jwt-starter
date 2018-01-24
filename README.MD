@@ -2,10 +2,9 @@
 
 **Features**:
 * spring-boot 2.0.0.M7
-* kotlin 1.2.20
-* JWT Authentication/Authorization with spring-security
+* kotlin 1.2.21
+* JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
-* Rest Exception handling
 
 ### Install
 

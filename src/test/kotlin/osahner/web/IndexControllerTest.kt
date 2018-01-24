@@ -1,11 +1,11 @@
-package osahner
+package osahner.web
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.boot.test.web.client.getForObject
@@ -14,22 +14,25 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class ApplicationTests(@Autowired private val restTemplate: TestRestTemplate) {
+internal class IndexControllerTest(@Autowired private val restTemplate: TestRestTemplate) {
 
   @Test
   fun ping() {
     val expected = "Pong!"
-    assertEquals(expected, restTemplate.getForObject<String>("/api/test"))
+    val result = restTemplate.getForObject<String>("/api/test")
+    assertNotNull(result)
+    assertEquals(expected, result)
   }
 
   @Test
   fun pingRestricted() {
-    val responseEntity = restTemplate.getForEntity<String>("/api/restricted")
+    val result = restTemplate.getForEntity<String>("/api/restricted")
     val expected = "Pong!"
 
-    assertEquals(HttpStatus.FORBIDDEN, responseEntity.statusCode)
+    assertNotNull(result)
+    assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
 
     // TODO Get JWT
   }
