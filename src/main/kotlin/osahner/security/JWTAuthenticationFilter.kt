@@ -45,7 +45,6 @@ class JWTAuthenticationFilter(private val _authenticationManager: Authentication
     } catch (e: IOException) {
       throw RuntimeException(e)
     }
-
   }
 
   @Throws(IOException::class, ServletException::class)

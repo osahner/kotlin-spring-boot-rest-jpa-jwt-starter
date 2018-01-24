@@ -39,24 +39,20 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
 
   private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
     val token = request.getHeader(HEADER_STRING)
-    if (token != null) {
-      val user = Jwts.parser()
-        .setSigningKey(SECRET)
-        .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-        .body
-        .subject
-
+    return if (token != null) {
       val claims = Jwts.parser()
         .setSigningKey(SECRET)
         .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+      val user = claims
+        .body
+        .subject
 
       val authorities = ArrayList<GrantedAuthority>()
       (claims.body["auth"] as MutableList<*>).forEach { role -> authorities.add(SimpleGrantedAuthority(role.toString())) }
 
-      return if (user != null) {
+      if (user != null) {
         UsernamePasswordAuthenticationToken(user, null, authorities)
       } else null
-    }
-    return null
+    } else null
   }
 }
