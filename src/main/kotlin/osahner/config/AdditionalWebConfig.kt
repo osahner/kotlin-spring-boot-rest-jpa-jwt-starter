@@ -14,7 +14,6 @@ class AdditionalWebConfig : WebMvcConfigurer {
 
   override fun configurePathMatch(configurer: PathMatchConfigurer) {
     configurer.isUseSuffixPatternMatch = false
-    configurer.isUseRegisteredSuffixPatternMatch = true
   }
 
   override fun configureContentNegotiation(configurer: ContentNegotiationConfigurer) {
@@ -35,7 +34,7 @@ class AdditionalWebConfig : WebMvcConfigurer {
       "Access-Control-Request-Method",
       "Access-Control-Request-Headers"
     )
-    configuration.exposedHeaders = listOf("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+    configuration.exposedHeaders = listOf("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization")
     configuration.allowCredentials = true
     configuration.maxAge = 3600
 
