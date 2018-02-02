@@ -5,21 +5,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 class AdditionalWebConfig : WebMvcConfigurer {
-
-  override fun configurePathMatch(configurer: PathMatchConfigurer) {
-    configurer.isUseSuffixPatternMatch = false
-  }
-
-  override fun configureContentNegotiation(configurer: ContentNegotiationConfigurer) {
-    configurer.favorPathExtension(false)
-  }
-
   @Bean
   fun corsConfigurationSource(): CorsConfigurationSource {
     val configuration = CorsConfiguration()
@@ -34,7 +23,8 @@ class AdditionalWebConfig : WebMvcConfigurer {
       "Access-Control-Request-Method",
       "Access-Control-Request-Headers"
     )
-    configuration.exposedHeaders = listOf("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization")
+    configuration.exposedHeaders =
+      listOf("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization")
     configuration.allowCredentials = true
     configuration.maxAge = 3600
 
