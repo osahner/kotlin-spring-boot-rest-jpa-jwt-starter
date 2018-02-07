@@ -1,12 +1,10 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
 **Features**:
-* spring-boot 2.0.0.RC1
+* spring-boot 2.0.0.M7
 * kotlin 1.2.21
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
-* Junit 5 Test
-* Deployable in servlet 3.0 container (`mvn package`) 
 
 ### Install
 
@@ -39,6 +37,7 @@ curl -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.doe"
 ```bash
 curl  -H "Authorization: Bearer ******"  http://localhost:8080/api/restricted
 ```
+
 
 ```bash
 curl -H "Authorization: Bearer ******" http://localhost:8080/actuator/health
