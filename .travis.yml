@@ -1,2 +1,15 @@
 language: java
 jdk: oraclejdk8
+services:
+  - mysql
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+sudo: required
+before_install:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('notimportant') where User='root'; update user set plugin='mysql_native_password';CREATE DATABASE starterspringkotlin;GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';FLUSH PRIVILEGES;"
+  - sudo service mysql restart
