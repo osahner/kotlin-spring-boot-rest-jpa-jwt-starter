@@ -6,7 +6,6 @@
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
 * Junit 5 Test
-* Deployable in servlet 3.0 container (`mvn package`) 
 
 ### Install
 
@@ -19,7 +18,7 @@ FLUSH PRIVILEGES;
 
 * **compile and run**
 ```bash
-mvn install
+mvn clean compile
 mvn spring-boot:run
 ```
 
