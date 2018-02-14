@@ -58,12 +58,12 @@ internal class ApiError private constructor() {
     subErrors!!.add(subError)
   }
 
-  private fun addValidationError(`object`: String, field: String, rejectedValue: Any, message: String) {
-    addSubError(ApiValidationError(`object`, field, rejectedValue, message))
+  private fun addValidationError(obj: String, field: String, rejectedValue: Any, message: String) {
+    addSubError(ApiValidationError(obj, field, rejectedValue, message))
   }
 
-  private fun addValidationError(`object`: String, message: String) {
-    addSubError(ApiValidationError(`object`, message))
+  private fun addValidationError(obj: String, message: String) {
+    addSubError(ApiValidationError(obj, message))
   }
 
   private fun addValidationError(fieldError: FieldError) {
@@ -104,42 +104,16 @@ internal class ApiError private constructor() {
     )
   }
 
-  fun addValidationErrors(constraintViolations: Set<ConstraintViolation<*>>) {
+  fun addValidationErrors(constraintViolations: Collection<ConstraintViolation<*>>) {
     constraintViolations.forEach(Consumer<ConstraintViolation<*>> { this.addValidationError(it) })
   }
 
-  fun getSubErrors(): List<ApiSubError>? {
+  fun getSubErrors(): Collection<ApiSubError>? {
     return this.subErrors
   }
 
   fun setSubErrors(subErrors: MutableList<ApiSubError>) {
     this.subErrors = subErrors
-  }
-
-  override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (other !is ApiError) return false
-
-    if (status != other.status) return false
-    if (timestamp != other.timestamp) return false
-    if (message != other.message) return false
-    if (debugMessage != other.debugMessage) return false
-    if (subErrors != other.subErrors) return false
-
-    return true
-  }
-
-  override fun hashCode(): Int {
-    var result = status?.hashCode() ?: 0
-    result = 31 * result + (timestamp?.hashCode() ?: 0)
-    result = 31 * result + (message?.hashCode() ?: 0)
-    result = 31 * result + (debugMessage?.hashCode() ?: 0)
-    result = 31 * result + (subErrors?.hashCode() ?: 0)
-    return result
-  }
-
-  override fun toString(): String {
-    return "ApiError(status=$status, timestamp=$timestamp, message=$message, debugMessage=$debugMessage, subErrors=$subErrors)"
   }
 
 
@@ -151,14 +125,13 @@ internal class ApiError private constructor() {
     private var rejectedValue: Any? = null
     private var message: String? = null
 
-    constructor(`object`: String, message: String) {
-      this.`object` = `object`
+    constructor(obj: String, message: String) {
+      this.`object` = obj
       this.message = message
     }
 
-    @java.beans.ConstructorProperties("object", "field", "rejectedValue", "message")
-    constructor(`object`: String, field: String, rejectedValue: Any, message: String) {
-      this.`object` = `object`
+    constructor(obj: String, field: String, rejectedValue: Any, message: String) {
+      this.`object` = obj
       this.field = field
       this.rejectedValue = rejectedValue
       this.message = message

@@ -6,6 +6,7 @@
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
 * Junit 5 Test
+* Custom REST Exception Handling
 
 ### Install
 
@@ -18,7 +19,7 @@ FLUSH PRIVILEGES;
 
 * **compile and run**
 ```bash
-mvn clean compile
+mvn clean compile test
 mvn spring-boot:run
 ```
 

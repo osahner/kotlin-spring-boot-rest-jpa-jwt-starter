@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.http.converter.HttpMessageNotWritableException
 import org.springframework.web.HttpMediaTypeNotSupportedException
+import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -22,6 +23,7 @@ import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import javax.persistence.EntityNotFoundException
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -44,7 +46,7 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
     status: HttpStatus,
     request: WebRequest
   ): ResponseEntity<Any> {
-    val error = ex.parameterName + " parameter is missing"
+    val error = "${ex.parameterName} parameter is missing"
     return buildResponseEntity(ApiError(BAD_REQUEST, error, ex))
   }
 
@@ -64,14 +66,25 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
     status: HttpStatus,
     request: WebRequest
   ): ResponseEntity<Any> {
-    val builder = StringBuilder()
-    builder.append(ex.contentType)
-    builder.append(" media type is not supported. Supported media types are ")
-    ex.supportedMediaTypes.forEach { t -> builder.append(t).append(", ") }
     return buildResponseEntity(
       ApiError(
         HttpStatus.UNSUPPORTED_MEDIA_TYPE,
-        builder.substring(0, builder.length - 2),
+        "${ex.contentType} media type is not supported. Supported media types are ${ex.supportedMediaTypes.joinToString()}",
+        ex
+      )
+    )
+  }
+
+  override fun handleHttpRequestMethodNotSupported(
+    ex: HttpRequestMethodNotSupportedException,
+    headers: HttpHeaders,
+    status: HttpStatus,
+    request: WebRequest
+  ): ResponseEntity<Any> {
+    return buildResponseEntity(
+      ApiError(
+        HttpStatus.METHOD_NOT_ALLOWED,
+        "${ex.method} method is not supported for this request. Supported methods are ${ex.supportedHttpMethods?.joinToString()}",
         ex
       )
     )
@@ -130,7 +143,7 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
     HttpStatus, request: WebRequest
   ): ResponseEntity<Any> {
     val servletWebRequest = request as ServletWebRequest
-    log.info("{} to {}", servletWebRequest.httpMethod, servletWebRequest.request.servletPath)
+    log.error("${servletWebRequest.httpMethod} to ${servletWebRequest.request.servletPath}")
     val error = "Malformed JSON request"
     return buildResponseEntity(ApiError(BAD_REQUEST, error, ex))
   }
@@ -157,18 +170,16 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
   /**
    * Handle javax.persistence.EntityNotFoundException
    */
-  @ExceptionHandler(javax.persistence.EntityNotFoundException::class)
-  protected fun handleEntityNotFound(ex: javax.persistence.EntityNotFoundException): ResponseEntity<Any> {
+  @ExceptionHandler(EntityNotFoundException::class)
+  protected fun handleEntityNotFound(ex: EntityNotFoundException): ResponseEntity<Any> {
     return buildResponseEntity(ApiError(NOT_FOUND, ex))
   }
 
-  // Example 10. Using nullability constraints on Kotlin repositories
   @ExceptionHandler(EmptyResultDataAccessException::class)
   protected fun handleEntityNotFound(ex: EmptyResultDataAccessException): ResponseEntity<Any> {
     val apiError = ApiError(NOT_FOUND)
     apiError.message = "Entity could not be found!"
     return buildResponseEntity(apiError)
-    //return buildResponseEntity(ApiError(HttpStatus.NOT_FOUND, ex))
   }
 
   /**
@@ -205,10 +216,7 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
     request: WebRequest
   ): ResponseEntity<Any> {
     val apiError = ApiError(BAD_REQUEST)
-    apiError.message = String.format(
-      "The parameter '%s' of value '%s' could not be converted to type '%s'",
-      ex.name, ex.value, ex.requiredType.simpleName
-    )
+    apiError.message = "The parameter '${ex.name}' of value '${ex.value}' could not be converted to type '${ex.requiredType?.simpleName}'"
     apiError.debugMessage = ex.message
     return buildResponseEntity(apiError)
   }
