@@ -7,8 +7,8 @@ addons:
     sources:
       - mysql-5.7-trusty
     packages:
-      - mysql-server-5.7
-      - mysql-client-5.7
+      - mysql-server
+      - mysql-client
 sudo: required
 before_install:
   - sudo mysql_upgrade --force
