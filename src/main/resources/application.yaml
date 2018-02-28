@@ -9,14 +9,15 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5Dialect
+    database-platform: org.hibernate.dialect.MySQL57Dialect
     open-in-view: true
     properties:
       hibernate.show_sql: false
+      hibernate.dialect.storage_engine: innodb
   datasource:
     password: starterspringkotlin
     username: starterspringkotlin
-    url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false
+    url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
     driver-class-name: com.mysql.jdbc.Driver
     # init app_user, app_role
     initialization-mode: always
@@ -39,6 +40,10 @@ spring:
       maximum-pool-size: 5
   jmx:
     default-domain: startertest
+management:
+  endpoint:
+    health:
+      show-details: WHEN_AUTHORIZED
 ---
 spring:
   profiles: test

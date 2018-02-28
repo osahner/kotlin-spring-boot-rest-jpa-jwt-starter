@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=master)](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
 
 **Features**:
-* spring-boot 2.0.0.RC1
+* spring-boot 2.0.0.RC2
 * kotlin 1.2.21
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
