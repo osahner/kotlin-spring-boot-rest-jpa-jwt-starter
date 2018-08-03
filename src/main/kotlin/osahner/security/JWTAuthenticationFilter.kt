@@ -3,6 +3,7 @@ package osahner.security
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.security.Keys
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -61,7 +62,7 @@ class JWTAuthenticationFilter(private val _authenticationManager: Authentication
       .setSubject((auth.principal as User).username)
       .claim("auth", claims)
       .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
-      .signWith(SignatureAlgorithm.HS512, SECRET)
+      .signWith(Keys.hmacShaKeyFor(SECRET.toByteArray()), SignatureAlgorithm.HS512)
       .compact()
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
   }
