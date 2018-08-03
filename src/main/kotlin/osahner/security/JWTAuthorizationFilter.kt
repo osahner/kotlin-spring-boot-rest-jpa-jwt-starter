@@ -1,6 +1,7 @@
 package osahner.security
 
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.security.Keys
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -41,7 +42,7 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
     val token = request.getHeader(HEADER_STRING)
     return if (token != null) {
       val claims = Jwts.parser()
-        .setSigningKey(SECRET)
+        .setSigningKey(Keys.hmacShaKeyFor(SECRET.toByteArray()))
         .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
       val user = claims
         .body
