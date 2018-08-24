@@ -3,15 +3,9 @@ package osahner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication(exclude = [(RepositoryRestMvcAutoConfiguration::class)])
-class Application : SpringBootServletInitializer() {
-
-  override fun configure(application: SpringApplicationBuilder): SpringApplicationBuilder {
-    return application.sources(Application::class.java)
-  }
-
+class Application {
 }
 
 fun main(args: Array<String>) {

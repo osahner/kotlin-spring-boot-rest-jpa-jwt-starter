@@ -44,6 +44,17 @@ management:
   endpoint:
     health:
       show-details: WHEN_AUTHORIZED
+server:
+  compression:
+    enabled: false
+  http2:
+    enabled: true
+  port: 4080
+  servlet:
+    context-path: /starter-test
+  tomcat:
+    accesslog:
+      directory: logs
 ---
 spring:
   profiles: test
