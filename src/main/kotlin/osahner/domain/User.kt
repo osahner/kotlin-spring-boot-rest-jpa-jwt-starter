@@ -5,11 +5,6 @@ import javax.persistence.*
 @Entity
 @Table(name = "app_user")
 class User(
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  var id: Long? = -1,
-
   @Column(name = "username")
   var username: String? = null,
 
@@ -30,5 +25,5 @@ class User(
     inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
   )
   var roles: Collection<Role>? = null
-)
+) : AbstractJpaPersistable<Long>()
 

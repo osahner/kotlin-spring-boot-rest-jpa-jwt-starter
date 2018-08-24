@@ -1,17 +1,15 @@
 package osahner.domain
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 @Entity
 @Table(name = "app_role")
 class Role(
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  var id: Long = -1,
-
   @Column(name = "role_name")
   var roleName: String? = null,
 
   @Column(name = "description")
   var description: String? = null
-)
+) : AbstractJpaPersistable<Long>()
