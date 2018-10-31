@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=master)](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
 
 **Features**:
-* spring-boot 2.0.4.RELEASE
-* kotlin 1.2.61
+* spring-boot 2.1.0.RELEASE
+* kotlin 1.3.0
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
 * Junit 5 Tests
@@ -48,6 +48,7 @@ curl -H "Authorization: Bearer ******" http://localhost:4080/starter-test/actuat
 
 ### Changelog
 
+* _v0.2.0-SNAPSHOT_: update spring-boot 2.1.0 and koltin 1.3.0
 * _v0.1.0-SNAPSHOT_: switch to jar packaging standalone app, update kotlin 1.2.61, jwt 0.10.5
 * _v0.0.5-SNAPSHOT_: update spring-boot 2.0.4.RELEASE, kotlin 1.2.60, jwt 0.10.1
 * _v0.0.4-SNAPSHOT_: update spring-boot 2.0.3.RELEASE

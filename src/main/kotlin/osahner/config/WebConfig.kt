@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import osahner.security.JWTAuthenticationFilter
 import osahner.security.JWTAuthorizationFilter
 import osahner.service.AppUserDetailsService
-import java.lang.Exception
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
