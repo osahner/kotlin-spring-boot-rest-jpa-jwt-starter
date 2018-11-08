@@ -18,7 +18,6 @@ spring:
     password: starterspringkotlin
     username: starterspringkotlin
     url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
-    driver-class-name: com.mysql.jdbc.Driver
     # init app_user, app_role
     initialization-mode: always
     continue-on-error: true
@@ -58,6 +57,18 @@ server:
 ---
 spring:
   profiles: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.show_sql: true
+  datasource:
+    # init app_user, app_role
+    initialization-mode: always
+    continue-on-error: true
+---
+spring:
+  profiles: development
   jpa:
     hibernate:
       ddl-auto: update
