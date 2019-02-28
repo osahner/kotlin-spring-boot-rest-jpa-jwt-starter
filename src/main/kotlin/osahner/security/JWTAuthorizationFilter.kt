@@ -33,27 +33,25 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
       chain.doFilter(req, res)
       return
     }
-    val authentication = getAuthentication(req)
+    val authentication = getAuthentication(header)
     SecurityContextHolder.getContext().authentication = authentication
     chain.doFilter(req, res)
   }
 
-  private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
-    val token = request.getHeader(HEADER_STRING)
-    return if (token != null) {
+  private fun getAuthentication(token: String): UsernamePasswordAuthenticationToken? {
+    return try {
       val claims = Jwts.parser()
         .setSigningKey(Keys.hmacShaKeyFor(SECRET.toByteArray()))
         .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
       val user = claims
         .body
         .subject
-
       val authorities = ArrayList<GrantedAuthority>()
       (claims.body["auth"] as MutableList<*>).forEach { role -> authorities.add(SimpleGrantedAuthority(role.toString())) }
 
-      if (user != null) {
-        UsernamePasswordAuthenticationToken(user, null, authorities)
-      } else null
-    } else null
+      UsernamePasswordAuthenticationToken(user, null, authorities)
+    } catch (e: Exception) {
+      return null
+    }
   }
 }

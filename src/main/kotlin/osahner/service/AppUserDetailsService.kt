@@ -1,6 +1,5 @@
 package osahner.service
 
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -12,7 +11,6 @@ import java.util.*
 
 @Component
 class AppUserDetailsService(val userRepository: UserRepository) : UserDetailsService {
-  private var log = LoggerFactory.getLogger(AppUserDetailsService::class.java)
 
   @Throws(UsernameNotFoundException::class)
   override fun loadUserByUsername(s: String): UserDetails {
