@@ -29,7 +29,7 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
   @Order(1)
   fun ping() {
     val expected = "Pong!"
-    val result = restTemplate.getForObject<String>("/api/test")
+    val result = restTemplate.getForObject<String>("/api/v1/test")
     assertNotNull(result)
     assertEquals(expected, result)
   }
@@ -37,7 +37,7 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
   @Test
   @Order(2)
   fun `ping restricted`() {
-    val result = restTemplate.getForEntity<String>("/api/restricted")
+    val result = restTemplate.getForEntity<String>("/api/v1/restricted")
 
     assertNotNull(result)
     assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
@@ -85,7 +85,7 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
     headers["Authorization"] = bearer
     val requestEntity = HttpEntity<String>(headers)
 
-    val result = restTemplate.exchange<String>("/api/restricted", HttpMethod.GET, requestEntity, String::class.java)
+    val result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
     assertNotNull(result)
     assertEquals(HttpStatus.OK, result.statusCode)
     assertEquals(expected, result.body)
@@ -99,14 +99,14 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
     headers["Authorization"] = "Bearer TOTALYWRONG"
     var requestEntity = HttpEntity<String>(headers)
 
-    var result = restTemplate.exchange<String>("/api/restricted", HttpMethod.GET, requestEntity, String::class.java)
+    var result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
     assertNotNull(result)
     assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
 
     headers["Authorization"] = "TOTALYWRONG"
     requestEntity = HttpEntity(headers)
 
-    result = restTemplate.exchange<String>("/api/restricted", HttpMethod.GET, requestEntity, String::class.java)
+    result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
     assertNotNull(result)
     assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
   }
@@ -116,7 +116,7 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
   fun `test required`() {
     val msg = "Required Test"
     val expected = "Echo \"$msg\"!"
-    val result = restTemplate.getForObject<String>("/api/required?msg=$msg")
+    val result = restTemplate.getForObject<String>("/api/v1/required?msg=$msg")
 
     assertNotNull(result)
     assertEquals(expected, result)

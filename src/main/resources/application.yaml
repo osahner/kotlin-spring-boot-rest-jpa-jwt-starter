@@ -1,7 +1,7 @@
 info:
   app:
     name: kotlin-spring-boot-rest-jpa-jwt-starter
-    version: 0.3.1-SNAPSHOT
+    version: 0.4.1-SNAPSHOT
 spring:
   jpa:
     hibernate:

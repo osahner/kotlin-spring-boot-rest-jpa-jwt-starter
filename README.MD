@@ -30,11 +30,11 @@ mvn spring-boot:run
 
 ### Test
 ```sh
-curl http://localhost:4080/starter-test/api/test
+curl http://localhost:4080/starter-test/api/v1/test
 ```
 
 ```sh
-curl http://localhost:4080/starter-test/api/restricted
+curl http://localhost:4080/starter-test/api/v1/restricted
 ```
 
 ```sh
@@ -42,7 +42,7 @@ curl -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.doe"
 ```
 
 ```sh
-curl  -H "Authorization: Bearer ******"  http://localhost:4080/starter-test/api/restricted
+curl  -H "Authorization: Bearer ******"  http://localhost:4080/starter-test/api/v1/restricted
 ```
 
 ```sh
