@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
@@ -25,7 +26,6 @@ import javax.servlet.http.HttpServletResponse
 
 class JWTAuthenticationFilter(private val _authenticationManager: AuthenticationManager) :
   UsernamePasswordAuthenticationFilter() {
-  private var log = LoggerFactory.getLogger(JWTAuthenticationFilter::class.java)
 
   @Throws(AuthenticationException::class)
   override fun attemptAuthentication(
@@ -44,7 +44,7 @@ class JWTAuthenticationFilter(private val _authenticationManager: Authentication
         )
       )
     } catch (e: IOException) {
-      throw RuntimeException(e)
+      throw AuthenticationServiceException(e.message)
     }
   }
 

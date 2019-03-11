@@ -227,6 +227,13 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco-maven-plugin.version}</version>
+        <configuration>
+          <excludes>
+            <exclude>osahner/config/SecurityConstants.*</exclude>
+            <exclude>osahner/ApplicationKt.*</exclude>
+            <exclude>osahner/domain/**.*</exclude>
+          </excludes>
+        </configuration>
         <executions>
           <execution>
             <goals>
