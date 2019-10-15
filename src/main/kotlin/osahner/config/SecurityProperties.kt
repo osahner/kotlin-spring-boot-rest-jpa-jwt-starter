@@ -1,0 +1,13 @@
+package osahner.config
+
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.stereotype.Component
+
+@ConfigurationProperties(prefix = "jwt-security")
+class SecurityProperties {
+  var secret = "PseudoSecret-Pseudosecret-Please-Use-Ur-Own-Key-PseudoSecret-Pseudosecret"
+  var expirationTime: Long = 864000000 // 10 days
+  var tokenPrefix = "Bearer "
+  var headerString = "Authorization"
+  var strength = 10
+}

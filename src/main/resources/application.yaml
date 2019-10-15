@@ -21,24 +21,6 @@ spring:
     # init app_user, app_role
     initialization-mode: always
     continue-on-error: true
-    hikari:
-      # https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
-      data-source-properties:
-        cachePrepStmts: true
-        useServerPrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useLocalSessionState: true
-        useLocalTransactionState: true
-        rewriteBatchedStatements: true
-        cacheResultSetMetadata: true
-        cacheServerConfiguration: true
-        elideSetAutoCommits: true
-        maintainTimeStats: false
-      pool-name: startertest
-      maximum-pool-size: 5
-  jmx:
-    default-domain: startertest
 management:
   endpoint:
     health:
@@ -54,6 +36,8 @@ server:
   tomcat:
     accesslog:
       directory: logs
+jwt-security:
+  secret: PseudoSecret-Pseudosecret-Please-Use-Ur-Own-Key-PseudoSecret-Pseudosecret
 ---
 spring:
   profiles: test
