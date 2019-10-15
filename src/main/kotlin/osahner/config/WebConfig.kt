@@ -18,7 +18,8 @@ import osahner.service.AppUserDetailsService
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebConfig(
   val bCryptPasswordEncoder: BCryptPasswordEncoder,
-  val userDetailsService: AppUserDetailsService
+  val userDetailsService: AppUserDetailsService,
+  val securityProperties: SecurityProperties
 ) : WebSecurityConfigurerAdapter() {
 
   override fun configure(http: HttpSecurity) {
@@ -33,8 +34,8 @@ class WebConfig(
       .antMatchers(HttpMethod.POST, "/login").permitAll()
       .anyRequest().authenticated()
       .and()
-      .addFilter(JWTAuthenticationFilter(authenticationManager()))
-      .addFilter(JWTAuthorizationFilter(authenticationManager()))
+      .addFilter(JWTAuthenticationFilter(authenticationManager(), securityProperties))
+      .addFilter(JWTAuthorizationFilter(authenticationManager(), securityProperties))
   }
 
   @Throws(Exception::class)

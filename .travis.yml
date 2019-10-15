@@ -1,16 +1,10 @@
 language: java
+dist: xenial
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 jdk: oraclejdk11
 services:
   - mysql
-addons:
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
-      - mysql-client
 sudo: required
 before_install:
   - sudo mysql_upgrade --force

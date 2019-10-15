@@ -13,7 +13,6 @@ class User(
   var username: String? = null,
 
   @Column(name = "password")
-  // @JsonIgnore
   var password: String? = null,
 
   @Column(name = "first_name")

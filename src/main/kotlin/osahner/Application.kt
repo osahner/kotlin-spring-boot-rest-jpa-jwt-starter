@@ -5,8 +5,7 @@ import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoCon
 import org.springframework.boot.builder.SpringApplicationBuilder
 
 @SpringBootApplication(exclude = [(RepositoryRestMvcAutoConfiguration::class)])
-class Application {
-}
+class Application
 
 fun main(args: Array<String>) {
   configureApplication(SpringApplicationBuilder()).run(*args)
