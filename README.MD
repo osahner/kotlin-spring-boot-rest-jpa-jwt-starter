@@ -5,10 +5,11 @@
 
 
 **Features**:
-* spring-boot 2.1.3.RELEASE
-* kotlin 1.3.21
+* spring-boot 2.2.0.RELEASE
+* kotlin 1.3.50
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
+* OpenCVS/POI
 * Junit 5 Tests
 * Travis CI
 * codecov
@@ -50,7 +51,8 @@ curl -H "Authorization: Bearer ******" http://localhost:4080/starter-test/actuat
 ```
 
 ### Changelog
-* _v0.4.2-SNAPSHOT_: spring-boot 2.1.6 and kotlin 1.3.40
+* _v0.6.0-SNAPSHOT_: update spring-boot 2.2.0.RELEASE, add address controller with csv import an xls export
+* _v0.5.0-SNAPSHOT_: spring-boot 2.1.9, and kotlin 1.3.50
 * _v0.4.1-SNAPSHOT_: spring-boot 2.1.3 and kotlin 1.3.21, add codecov, fixed code style, fix tests, add coverage
 * _v0.3.1-SNAPSHOT_: update jdk11, spring-boot 2.1.2 and kotlin 1.3.20
 * _v0.1.0-SNAPSHOT_: switch to jar packaging standalone app, update kotlin 1.2.61, jwt 0.10.5

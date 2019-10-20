@@ -1,7 +1,3 @@
-info:
-  app:
-    name: kotlin-spring-boot-rest-jpa-jwt-starter
-    version: 0.4.1-SNAPSHOT
 spring:
   jpa:
     hibernate:
@@ -21,10 +17,6 @@ spring:
     # init app_user, app_role
     initialization-mode: always
     continue-on-error: true
-management:
-  endpoint:
-    health:
-      show-details: WHEN_AUTHORIZED
 server:
   compression:
     enabled: false
