@@ -25,9 +25,6 @@ server:
   port: 4080
   servlet:
     context-path: /starter-test
-  tomcat:
-    accesslog:
-      directory: logs
 jwt-security:
   secret: PseudoSecret-Pseudosecret-Please-Use-Ur-Own-Key-PseudoSecret-Pseudosecret
 ---
@@ -54,3 +51,14 @@ spring:
     # init app_user, app_role
     initialization-mode: always
     continue-on-error: true
+---
+spring:
+  profiles: docker
+  datasource:
+    password: starterspringkotlin
+    username: starterspringkotlin
+    url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+server:
+  port: 8888
+  servlet:
+    context-path: /starter-test

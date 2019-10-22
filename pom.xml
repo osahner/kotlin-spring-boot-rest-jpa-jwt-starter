@@ -5,7 +5,7 @@
 
   <groupId>osahner</groupId>
   <artifactId>kotlin-spring-boot-rest-jpa-jwt-starter</artifactId>
-  <version>0.6.0-SNAPSHOT</version>
+  <version>0.6.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>kotlin spring-boot 2 rest/jpa/jwt starter</name>
@@ -26,9 +26,10 @@
 
     <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
     <jjwt.version>0.10.7</jjwt.version>
-    <poi.version>4.1.0</poi.version>
+    <poi.version>4.1.1</poi.version>
     <jasypt.version>1.9.3</jasypt.version>
-    <opencsv.version>4.6</opencsv.version>
+    <opencsv.version>5.0</opencsv.version>
+    <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
     <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
   </properties>
 
@@ -257,6 +258,29 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <version>${dockerfile-maven.version}</version>
+        <executions>
+          <execution>
+            <id>default</id>
+            <goals>
+              <goal>build</goal>
+              <goal>push</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <noCache/>
+          <repository>osahner/kotlin</repository>
+          <tag>${project.version}</tag>
+          <buildArgs>
+            <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+          </buildArgs>
+          <verbose/>
+        </configuration>
       </plugin>
     </plugins>
   </build>
