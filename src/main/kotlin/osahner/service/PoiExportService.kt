@@ -4,14 +4,11 @@ import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.BorderStyle
-import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Workbook
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class PoiExportService {
-
   fun buildExcelDocument(titel: String? = "Export", header: Collection<String>, result: Collection<Any>): Workbook {
     val mapper = jacksonObjectMapper()
 
@@ -39,23 +36,18 @@ class PoiExportService {
       val list = header.map { map[it] }
       row = sheet.createRow(rowNo++)
       list.withIndex().forEach { (cellNo, entity) ->
-        createCellWith(row, cellNo, entity)
+        val cell = row.createCell(cellNo)
+        when (entity) {
+          is Number -> cell.setCellValue(entity.toDouble())
+          is String -> cell.setCellValue(entity as String?)
+          is Boolean -> cell.setCellValue((entity as Boolean?)!!)
+          is Collection<*> -> cell.setCellValue(entity.joinToString(", "))
+          is Any -> cell.setCellValue(mapper.writeValueAsString(entity))
+          else -> cell.setCellValue("-") // null
+        }
       }
     }
 
     return workbook
-  }
-
-
-  private fun createCellWith(row: Row, cellNo: Int, value: Any?) {
-    val cell = row.createCell(cellNo)
-    when (value) {
-      is Number -> cell.setCellValue(value.toDouble())
-      is String -> cell.setCellValue(value as String?)
-      is Date -> cell.setCellValue(value as Date?)
-      is Boolean -> cell.setCellValue((value as Boolean?)!!)
-      is Collection<*> -> cell.setCellValue(value.joinToString(", "))
-      else -> cell.setCellValue("-")
-    }
   }
 }

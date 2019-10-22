@@ -17,11 +17,13 @@ import java.util.*
 class AddressController(private val addressService: AddressService) {
   @GetMapping(value = ["", "/"])
   @PreAuthorize("hasAnyAuthority('ADMIN_USER', 'STANDARD_USER')")
-  fun list() = addressService.list()
+  fun list() = addressService.list().map { it.toDTO() }
 
   @GetMapping(value = ["/edit/{id}"])
   @PreAuthorize("hasAuthority('ADMIN_USER')")
-  fun edit(@PathVariable id: Int) = addressService.findById(id)
+  fun edit(@PathVariable id: Int): ResponseEntity<AddressDto> = addressService.findById(id).map { address ->
+    ResponseEntity.ok(address.toDTO())
+  }.orElse(ResponseEntity.notFound().build())
 
   @PostMapping(value = ["/import"])
   @PreAuthorize("hasAuthority('ADMIN_USER')")
@@ -47,7 +49,7 @@ class AddressController(private val addressService: AddressService) {
 
   @PostMapping
   @PreAuthorize("hasAuthority('ADMIN_USER')")
-  fun save(@RequestBody saveDto: AddressDto) = addressService.save(saveDto)
+  fun save(@RequestBody dto: AddressDto) = addressService.save(dto).toDTO()
 
   @DeleteMapping(value = ["/{id}"])
   @PreAuthorize("hasAuthority('ADMIN_USER')")

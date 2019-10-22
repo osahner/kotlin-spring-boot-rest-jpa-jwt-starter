@@ -7,10 +7,10 @@ import org.springframework.web.multipart.MultipartFile
 import osahner.domain.Address
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.time.LocalDateTime
 
 @Component
 class CsvImportService {
-
   fun importAddress(file: MultipartFile): Collection<Address> =
     BufferedReader(InputStreamReader(file.inputStream)).use {
       CsvToBeanBuilder<AddressImport>(it)
@@ -51,7 +51,11 @@ class CsvImportService {
       zip = zip,
       city = city,
       email = email,
-      tel = tel
+      tel = tel,
+      enabled = false,
+      options = null,
+      things = null,
+      lastModified = LocalDateTime.now()
     )
   }
 }

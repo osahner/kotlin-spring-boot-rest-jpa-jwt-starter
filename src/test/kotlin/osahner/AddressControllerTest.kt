@@ -1,6 +1,6 @@
 package osahner
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -18,7 +18,6 @@ import org.springframework.http.*
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.util.LinkedMultiValueMap
-import osahner.domain.Address
 import osahner.dto.AddressDto
 
 
@@ -26,8 +25,10 @@ import osahner.dto.AddressDto
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @ActiveProfiles("test")
-internal class AddressControllerTest(@Autowired private val restTemplate: TestRestTemplate) {
-  val mapper = jacksonObjectMapper()
+internal class AddressControllerTest(
+  @Autowired private val restTemplate: TestRestTemplate,
+  @Autowired private val mapper: ObjectMapper
+) {
   val loginForm = hashMapOf("username" to "admin.admin", "password" to "test1234")
 
   fun authHeader(): HttpHeaders {
@@ -43,7 +44,7 @@ internal class AddressControllerTest(@Autowired private val restTemplate: TestRe
     val requestEntity = HttpEntity<String>(authHeader())
     val result =
       restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java)
-    val list: Collection<Address>? = mapper.readValue(result.body!!)
+    val list: Collection<AddressDto>? = mapper.readValue(result.body!!)
     return list?.filter { it.name.equals("Test") }?.map { it.id }
   }
 
@@ -58,14 +59,16 @@ internal class AddressControllerTest(@Autowired private val restTemplate: TestRe
       zip = "zip",
       city = "city",
       email = "email@email.com",
-      tel = "tel"
+      tel = null,
+      enabled = true,
+      things = listOf("a thing", "a second one"),
+      options = mapOf("option1" to "what a option!", "option2" to "that is not my thing"),
+      lastModfied = null
     )
     val requestEntity = HttpEntity(payload, header)
     val result = restTemplate.exchange<String>("/api/v1/address", HttpMethod.POST, requestEntity, String::class.java)
     assertNotNull(result)
     assertEquals(HttpStatus.OK, result.statusCode)
-    val address: Address? = mapper.readValue(result.body!!)
-    assertNotNull(address)
   }
 
   @Test
@@ -81,7 +84,6 @@ internal class AddressControllerTest(@Autowired private val restTemplate: TestRe
     assertEquals(HttpStatus.OK, result.statusCode)
   }
 
-
   @Test
   @Order(3)
   fun list() {
@@ -90,7 +92,8 @@ internal class AddressControllerTest(@Autowired private val restTemplate: TestRe
       restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java)
     assertNotNull(result)
     assertEquals(HttpStatus.OK, result.statusCode)
-    val list: Collection<Address>? = mapper.readValue(result.body!!)
+    println(result.body)
+    val list: Collection<AddressDto>? = mapper.readValue(result.body!!)
     assertNotNull(list)
   }
 
@@ -111,13 +114,12 @@ internal class AddressControllerTest(@Autowired private val restTemplate: TestRe
       assertNotNull(result)
       assertEquals(HttpStatus.OK, result.statusCode)
       assertNotNull(result.body)
-      val address: Address = mapper.readValue(result.body!!)
+      val address: AddressDto = mapper.readValue(result.body!!)
       assertNotNull(address)
       assertEquals(address.name, "Test")
     }
 
   }
-
 
   @Test
   @Order(5)
@@ -129,7 +131,6 @@ internal class AddressControllerTest(@Autowired private val restTemplate: TestRe
     assertEquals(HttpStatus.OK, result.statusCode)
     assertNotNull(result.body)
   }
-
 
   @Test
   @Order(100)
@@ -145,7 +146,7 @@ internal class AddressControllerTest(@Autowired private val restTemplate: TestRe
           String::class.java
         )
       assertNotNull(result)
-      assertEquals(HttpStatus.OK, result.statusCode, "Could not delete Adresse with id: $it")
+      assertEquals(HttpStatus.OK, result.statusCode)
     }
   }
 }

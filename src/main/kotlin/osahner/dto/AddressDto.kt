@@ -1,5 +1,7 @@
 package osahner.dto
 
+import java.time.LocalDateTime
+
 data class AddressDto(
   var id: Int?,
 
@@ -13,5 +15,13 @@ data class AddressDto(
 
   var email: String?,
 
-  var tel: String?
+  var tel: String?,
+
+  var enabled: Boolean?,
+
+  var lastModfied: LocalDateTime?,
+
+  var options: Any?,
+
+  var things: Collection<String>?
 )

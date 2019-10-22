@@ -1,15 +1,17 @@
 package osahner.domain
 
 import osahner.dto.AddressDto
+import osahner.toStringArray
+import osahner.writeValueAsString
+import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
 data class Address(
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue()
   var id: Int?,
 
   var name: String?,
@@ -22,8 +24,30 @@ data class Address(
 
   var email: String?,
 
-  var tel: String?
+  var tel: String?,
+
+  var enabled: Boolean?,
+
+  var lastModified: LocalDateTime?,
+
+  var options: String?,
+
+  var things: String?
 ) {
+  fun toDTO() = AddressDto(
+    id = this.id,
+    name = this.name,
+    street = this.street,
+    zip = this.zip,
+    city = this.city,
+    email = this.email,
+    tel = this.tel,
+    enabled = this.enabled,
+    lastModfied = lastModified,
+    options = this.options,
+    things = this.things.toStringArray()
+  )
+
   companion object {
     fun fromDTO(dto: AddressDto) = Address(
       id = dto.id,
@@ -32,7 +56,11 @@ data class Address(
       zip = dto.zip,
       city = dto.city,
       email = dto.email,
-      tel = dto.tel
+      tel = dto.tel,
+      enabled = dto.enabled,
+      lastModified = LocalDateTime.now(),
+      options = dto.options.writeValueAsString(),
+      things = dto.things.writeValueAsString()
     )
   }
 }

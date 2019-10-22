@@ -1,14 +1,26 @@
 package osahner
 
-import osahner.domain.Address
-import osahner.dto.AddressDto
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 
-fun Address.toDTO() = AddressDto(
-  id = id,
-  name = name,
-  street = street,
-  zip = zip,
-  city = city,
-  email = email,
-  tel = tel
-)
+fun Any?.writeValueAsString(): String? {
+  return if (this != null) {
+    val mapper = jacksonObjectMapper()
+    mapper.writeValueAsString(this)
+  } else {
+    null
+  }
+}
+
+fun String?.toStringArray(): Collection<String>? {
+  return if (this != null && this.isNotEmpty()) {
+    val mapper = jacksonObjectMapper()
+    return try {
+      mapper.readValue(this)
+    } catch (e: Exception) {
+      null
+    }
+  } else {
+    null
+  }
+}

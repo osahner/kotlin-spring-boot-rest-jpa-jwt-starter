@@ -24,8 +24,7 @@ import javax.servlet.http.HttpServletResponse
 class JWTAuthenticationFilter(
   private val authManager: AuthenticationManager,
   private val securityProperties: SecurityProperties
-) :
-  UsernamePasswordAuthenticationFilter() {
+) : UsernamePasswordAuthenticationFilter() {
 
   @Throws(AuthenticationException::class)
   override fun attemptAuthentication(
