@@ -10,3 +10,5 @@ before_install:
   - sudo mysql_upgrade --force
   - sudo mysql -e "CREATE DATABASE starterspringkotlin;GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';FLUSH PRIVILEGES;"
   - sudo service mysql restart
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Ddockerfile.skip -B -V
