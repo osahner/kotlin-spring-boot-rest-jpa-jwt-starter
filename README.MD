@@ -5,7 +5,7 @@
 
 
 **Features**:
-* spring-boot 2.2.0.RELEASE
+* spring-boot 2.2.x.RELEASE
 * kotlin 1.3.50
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql
@@ -16,41 +16,55 @@
 
 ### Install
 
-* **create mysql db**
+* **create a mysql db**
 ```sql
 CREATE DATABASE starterspringkotlin;
 GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';
 FLUSH PRIVILEGES;
 ```
 
-* **compile and run**
+* **compile & run integration tests**
 ```sh
 mvn clean compile test
 mvn spring-boot:run
 ```
 
-### Test
+### some CLI tests
+
+```sh
+mvn clean install -Dmaven.test.skip=true -Ddockerfile.skip
+mvn spring-boot:run
+```
+
 ```sh
 curl http://localhost:4080/starter-test/api/v1/test
-```
+# result: Pong!%
 
-```sh
 curl http://localhost:4080/starter-test/api/v1/restricted
+# result {"timestamp":"***","status":403,"error":"Forbidden","message":"Access Denied","path":"/starter-test/api/v1/restricted"}%
+
+curl -s -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.doe", "password": "test1234"}' http://localhost:4080/starter-test/login | grep Authorization
+# result: Authorization: Bearer ***
+
+curl  -H "Authorization: Bearer ***"  http://localhost:4080/starter-test/api/v1/restricted
+# result: Pong!%
 ```
 
-```sh
-curl -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.doe", "password": "test1234"}' http://localhost:4080/starter-test/login
-```
+### Docker
 
 ```sh
-curl  -H "Authorization: Bearer ******"  http://localhost:4080/starter-test/api/v1/restricted
+mvn clean package -Dmaven.test.skip=true
+docker run -it --rm osahner/kotlin:0.6.1-SNAPSHOT
 ```
 
-```sh
-curl -H "Authorization: Bearer ******" http://localhost:4080/starter-test/actuator/health
-```
+### Why
+
+This is my tiny backend cookbook - I need and use it on regular basis for different small to midsized projects. 
+* Like it -> use it. 
+* Found an error -> please tell me.
 
 ### Changelog
+* _v0.6.1-SNAPSHOT_: add Docker
 * _v0.6.0-SNAPSHOT_: update spring-boot 2.2.0.RELEASE, add address controller with csv import an xls export
 * _v0.5.0-SNAPSHOT_: spring-boot 2.1.9, and kotlin 1.3.50
 * _v0.4.1-SNAPSHOT_: spring-boot 2.1.3 and kotlin 1.3.21, add codecov, fixed code style, fix tests, add coverage
