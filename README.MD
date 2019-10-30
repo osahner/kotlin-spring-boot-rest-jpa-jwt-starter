@@ -6,13 +6,10 @@
 
 **Features**:
 * spring-boot 2.2.x.RELEASE
-* kotlin 1.3.50
+* kotlin 1.3.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
-* JPA mysql
-* OpenCVS/POI
-* Junit 5 Tests
-* Travis CI
-* codecov
+* JPA mysql / OpenCVS / POI
+* Travis CI / codecov
 
 ### Install & play
 
@@ -69,3 +66,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * _v0.3.1-SNAPSHOT_: update jdk11, spring-boot 2.1.2 and kotlin 1.3.20
 * _v0.1.0-SNAPSHOT_: switch to jar packaging standalone app, update kotlin 1.2.61, jwt 0.10.5
 * _v0.0.5-SNAPSHOT_: update spring-boot 2.0.4.RELEASE, kotlin 1.2.60, jwt 0.10.1
+
+## LICENCE
+
+MIT © [Oliver Sahner](https://osahner.github.io)
