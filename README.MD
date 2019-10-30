@@ -14,7 +14,7 @@
 * Travis CI
 * codecov
 
-### Install
+### Install & play
 
 * **create a mysql db**
 ```sql
@@ -23,19 +23,17 @@ GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED B
 FLUSH PRIVILEGES;
 ```
 
-* **compile & run integration tests**
+* **compile & integration tests**
 ```sh
 mvn clean compile test
-mvn spring-boot:run
 ```
 
-### some CLI tests
-
+* **run app**
 ```sh
-mvn clean install -Dmaven.test.skip=true -Ddockerfile.skip
 mvn spring-boot:run
 ```
 
+* **some CLI tests**
 ```sh
 curl http://localhost:4080/starter-test/api/v1/test
 # result: Pong!%
@@ -59,7 +57,7 @@ docker run -it --rm osahner/kotlin:0.6.1-SNAPSHOT
 
 ### Why
 
-This is my tiny backend cookbook - I need and use it on regular basis for different small to midsized projects. 
+This is my tiny backend cookbook. I need and use it on regular basis for different small to midsized projects.
 * Like it -> use it. 
 * Found an error -> please tell me.
 

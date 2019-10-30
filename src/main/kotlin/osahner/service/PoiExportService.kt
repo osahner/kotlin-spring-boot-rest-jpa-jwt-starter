@@ -1,17 +1,18 @@
 package osahner.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.Workbook
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 
 @Component
-class PoiExportService {
+class PoiExportService(
+  @Qualifier("objectMapper") private val mapper: ObjectMapper
+) {
   fun buildExcelDocument(titel: String? = "Export", header: Collection<String>, result: Collection<Any>): Workbook {
-    val mapper = jacksonObjectMapper()
-
     val workbook = HSSFWorkbook()
     val sheet = workbook.createSheet(titel)
     sheet.defaultColumnWidth = 40
@@ -41,9 +42,9 @@ class PoiExportService {
           is Number -> cell.setCellValue(entity.toDouble())
           is String -> cell.setCellValue(entity as String?)
           is Boolean -> cell.setCellValue((entity as Boolean?)!!)
-          is Collection<*> -> cell.setCellValue(entity.joinToString(", "))
+          is Collection<*> -> cell.setCellValue(entity.joinToString("; "))
           is Any -> cell.setCellValue(mapper.writeValueAsString(entity))
-          else -> cell.setCellValue("-") // null
+          else -> cell.setCellValue("") // null -> empty text field
         }
       }
     }
