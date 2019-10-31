@@ -82,6 +82,15 @@ internal class AddressControllerTest(
     val result = restTemplate.postForEntity("/api/v1/address/import", requestEntity, String::class.java)
     assertNotNull(result)
     assertEquals(HttpStatus.OK, result.statusCode)
+
+    val headersWithBOM = authHeader()
+    headersWithBOM.contentType = MediaType.MULTIPART_FORM_DATA
+    val bodyWithBOM = LinkedMultiValueMap<Any, Any>()
+    bodyWithBOM.add("file", FileSystemResource("src/test/resources/addressWithBOM.csv"))
+    val requestEntityWithBOM = HttpEntity<Any>(bodyWithBOM, headersWithBOM)
+    val resultWithBOM = restTemplate.postForEntity("/api/v1/address/import", requestEntityWithBOM, String::class.java)
+    assertNotNull(resultWithBOM)
+    assertEquals(HttpStatus.OK, result.statusCode)
   }
 
   @Test
