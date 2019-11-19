@@ -49,7 +49,10 @@ curl  -H "Authorization: Bearer ***"  http://localhost:4080/starter-test/api/v1/
 
 ```sh
 mvn clean package -Dmaven.test.skip=true
-docker run -it --rm osahner/kotlin:0.6.1-SNAPSHOT
+docker run -it -p 8888:8888 --rm osahner/kotlin:0.6.3-SNAPSHOT
+
+curl http://localhost:32768/starter-test/api/v1/test
+# result: Pong!%
 ```
 
 ### Why
