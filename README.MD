@@ -1,7 +1,7 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
-[![Build Status](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=master)](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
-[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
+[![Build Status](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=develop)](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
+[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
 
 
 **Features**:
@@ -49,9 +49,9 @@ curl  -H "Authorization: Bearer ***"  http://localhost:4080/starter-test/api/v1/
 
 ```sh
 mvn clean package -Dmaven.test.skip=true
-docker run -it -p 8888:8888 --rm osahner/kotlin:0.6.3-SNAPSHOT
+docker run -it -p 8888:8888 --rm osahner/kotlin:0.6.2-SNAPSHOT
 
-curl http://localhost:32768/starter-test/api/v1/test
+curl http://localhost:8888/starter-test/api/v1/test
 # result: Pong!%
 ```
 
@@ -62,6 +62,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * Found an error -> please tell me.
 
 ### Changelog
+* _v0.6.2-SNAPSHOT_: spring-boot 2.2.1, kotlin 1.3.60
 * _v0.6.1-SNAPSHOT_: add Docker
 * _v0.6.0-SNAPSHOT_: update spring-boot 2.2.0.RELEASE, add address controller with csv import an xls export
 * _v0.5.0-SNAPSHOT_: spring-boot 2.1.9, and kotlin 1.3.50
