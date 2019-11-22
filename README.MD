@@ -1,7 +1,7 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
 [![Build Status](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=develop)](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
-[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
+[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/)
 
 
 **Features**:
