@@ -1,6 +1,7 @@
 package osahner.domain
 
 import osahner.dto.AddressDto
+import osahner.toMap
 import osahner.toStringArray
 import osahner.writeValueAsString
 import java.time.LocalDateTime
@@ -44,7 +45,7 @@ data class Address(
     tel = this.tel,
     enabled = this.enabled,
     lastModfied = lastModified,
-    options = this.options,
+    options = this.options.toMap(),
     things = this.things.toStringArray()
   )
 

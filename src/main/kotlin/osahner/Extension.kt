@@ -26,6 +26,20 @@ fun String?.toStringArray(): Collection<String>? {
   }
 }
 
+
+fun String?.toMap(): Map<String, Any>? {
+  return if (this != null && this.isNotEmpty()) {
+    val mapper = jacksonObjectMapper()
+    return try {
+      mapper.readValue(this)
+    } catch (e: Exception) {
+      null
+    }
+  } else {
+    null
+  }
+}
+
 // Adam Kis https://stackoverflow.com/a/56115232/7573817
 @Throws(IllegalAccessException::class, ClassCastException::class)
 inline fun <reified T> Any.getField(fieldName: String): T? {

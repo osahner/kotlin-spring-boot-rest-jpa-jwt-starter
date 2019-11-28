@@ -62,7 +62,7 @@ internal class AddressControllerTest(
       tel = null,
       enabled = true,
       things = listOf("a thing", "a second one"),
-      options = mapOf("option1" to "what a option!", "option2" to "that is not my thing"),
+      options = mapOf("option1" to "what an option!", "option2" to 42),
       lastModfied = null
     )
     val requestEntity = HttpEntity(payload, header)
@@ -119,7 +119,6 @@ internal class AddressControllerTest(
           requestEntity,
           String::class.java
         )
-      assertNotNull(result)
       assertNotNull(result)
       assertEquals(HttpStatus.OK, result.statusCode)
       assertNotNull(result.body)
