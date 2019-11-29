@@ -32,20 +32,20 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
   @Order(1)
   fun ping() {
     val expected = "Pong!"
-    val result = restTemplate.getForObject<String>("/api/v1/test")
-    assertNotNull(result)
-    assertEquals(expected, result)
+    restTemplate.getForObject<String>("/api/v1/test").also {
+      assertNotNull(it)
+      assertEquals(expected, it)
+    }
   }
 
   @Test
   @Order(2)
   fun `ping restricted`() {
-    val result = restTemplate.getForEntity<String>("/api/v1/restricted")
-
-    assertNotNull(result)
-    assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
+    restTemplate.getForEntity<String>("/api/v1/restricted").also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
+    }
   }
-
 
   @Test
   @Order(3)
@@ -56,10 +56,11 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
     headers["Authorization"] = bearer
     val requestEntity = HttpEntity<String>(headers)
 
-    val result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
-    assertEquals(expected, result.body)
+    restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+      assertEquals(expected, it.body)
+    }
   }
 
   @Test
@@ -67,9 +68,10 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
   fun `test required`() {
     val msg = "Required Test"
     val expected = "Echo \"$msg\"!"
-    val result = restTemplate.getForObject<String>("/api/v1/required?msg=$msg")
 
-    assertNotNull(result)
-    assertEquals(expected, result)
+    restTemplate.getForObject<String>("/api/v1/required?msg=$msg").also {
+      assertNotNull(it)
+      assertEquals(expected, it)
+    }
   }
 }
