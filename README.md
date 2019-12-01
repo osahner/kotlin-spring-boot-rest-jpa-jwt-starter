@@ -58,11 +58,11 @@ curl http://localhost:8888/starter-test/api/v1/test
 ### Why
 
 This is my tiny backend cookbook. I need and use it on regular basis for different small to midsized projects.
-* Like it -> use it. 
+* Like it -> use it.
 * Found an error -> please tell me.
 
 ### Changelog
-* _v0.6.2-SNAPSHOT_: spring-boot 2.2.1, kotlin 1.3.60
+* _v0.6.3-SNAPSHOT_: spring-boot 2.2.1, kotlin 1.3.61
 * _v0.6.1-SNAPSHOT_: add Docker
 * _v0.6.0-SNAPSHOT_: update spring-boot 2.2.0.RELEASE, add address controller with csv import an xls export
 * _v0.5.0-SNAPSHOT_: spring-boot 2.1.9, and kotlin 1.3.50
