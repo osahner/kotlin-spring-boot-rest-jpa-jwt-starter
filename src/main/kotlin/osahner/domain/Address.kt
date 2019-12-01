@@ -12,7 +12,7 @@ import javax.persistence.Id
 @Entity
 data class Address(
   @Id
-  @GeneratedValue()
+  @GeneratedValue
   var id: Int?,
 
   var name: String?,

@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test
 
 internal class ExtensionKtTest {
   private val listVal = listOf("test1", "test2")
-  private val listValAsString = "[\"test1\",\"test2\"]"
+  private val listValAsString = """["test1","test2"]"""
   private val mapVal = mapOf("stringProperty" to "theProperty", "numberProperty" to 42)
-  private val mapValAsString = "{\"stringProperty\":\"theProperty\",\"numberProperty\":42}"
+  private val mapValAsString = """{"stringProperty":"theProperty","numberProperty":42}"""
 
   @Test
   fun writeValueAsString() {

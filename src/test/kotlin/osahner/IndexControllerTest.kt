@@ -20,13 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ActiveProfiles("test")
 internal class IndexControllerTest(@Autowired private val restTemplate: TestRestTemplate) {
   val loginForm = hashMapOf("username" to "john.doe", "password" to "test1234")
-  lateinit var bearer: String
-
-  @BeforeEach
-  fun `login to get bearer`() {
-    val result = restTemplate.postForEntity<String>("/login", loginForm)
-    bearer = result.headers["authorization"]?.get(0).orEmpty()
-  }
 
   @Test
   @Order(1)
@@ -53,7 +46,9 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
     val expected = "Pong!"
     val headers = HttpHeaders()
     headers.contentType = MediaType.APPLICATION_JSON
-    headers["Authorization"] = bearer
+    restTemplate.postForEntity<String>("/login", loginForm).also {
+      headers["Authorization"] = it.headers["authorization"]?.get(0).orEmpty()
+    }
     val requestEntity = HttpEntity<String>(headers)
 
     restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
@@ -67,7 +62,7 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
   @Order(4)
   fun `test required`() {
     val msg = "Required Test"
-    val expected = "Echo \"$msg\"!"
+    val expected = """Echo "$msg"!"""
 
     restTemplate.getForObject<String>("/api/v1/required?msg=$msg").also {
       assertNotNull(it)

@@ -66,7 +66,7 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
 
   @Test
   @Order(4)
-  fun `failed login with faulty POST`() {
+  fun `failed login with faulty POST payload`() {
     val falseLoginForm = hashMapOf("username" to "john.doe", "password" to "wrongpassword", "bogus" to "bogus")
     try {
       restTemplate.postForEntity<Any>("/login", falseLoginForm).also {

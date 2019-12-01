@@ -41,7 +41,8 @@ internal class AddressControllerTest(
   }
 
   fun findIdsToCleanup(): Collection<Int?>? {
-    val requestEntity = HttpEntity<String>(authHeader())
+    val header = authHeader()
+    val requestEntity = HttpEntity<String>(header)
     val result =
       restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java)
     val list: Collection<AddressDto>? = mapper.readValue(result.body!!)
@@ -75,21 +76,21 @@ internal class AddressControllerTest(
   @Test
   @Order(2)
   fun import() {
-    val headers = authHeader()
-    headers.contentType = MediaType.MULTIPART_FORM_DATA
+    val header = authHeader()
+    header.contentType = MediaType.MULTIPART_FORM_DATA
     val body = LinkedMultiValueMap<Any, Any>()
     body.add("file", FileSystemResource("src/test/resources/address.csv"))
-    val requestEntity = HttpEntity<Any>(body, headers)
+    val requestEntity = HttpEntity<Any>(body, header)
     restTemplate.postForEntity("/api/v1/address/import", requestEntity, String::class.java).also {
       assertNotNull(it)
       assertEquals(HttpStatus.OK, it.statusCode)
     }
 
-    val headersWithBOM = authHeader()
-    headersWithBOM.contentType = MediaType.MULTIPART_FORM_DATA
+    val headerWithBOM = authHeader()
+    headerWithBOM.contentType = MediaType.MULTIPART_FORM_DATA
     val bodyWithBOM = LinkedMultiValueMap<Any, Any>()
     bodyWithBOM.add("file", FileSystemResource("src/test/resources/addressWithBOM.csv"))
-    val requestEntityWithBOM = HttpEntity<Any>(bodyWithBOM, headersWithBOM)
+    val requestEntityWithBOM = HttpEntity<Any>(bodyWithBOM, headerWithBOM)
     restTemplate.postForEntity("/api/v1/address/import", requestEntityWithBOM, String::class.java).also {
       assertNotNull(it)
       assertEquals(HttpStatus.OK, it.statusCode)
