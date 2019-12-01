@@ -20,32 +20,25 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ActiveProfiles("test")
 internal class IndexControllerTest(@Autowired private val restTemplate: TestRestTemplate) {
   val loginForm = hashMapOf("username" to "john.doe", "password" to "test1234")
-  lateinit var bearer: String
-
-  @BeforeEach
-  fun `login to get bearer`() {
-    val result = restTemplate.postForEntity<String>("/login", loginForm)
-    bearer = result.headers["authorization"]?.get(0).orEmpty()
-  }
 
   @Test
   @Order(1)
   fun ping() {
     val expected = "Pong!"
-    val result = restTemplate.getForObject<String>("/api/v1/test")
-    assertNotNull(result)
-    assertEquals(expected, result)
+    restTemplate.getForObject<String>("/api/v1/test").also {
+      assertNotNull(it)
+      assertEquals(expected, it)
+    }
   }
 
   @Test
   @Order(2)
   fun `ping restricted`() {
-    val result = restTemplate.getForEntity<String>("/api/v1/restricted")
-
-    assertNotNull(result)
-    assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
+    restTemplate.getForEntity<String>("/api/v1/restricted").also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
+    }
   }
-
 
   @Test
   @Order(3)
@@ -53,23 +46,27 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
     val expected = "Pong!"
     val headers = HttpHeaders()
     headers.contentType = MediaType.APPLICATION_JSON
-    headers["Authorization"] = bearer
+    restTemplate.postForEntity<String>("/login", loginForm).also {
+      headers["Authorization"] = it.headers["authorization"]?.get(0).orEmpty()
+    }
     val requestEntity = HttpEntity<String>(headers)
 
-    val result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
-    assertEquals(expected, result.body)
+    restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+      assertEquals(expected, it.body)
+    }
   }
 
   @Test
   @Order(4)
   fun `test required`() {
     val msg = "Required Test"
-    val expected = "Echo \"$msg\"!"
-    val result = restTemplate.getForObject<String>("/api/v1/required?msg=$msg")
+    val expected = """Echo "$msg"!"""
 
-    assertNotNull(result)
-    assertEquals(expected, result)
+    restTemplate.getForObject<String>("/api/v1/required?msg=$msg").also {
+      assertNotNull(it)
+      assertEquals(expected, it)
+    }
   }
 }

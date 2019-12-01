@@ -22,16 +22,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @ActiveProfiles("test")
 internal class AuthenticationTest(@Autowired private val restTemplate: TestRestTemplate) {
-  val loginForm = hashMapOf("username" to "john.doe", "password" to "test1234")
-
+  private val loginForm = hashMapOf("username" to "john.doe", "password" to "test1234")
 
   @Test
   @Order(1)
   fun `ping restricted`() {
-    val result = restTemplate.getForEntity<String>("/api/v1/restricted")
-
-    assertNotNull(result)
-    assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
+    restTemplate.getForEntity<String>("/api/v1/restricted").also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
+    }
   }
 
 
@@ -42,10 +41,10 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
   fun `failed login with wrong password`() {
     val falseLoginForm = hashMapOf("username" to "john.doe", "password" to "wrongpassword")
     try {
-      val result = restTemplate.postForEntity<Any>("/login", falseLoginForm)
-
-      assertNotNull(result)
-      assertEquals(HttpStatus.UNAUTHORIZED, result.statusCode)
+      restTemplate.postForEntity<Any>("/login", falseLoginForm).also {
+        assertNotNull(it)
+        assertEquals(HttpStatus.UNAUTHORIZED, it.statusCode)
+      }
     } catch (e: Exception) {
       print("Fixme RestTemplate with HttpStatus.UNAUTHORIZED result")
     }
@@ -56,10 +55,10 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
   fun `failed login with wrong username`() {
     val falseLoginForm = hashMapOf("username" to "john.wrong", "password" to "wrongpassword")
     try {
-      val result = restTemplate.postForEntity<Any>("/login", falseLoginForm)
-
-      assertNotNull(result)
-      assertEquals(HttpStatus.UNAUTHORIZED, result.statusCode)
+      restTemplate.postForEntity<Any>("/login", falseLoginForm).also {
+        assertNotNull(it)
+        assertEquals(HttpStatus.UNAUTHORIZED, it.statusCode)
+      }
     } catch (e: Exception) {
       print("Fixme RestTemplate with HttpStatus.UNAUTHORIZED result")
     }
@@ -67,13 +66,13 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
 
   @Test
   @Order(4)
-  fun `failed login with faulty POST`() {
+  fun `failed login with faulty POST payload`() {
     val falseLoginForm = hashMapOf("username" to "john.doe", "password" to "wrongpassword", "bogus" to "bogus")
     try {
-      val result = restTemplate.postForEntity<Any>("/login", falseLoginForm)
-
-      assertNotNull(result)
-      assertEquals(HttpStatus.UNAUTHORIZED, result.statusCode)
+      restTemplate.postForEntity<Any>("/login", falseLoginForm).also {
+        assertNotNull(it)
+        assertEquals(HttpStatus.UNAUTHORIZED, it.statusCode)
+      }
     } catch (e: Exception) {
       print("Fixme RestTemplate with HttpStatus.UNAUTHORIZED result")
     }
@@ -82,13 +81,13 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
   @Test
   @Order(5)
   fun `successfull login`() {
-    val result = restTemplate.postForEntity<String>("/login", loginForm)
-
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
-    val bearer = result.headers["authorization"]?.get(0).orEmpty()
-    assertNotNull(bearer)
-    assertThat(bearer).contains("Bearer")
+    restTemplate.postForEntity<String>("/login", loginForm).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+      val bearer = it.headers["authorization"]?.get(0).orEmpty()
+      assertNotNull(bearer)
+      assertThat(bearer).contains("Bearer")
+    }
   }
 
 
@@ -96,7 +95,6 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
   @Order(6)
   fun `ping restricted again`() {
     val expected = "Pong!"
-
     val login = restTemplate.postForEntity<String>("/login", loginForm)
     val bearer = login.headers["authorization"]?.get(0).orEmpty()
     val headers = HttpHeaders()
@@ -104,10 +102,16 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
     headers["Authorization"] = bearer
     val requestEntity = HttpEntity<String>(headers)
 
-    val result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
-    assertEquals(expected, result.body)
+    restTemplate.exchange<String>(
+      "/api/v1/restricted",
+      HttpMethod.GET,
+      requestEntity,
+      String::class.java
+    ).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+      assertEquals(expected, it.body)
+    }
   }
 
   @Test
@@ -118,16 +122,17 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
     headers["Authorization"] = "Bearer TOTALYWRONG"
     var requestEntity = HttpEntity<String>(headers)
 
-    var result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
+    restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
+    }
 
     headers["Authorization"] = "TOTALYWRONG"
     requestEntity = HttpEntity(headers)
 
-    result = restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.FORBIDDEN, result.statusCode)
+    restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
+    }
   }
-
 }

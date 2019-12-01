@@ -41,7 +41,8 @@ internal class AddressControllerTest(
   }
 
   fun findIdsToCleanup(): Collection<Int?>? {
-    val requestEntity = HttpEntity<String>(authHeader())
+    val header = authHeader()
+    val requestEntity = HttpEntity<String>(header)
     val result =
       restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java)
     val list: Collection<AddressDto>? = mapper.readValue(result.body!!)
@@ -62,48 +63,50 @@ internal class AddressControllerTest(
       tel = null,
       enabled = true,
       things = listOf("a thing", "a second one"),
-      options = mapOf("option1" to "what a option!", "option2" to "that is not my thing"),
+      options = mapOf("option1" to "what an option!", "option2" to 42),
       lastModfied = null
     )
     val requestEntity = HttpEntity(payload, header)
-    val result = restTemplate.exchange<String>("/api/v1/address", HttpMethod.POST, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
+    restTemplate.exchange<String>("/api/v1/address", HttpMethod.POST, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+    }
   }
 
   @Test
   @Order(2)
   fun import() {
-    val headers = authHeader()
-    headers.contentType = MediaType.MULTIPART_FORM_DATA
+    val header = authHeader()
+    header.contentType = MediaType.MULTIPART_FORM_DATA
     val body = LinkedMultiValueMap<Any, Any>()
     body.add("file", FileSystemResource("src/test/resources/address.csv"))
-    val requestEntity = HttpEntity<Any>(body, headers)
-    val result = restTemplate.postForEntity("/api/v1/address/import", requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
+    val requestEntity = HttpEntity<Any>(body, header)
+    restTemplate.postForEntity("/api/v1/address/import", requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+    }
 
-    val headersWithBOM = authHeader()
-    headersWithBOM.contentType = MediaType.MULTIPART_FORM_DATA
+    val headerWithBOM = authHeader()
+    headerWithBOM.contentType = MediaType.MULTIPART_FORM_DATA
     val bodyWithBOM = LinkedMultiValueMap<Any, Any>()
     bodyWithBOM.add("file", FileSystemResource("src/test/resources/addressWithBOM.csv"))
-    val requestEntityWithBOM = HttpEntity<Any>(bodyWithBOM, headersWithBOM)
-    val resultWithBOM = restTemplate.postForEntity("/api/v1/address/import", requestEntityWithBOM, String::class.java)
-    assertNotNull(resultWithBOM)
-    assertEquals(HttpStatus.OK, result.statusCode)
+    val requestEntityWithBOM = HttpEntity<Any>(bodyWithBOM, headerWithBOM)
+    restTemplate.postForEntity("/api/v1/address/import", requestEntityWithBOM, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+    }
   }
 
   @Test
   @Order(3)
   fun list() {
     val requestEntity = HttpEntity<String>(authHeader())
-    val result =
-      restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
-    println(result.body)
-    val list: Collection<AddressDto>? = mapper.readValue(result.body!!)
-    assertNotNull(list)
+    restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+      val list: Collection<AddressDto>? = mapper.readValue(it.body!!)
+      assertNotNull(list)
+    }
   }
 
   @Test
@@ -111,34 +114,37 @@ internal class AddressControllerTest(
   fun get() {
     val list = findIdsToCleanup()
     val requestEntity = HttpEntity<String>(authHeader())
-    list?.map {
-      val result =
-        restTemplate.exchange<String>(
-          "/api/v1/address/edit/${it}",
-          HttpMethod.GET,
-          requestEntity,
-          String::class.java
-        )
-      assertNotNull(result)
-      assertNotNull(result)
-      assertEquals(HttpStatus.OK, result.statusCode)
-      assertNotNull(result.body)
-      val address: AddressDto = mapper.readValue(result.body!!)
-      assertNotNull(address)
-      assertEquals(address.name, "Test")
+    list?.map { item ->
+      restTemplate.exchange<String>(
+        "/api/v1/address/edit/${item}",
+        HttpMethod.GET,
+        requestEntity,
+        String::class.java
+      ).also {
+        assertNotNull(it)
+        assertEquals(HttpStatus.OK, it.statusCode)
+        assertNotNull(it.body)
+        val address: AddressDto = mapper.readValue(it.body!!)
+        assertNotNull(address)
+        assertEquals("Test", address.name)
+      }
     }
-
   }
 
   @Test
   @Order(5)
   fun export() {
     val requestEntity = HttpEntity<String>(authHeader())
-    val result =
-      restTemplate.exchange<String>("/api/v1/address/export", HttpMethod.GET, requestEntity, String::class.java)
-    assertNotNull(result)
-    assertEquals(HttpStatus.OK, result.statusCode)
-    assertNotNull(result.body)
+    restTemplate.exchange<String>(
+      "/api/v1/address/export",
+      HttpMethod.GET,
+      requestEntity,
+      String::class.java
+    ).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+      assertNotNull(it.body)
+    }
   }
 
   @Test
@@ -146,16 +152,16 @@ internal class AddressControllerTest(
   fun delete() {
     val requestEntity = HttpEntity<String>(authHeader())
     val list = findIdsToCleanup()
-    list?.map {
-      val result =
-        restTemplate.exchange<String>(
-          "/api/v1/address/${it}",
-          HttpMethod.DELETE,
-          requestEntity,
-          String::class.java
-        )
-      assertNotNull(result)
-      assertEquals(HttpStatus.OK, result.statusCode)
+    list?.map { item ->
+      restTemplate.exchange<String>(
+        "/api/v1/address/${item}",
+        HttpMethod.DELETE,
+        requestEntity,
+        String::class.java
+      ).also {
+        assertNotNull(it)
+        assertEquals(HttpStatus.OK, it.statusCode)
+      }
     }
   }
 }

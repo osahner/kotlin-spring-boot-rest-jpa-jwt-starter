@@ -21,7 +21,7 @@ data class AddressDto(
 
   var lastModfied: LocalDateTime?,
 
-  var options: Any?,
+  var options: Map<String, Any>?,
 
   var things: Collection<String>?
 )
