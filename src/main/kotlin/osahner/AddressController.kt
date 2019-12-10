@@ -21,8 +21,8 @@ class AddressController(private val addressService: AddressService) {
 
   @GetMapping(value = ["/edit/{id}"])
   @PreAuthorize("hasAuthority('ADMIN_USER')")
-  fun edit(@PathVariable id: Int): ResponseEntity<AddressDto> = addressService.findById(id).map { address ->
-    ResponseEntity.ok(address.toDTO())
+  fun edit(@PathVariable id: Int): ResponseEntity<AddressDto> = addressService.findById(id).map {
+    ResponseEntity.ok(it.toDTO())
   }.orElse(ResponseEntity.notFound().build())
 
   @PostMapping(value = ["/import"])
@@ -32,17 +32,19 @@ class AddressController(private val addressService: AddressService) {
   @GetMapping(value = ["/export"])
   @PreAuthorize("hasAnyAuthority('ADMIN_USER', 'STANDARD_USER')")
   fun export(): ResponseEntity<ByteArrayResource> {
-    val headers = HttpHeaders()
-    headers.add("Content-Disposition", "filename=\"Export-${Date().time}.xls\"")
+    val headers = HttpHeaders().apply {
+      add("Content-Disposition", "filename=\"Export-${Date().time}.xls\"")
+    }
     val bos = ByteArrayOutputStream()
-    val workbook = addressService.export()
-    bos.use { b ->
-      workbook.write(b)
+    bos.use {
+      addressService.export().apply {
+        write(it)
+      }
     }
     val resource = ByteArrayResource(bos.toByteArray())
     return ResponseEntity.ok()
       .headers(headers)
-      .contentLength(bos.size().toLong())
+      .contentLength(resource.contentLength())
       .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
       .body(resource)
   }

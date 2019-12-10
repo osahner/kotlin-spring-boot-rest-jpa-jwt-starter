@@ -12,17 +12,20 @@ import org.springframework.stereotype.Component
 class PoiExportService(
   @Qualifier("objectMapper") private val mapper: ObjectMapper
 ) {
-  fun buildExcelDocument(titel: String? = "Export", header: Collection<String>, result: Collection<Any>): Workbook {
-    val workbook = HSSFWorkbook()
-    val sheet = workbook.createSheet(titel)
+  fun buildExcelDocument(
+    titel: String? = "Export",
+    header: Collection<String>,
+    result: Collection<Any>
+  ): Workbook = HSSFWorkbook().apply {
+    val sheet = createSheet(titel)
     sheet.defaultColumnWidth = 40
 
-    val headerFont = workbook.createFont()
+    val headerFont = createFont()
     headerFont.bold = true
-    val headerCellStyle = workbook.createCellStyle()
+    val headerCellStyle = createCellStyle()
     headerCellStyle.setFont(headerFont)
     headerCellStyle.borderBottom = BorderStyle.MEDIUM
-    val createHelper = workbook.creationHelper
+    val createHelper = creationHelper
     var rowNo = 0
     var row = sheet.createRow(rowNo++)
 
@@ -48,7 +51,5 @@ class PoiExportService(
         }
       }
     }
-
-    return workbook
   }
 }

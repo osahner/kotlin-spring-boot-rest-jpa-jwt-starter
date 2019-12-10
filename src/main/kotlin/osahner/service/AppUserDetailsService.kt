@@ -18,7 +18,7 @@ class AppUserDetailsService(private val userRepository: UserRepository) : UserDe
       .orElseThrow { UsernameNotFoundException("The username $s doesn't exist") }
 
     val authorities = ArrayList<GrantedAuthority>()
-    user.roles!!.forEach { role -> authorities.add(SimpleGrantedAuthority(role.roleName)) }
+    user.roles!!.forEach { authorities.add(SimpleGrantedAuthority(it.roleName)) }
 
     return User(
       user.username,

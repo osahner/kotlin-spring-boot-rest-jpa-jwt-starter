@@ -21,10 +21,8 @@ class AddressService(
 
   fun delete(id: Int) = addressRepository.deleteById(id)
 
-  fun import(file: MultipartFile): Collection<Address> {
-    val adressen = csvImportService.importAddress(file)
-    return addressRepository.saveAll(adressen)
-  }
+  fun import(file: MultipartFile): Collection<Address> =
+    csvImportService.importAddress(file).also { addressRepository.saveAll(it) }
 
   fun export(): Workbook {
     val result = addressRepository.findAll().map { it.toDTO() }
