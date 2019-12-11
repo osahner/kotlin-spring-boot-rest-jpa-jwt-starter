@@ -11,14 +11,14 @@ import java.time.LocalDateTime
 @Component
 class CsvImportService {
   fun importAddress(file: MultipartFile): Collection<Address> =
-    BOMInputStream(file.inputStream).bufferedReader().use {
-      CsvToBeanBuilder<AddressImport>(it)
+    BOMInputStream(file.inputStream).bufferedReader().use { stream ->
+      CsvToBeanBuilder<AddressImport>(stream)
         .withType(AddressImport::class.java)
         .withIgnoreLeadingWhiteSpace(true)
         .withSeparator(';')
         .build()
         .parse()
-        .map { imp -> imp.toAddress() }
+        .map { it.toAddress() }
     }
 
   class AddressImport {

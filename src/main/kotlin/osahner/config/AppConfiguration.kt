@@ -13,7 +13,5 @@ class AppConfiguration(
   val securityProperties: SecurityProperties
 ) {
   @Bean
-  fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
-    return BCryptPasswordEncoder(securityProperties.strength)
-  }
+  fun bCryptPasswordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder(securityProperties.strength)
 }

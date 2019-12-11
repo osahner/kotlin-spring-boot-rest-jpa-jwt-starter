@@ -22,7 +22,6 @@ import osahner.security.JWTAuthenticationFilter
 import osahner.security.JWTAuthorizationFilter
 import osahner.service.AppUserDetailsService
 
-
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebConfig(
@@ -53,45 +52,39 @@ class WebConfig(
   }
 
   @Bean
-  fun authProvider(): DaoAuthenticationProvider {
-    val authProvider = DaoAuthenticationProvider()
-    authProvider.setUserDetailsService(userDetailsService)
-    authProvider.setPasswordEncoder(bCryptPasswordEncoder)
-    return authProvider
+  fun authProvider(): DaoAuthenticationProvider = DaoAuthenticationProvider().apply {
+    setUserDetailsService(userDetailsService)
+    setPasswordEncoder(bCryptPasswordEncoder)
   }
 
   @Bean
-  fun corsConfigurationSource(): CorsConfigurationSource {
-    val configuration = CorsConfiguration()
-    configuration.allowedOrigins = listOf("*")
-    configuration.allowedMethods = listOf("POST", "PUT", "DELETE", "GET", "OPTIONS", "HEAD")
-    configuration.allowedHeaders = listOf(
-      "Authorization",
-      "Content-Type",
-      "X-Requested-With",
-      "Accept",
-      "Origin",
-      "Access-Control-Request-Method",
-      "Access-Control-Request-Headers"
-    )
-    configuration.exposedHeaders =
-      listOf(
-        "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization", "Content-Disposition"
+  fun corsConfigurationSource(): CorsConfigurationSource = UrlBasedCorsConfigurationSource().also { cors ->
+    CorsConfiguration().apply {
+      allowedOrigins = listOf("*")
+      allowedMethods = listOf("POST", "PUT", "DELETE", "GET", "OPTIONS", "HEAD")
+      allowedHeaders = listOf(
+        "Authorization",
+        "Content-Type",
+        "X-Requested-With",
+        "Accept",
+        "Origin",
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers"
       )
-    configuration.allowCredentials = true
-    configuration.maxAge = 3600
-
-    val source = UrlBasedCorsConfigurationSource()
-    source.registerCorsConfiguration("/**", configuration)
-    return source
+      exposedHeaders =
+        listOf(
+          "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization", "Content-Disposition"
+        )
+      allowCredentials = true
+      maxAge = 3600
+      cors.registerCorsConfiguration("/**", this)
+    }
   }
 
   @Bean
   @Primary
-  fun objectMapper(builder: Jackson2ObjectMapperBuilder): ObjectMapper {
-    val objectMapper = builder.build<ObjectMapper>()
-    objectMapper.registerModule(JavaTimeModule())
-    objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-    return objectMapper
+  fun objectMapper(builder: Jackson2ObjectMapperBuilder): ObjectMapper = builder.build<ObjectMapper>().apply {
+    registerModule(JavaTimeModule())
+    configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
   }
 }
