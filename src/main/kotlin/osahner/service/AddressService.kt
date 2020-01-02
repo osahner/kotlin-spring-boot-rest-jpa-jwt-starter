@@ -24,7 +24,7 @@ class AddressService(
   fun import(file: MultipartFile): Collection<Address> =
     csvImportService.importAddress(file).also { addressRepository.saveAll(it) }
 
-  fun export(): Workbook {
+  fun toWorkbook(): Workbook {
     val result = addressRepository.findAll().map { it.toDTO() }
     return poiExportService.buildExcelDocument(
       "Export Address List",

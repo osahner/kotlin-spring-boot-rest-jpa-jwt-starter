@@ -37,8 +37,8 @@ class AddressController(private val addressService: AddressService) {
     }
     val bos = ByteArrayOutputStream()
     bos.use {
-      addressService.export().apply {
-        write(it)
+      addressService.toWorkbook().apply {
+        write(bos)
       }
     }
     val resource = ByteArrayResource(bos.toByteArray())
