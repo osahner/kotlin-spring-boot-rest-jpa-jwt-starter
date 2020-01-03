@@ -17,22 +17,26 @@ class PoiExportService(
     header: Collection<String>,
     result: Collection<Any>
   ): Workbook = HSSFWorkbook().apply {
-    val sheet = createSheet(titel)
-    sheet.defaultColumnWidth = 40
+    val sheet = createSheet(titel).apply {
+      defaultColumnWidth = 40
+    }
+    val headerFont = createFont().apply {
+      bold = true
+    }
+    val headerCellStyle = createCellStyle().apply {
+      setFont(headerFont)
+      borderBottom = BorderStyle.MEDIUM
+    }
 
-    val headerFont = createFont()
-    headerFont.bold = true
-    val headerCellStyle = createCellStyle()
-    headerCellStyle.setFont(headerFont)
-    headerCellStyle.borderBottom = BorderStyle.MEDIUM
     val createHelper = creationHelper
     var rowNo = 0
     var row = sheet.createRow(rowNo++)
 
     header.withIndex().forEach { (cellNo, it) ->
-      val cell = row.createCell(cellNo)
-      cell.setCellValue(createHelper.createRichTextString(it.capitalize()))
-      cell.setCellStyle(headerCellStyle)
+      row.createCell(cellNo).apply {
+        setCellValue(createHelper.createRichTextString(it.capitalize()))
+        setCellStyle(headerCellStyle)
+      }
     }
 
     result.forEach { entity ->
@@ -40,14 +44,15 @@ class PoiExportService(
       val list = header.map { map[it] }
       row = sheet.createRow(rowNo++)
       list.withIndex().forEach { (cellNo, entity) ->
-        val cell = row.createCell(cellNo)
-        when (entity) {
-          is Number -> cell.setCellValue(entity.toDouble())
-          is String -> cell.setCellValue(entity as String?)
-          is Boolean -> cell.setCellValue((entity as Boolean?)!!)
-          is Collection<*> -> cell.setCellValue(entity.joinToString("; "))
-          is Any -> cell.setCellValue(mapper.writeValueAsString(entity))
-          else -> cell.setCellValue("") // null -> empty text field
+        row.createCell(cellNo).apply {
+          when (entity) {
+            is Number -> setCellValue(entity.toDouble())
+            is String -> setCellValue(entity as String?)
+            is Boolean -> setCellValue((entity as Boolean?)!!)
+            is Collection<*> -> setCellValue(entity.joinToString("; "))
+            is Any -> setCellValue(mapper.writeValueAsString(entity))
+            else -> setCellValue("") // null -> empty text field
+          }
         }
       }
     }
