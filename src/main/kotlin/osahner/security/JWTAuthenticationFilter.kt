@@ -13,6 +13,7 @@ import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import osahner.add
 import osahner.config.SecurityProperties
 import java.io.IOException
 import java.util.*
@@ -63,7 +64,7 @@ class JWTAuthenticationFilter(
     val token = Jwts.builder()
       .setSubject((auth.principal as User).username)
       .claim("auth", claims)
-      .setExpiration(Date(System.currentTimeMillis() + securityProperties.expirationTime))
+      .setExpiration(Date().add(Calendar.DAY_OF_MONTH, securityProperties.expirationTime))
       .signWith(Keys.hmacShaKeyFor(securityProperties.secret.toByteArray()), SignatureAlgorithm.HS512)
       .compact()
     res.addHeader(securityProperties.headerString, securityProperties.tokenPrefix + token)

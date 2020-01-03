@@ -2,6 +2,7 @@ package osahner
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.util.*
 
 internal class ExtensionKtTest {
   private val listVal = listOf("test1", "test2")
@@ -56,6 +57,15 @@ internal class ExtensionKtTest {
 
     (null as String?).toMap().also {
       assertNull(it)
+    }
+  }
+
+  @Test
+  fun `date add`() {
+    val date = Date()
+    date.add(Calendar.DAY_OF_MONTH, 1).also {
+      assertNotNull(it)
+      assertEquals(date.time + 24*60*60*1000, it.time)
     }
   }
 }
