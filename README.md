@@ -22,7 +22,7 @@ FLUSH PRIVILEGES;
 
 * **compile & integration tests**
 ```sh
-mvn clean compile test
+mvn -Ddockerfile.skip clean compile test
 ```
 
 * **run app**

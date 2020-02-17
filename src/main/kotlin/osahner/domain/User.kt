@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "app_user")
 class User(
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue()
   val id: Int,
 
   @Column(name = "username")
