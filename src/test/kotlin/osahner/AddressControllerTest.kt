@@ -116,7 +116,7 @@ internal class AddressControllerTest(
     val requestEntity = HttpEntity<String>(authHeader())
     list?.map { item ->
       restTemplate.exchange<String>(
-        "/api/v1/address/edit/${item}",
+        "/api/v1/address/${item}",
         HttpMethod.GET,
         requestEntity,
         String::class.java
