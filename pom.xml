@@ -5,7 +5,7 @@
 
   <groupId>osahner</groupId>
   <artifactId>kotlin-spring-boot-rest-jpa-jwt-starter</artifactId>
-  <version>0.6.3-SNAPSHOT</version>
+  <version>0.6.4-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>kotlin spring-boot 2 rest/jpa/jwt starter</name>
@@ -22,9 +22,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <kotlin.version>1.3.61</kotlin.version>
-
-    <kotlin.version>1.3.61</kotlin.version>
+    <kotlin.version>1.3.70</kotlin.version>
 
     <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
     <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
