@@ -53,6 +53,10 @@ class AddressController(private val addressService: AddressService) {
   @PreAuthorize("hasAuthority('ADMIN_USER')")
   fun save(@RequestBody dto: AddressDto) = addressService.save(dto).toDTO()
 
+  @PutMapping(value = ["/{id}"])
+  @PreAuthorize("hasAuthority('ADMIN_USER')")
+  fun update(@PathVariable id: Int, @RequestBody dto: AddressDto) = addressService.save(dto).toDTO()
+
   @DeleteMapping(value = ["/{id}"])
   @PreAuthorize("hasAuthority('ADMIN_USER')")
   fun delete(@PathVariable id: Int) = addressService.delete(id)

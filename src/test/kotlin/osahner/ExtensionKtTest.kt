@@ -39,6 +39,10 @@ internal class ExtensionKtTest {
       assertNull(it)
     }
 
+    "".toStringArray().also {
+      assertNull(it)
+    }
+
     "this [ is no string array}".toStringArray().also {
       assertNull(it)
     }
@@ -51,11 +55,15 @@ internal class ExtensionKtTest {
       assertEquals(mapVal, it)
     }
 
-    "this [ is no string map}".toMap().also {
+    (null as String?).toMap().also {
       assertNull(it)
     }
 
-    (null as String?).toMap().also {
+    "".toStringArray().also {
+      assertNull(it)
+    }
+
+    "this [ is no string map}".toMap().also {
       assertNull(it)
     }
   }
@@ -65,7 +73,7 @@ internal class ExtensionKtTest {
     val date = Date()
     date.add(Calendar.DAY_OF_MONTH, 1).also {
       assertNotNull(it)
-      assertEquals(date.time + 24*60*60*1000, it.time)
+      assertEquals(date.time + 24 * 60 * 60 * 1000, it.time)
     }
   }
 }

@@ -44,7 +44,7 @@ internal class AddressControllerTest(
     val header = authHeader()
     val requestEntity = HttpEntity<String>(header)
     val result =
-      restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java)
+      restTemplate.exchange("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java)
     val list: Collection<AddressDto>? = mapper.readValue(result.body!!)
     return list?.filter { it.name.equals("Test") }?.map { it.id }
   }
@@ -54,7 +54,7 @@ internal class AddressControllerTest(
   fun save() {
     val header = authHeader()
     val payload = AddressDto(
-      id = 1,
+      id = null,
       name = "Test",
       street = "street",
       zip = "zip",
@@ -67,7 +67,7 @@ internal class AddressControllerTest(
       lastModfied = null
     )
     val requestEntity = HttpEntity(payload, header)
-    restTemplate.exchange<String>("/api/v1/address", HttpMethod.POST, requestEntity, String::class.java).also {
+    restTemplate.exchange("/api/v1/address", HttpMethod.POST, requestEntity, String::class.java).also {
       assertNotNull(it)
       assertEquals(HttpStatus.OK, it.statusCode)
     }
@@ -75,6 +75,31 @@ internal class AddressControllerTest(
 
   @Test
   @Order(2)
+  fun update() {
+    val list = findIdsToCleanup()
+    val header = authHeader()
+    val payload = AddressDto(
+      id = list?.first(),
+      name = "Test",
+      street = "updated",
+      zip = "updated",
+      city = "updated",
+      email = "updated@updated.com",
+      tel = null,
+      enabled = true,
+      things = listOf("a thing", "a second one", "updated"),
+      options = mapOf("option1" to "updated", "option2" to 42),
+      lastModfied = null
+    )
+    val requestEntity = HttpEntity(payload, header)
+    restTemplate.exchange("/api/v1/address", HttpMethod.POST, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.OK, it.statusCode)
+    }
+  }
+
+  @Test
+  @Order(3)
   fun import() {
     val header = authHeader()
     header.contentType = MediaType.MULTIPART_FORM_DATA
@@ -98,10 +123,10 @@ internal class AddressControllerTest(
   }
 
   @Test
-  @Order(3)
+  @Order(4)
   fun list() {
     val requestEntity = HttpEntity<String>(authHeader())
-    restTemplate.exchange<String>("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java).also {
+    restTemplate.exchange("/api/v1/address", HttpMethod.GET, requestEntity, String::class.java).also {
       assertNotNull(it)
       assertEquals(HttpStatus.OK, it.statusCode)
       val list: Collection<AddressDto>? = mapper.readValue(it.body!!)
@@ -110,12 +135,12 @@ internal class AddressControllerTest(
   }
 
   @Test
-  @Order(4)
+  @Order(5)
   fun get() {
     val list = findIdsToCleanup()
     val requestEntity = HttpEntity<String>(authHeader())
     list?.map { item ->
-      restTemplate.exchange<String>(
+      restTemplate.exchange(
         "/api/v1/address/${item}",
         HttpMethod.GET,
         requestEntity,
@@ -132,10 +157,10 @@ internal class AddressControllerTest(
   }
 
   @Test
-  @Order(5)
+  @Order(6)
   fun export() {
     val requestEntity = HttpEntity<String>(authHeader())
-    restTemplate.exchange<String>(
+    restTemplate.exchange(
       "/api/v1/address/export",
       HttpMethod.GET,
       requestEntity,
@@ -153,7 +178,7 @@ internal class AddressControllerTest(
     val requestEntity = HttpEntity<String>(authHeader())
     val list = findIdsToCleanup()
     list?.map { item ->
-      restTemplate.exchange<String>(
+      restTemplate.exchange(
         "/api/v1/address/${item}",
         HttpMethod.DELETE,
         requestEntity,

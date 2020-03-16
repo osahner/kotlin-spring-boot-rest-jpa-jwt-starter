@@ -51,7 +51,7 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
     }
     val requestEntity = HttpEntity<String>(headers)
 
-    restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+    restTemplate.exchange("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
       assertNotNull(it)
       assertEquals(HttpStatus.OK, it.statusCode)
       assertEquals(expected, it.body)
