@@ -122,7 +122,7 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
     headers["Authorization"] = "Bearer TOTALYWRONG"
     var requestEntity = HttpEntity<String>(headers)
 
-    restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+    restTemplate.exchange("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
       assertNotNull(it)
       assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
     }
@@ -130,7 +130,7 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
     headers["Authorization"] = "TOTALYWRONG"
     requestEntity = HttpEntity(headers)
 
-    restTemplate.exchange<String>("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+    restTemplate.exchange("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
       assertNotNull(it)
       assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
     }
