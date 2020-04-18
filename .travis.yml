@@ -1,7 +1,6 @@
 language: java
 dist: xenial
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+sudo: required
 jdk: oraclejdk11
 services:
   - docker
@@ -9,3 +8,5 @@ install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
   - mvn verify -P build
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
