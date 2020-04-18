@@ -1,0 +1,16 @@
+version: '2'
+services:
+  spring-boot-rest-jpa-jwt-starter:
+    image: osahner/kotlin-spring-boot-rest-jpa-jwt-starter
+    depends_on:
+      - local-mysql-database
+    ports:
+    - 8888:8888
+  local-mysql-database:
+    image: mysql/mysql-server:5.7
+    container_name: local-mysql-database
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: starterspringkotlin
+      MYSQL_DATABASE: starterspringkotlin

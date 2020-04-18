@@ -11,47 +11,28 @@
 * JPA mysql / OpenCVS / POI
 * Travis CI / codecov
 
-### Install & play
-
-* **create a mysql db**
-```sql
-CREATE DATABASE starterspringkotlin;
-GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';
-FLUSH PRIVILEGES;
-```
-
 * **compile & integration tests**
 ```sh
-mvn -Ddockerfile.skip clean compile test
+mvn clean verify -P build
 ```
 
 * **run app**
 ```sh
-mvn spring-boot:run
+docker-compose up
 ```
 
 * **some CLI tests**
 ```sh
-curl http://localhost:4080/starter-test/api/v1/test
+curl http://localhost:8888/starter-test/api/v1/test
 # result: Pong!%
 
-curl http://localhost:4080/starter-test/api/v1/restricted
+curl http://localhost:8888/starter-test/api/v1/restricted
 # result {"timestamp":"***","status":403,"error":"Forbidden","message":"Access Denied","path":"/starter-test/api/v1/restricted"}%
 
-curl -s -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.doe", "password": "test1234"}' http://localhost:4080/starter-test/login | grep Authorization
+curl -s -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.doe", "password": "test1234"}' http://localhost:8888/starter-test/login | grep Authorization
 # result: Authorization: Bearer ***
 
-curl  -H "Authorization: Bearer ***"  http://localhost:4080/starter-test/api/v1/restricted
-# result: Pong!%
-```
-
-### Docker
-
-```sh
-mvn clean package -Dmaven.test.skip=true
-docker run -it -p 8888:8888 --rm osahner/kotlin-spring-boot-rest-jpa-jwt-starter:0.6.3-SNAPSHOT
-
-curl http://localhost:8888/starter-test/api/v1/test
+curl  -H "Authorization: Bearer ***"  http://localhost:8888/starter-test/api/v1/restricted
 # result: Pong!%
 ```
 
@@ -62,6 +43,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * Found an error -> please tell me.
 
 ### Changelog
+* _v0.6.5-SNAPSHOT_: spring-boot 2.2.6, kotlin 1.3.72, switched to io.fabric8.docker-maven-plugin
 * _v0.6.4-SNAPSHOT_: spring-boot 2.2.4, kotlin 1.3.70, fix REST API naming convention
 * _v0.6.1-SNAPSHOT_: add Docker
 * _v0.6.0-SNAPSHOT_: update spring-boot 2.2.0.RELEASE, add address controller with csv import an xls export

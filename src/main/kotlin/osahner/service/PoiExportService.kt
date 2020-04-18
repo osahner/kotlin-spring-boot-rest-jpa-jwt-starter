@@ -16,6 +16,12 @@ class PoiExportService(
     titel: String? = "Export",
     header: Collection<String>,
     result: Collection<Any>
+  ) = buildExcelDocument(titel, header.map { it to it.capitalize() }.toMap(), result)
+
+  fun buildExcelDocument(
+    titel: String? = "Export",
+    header: Map<String, String>,
+    result: Collection<Any>
   ): Workbook = HSSFWorkbook().apply {
     val sheet = createSheet(titel).apply {
       defaultColumnWidth = 40
@@ -32,16 +38,16 @@ class PoiExportService(
     var rowNo = 0
     var row = sheet.createRow(rowNo++)
 
-    header.withIndex().forEach { (cellNo, it) ->
+    header.values.withIndex().forEach { (cellNo, it) ->
       row.createCell(cellNo).apply {
-        setCellValue(createHelper.createRichTextString(it.capitalize()))
+        setCellValue(createHelper.createRichTextString(it))
         setCellStyle(headerCellStyle)
       }
     }
 
     result.forEach { entity ->
       val map = mapper.convertValue<Map<String, Any>>(entity)
-      val list = header.map { map[it] }
+      val list = header.keys.map { map[it] }
       row = sheet.createRow(rowNo++)
       list.withIndex().forEach { (cellNo, entity) ->
         row.createCell(cellNo).apply {

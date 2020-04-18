@@ -4,11 +4,8 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 jdk: oraclejdk11
 services:
-  - mysql
-sudo: required
-before_install:
-  - sudo mysql_upgrade --force
-  - sudo mysql -e "CREATE DATABASE starterspringkotlin;GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';FLUSH PRIVILEGES;"
-  - sudo service mysql restart
+  - docker
 install:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Ddockerfile.skip -B -V
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script:
+  - mvn verify -P build

@@ -37,6 +37,9 @@ spring:
     properties:
       hibernate.show_sql: true
   datasource:
+    password: starterspringkotlin
+    username: starterspringkotlin
+    url: jdbc:mysql://localhost:3307/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
     # init app_user, app_role
     initialization-mode: always
     continue-on-error: true
@@ -56,9 +59,9 @@ spring:
 spring:
   profiles: docker
   datasource:
-    password: starterspringkotlin
+    password: root
     username: starterspringkotlin
-    url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://local-mysql-database:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
 server:
   port: 8888
   servlet:
