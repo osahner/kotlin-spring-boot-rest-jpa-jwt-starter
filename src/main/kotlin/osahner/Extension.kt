@@ -13,30 +13,29 @@ fun Any?.writeValueAsString(): String? {
   }
 }
 
-fun String?.toStringArray(): Collection<String>? {
-  return if (this != null && this.isNotEmpty()) {
+fun String?.toStringArray(): Collection<String>? = when {
+  (this != null && this.isNotEmpty()) -> {
     val mapper = jacksonObjectMapper()
-    return try {
-      mapper.readValue(this)
+    try {
+      mapper.readValue<Collection<String>?>(this)
     } catch (e: Exception) {
       null
     }
-  } else {
-    null
   }
+  else -> null
 }
 
-fun String?.toMap(): Map<String, Any>? {
-  return if (this != null && this.isNotEmpty()) {
+
+fun String?.toMap(): Map<String, Any>? = when {
+  (this != null && this.isNotEmpty()) -> {
     val mapper = jacksonObjectMapper()
-    return try {
-      mapper.readValue(this)
+    try {
+      mapper.readValue<Map<String, Any>?>(this)
     } catch (e: Exception) {
       null
     }
-  } else {
-    null
   }
+  else -> null
 }
 
 // kudos to https://gist.github.com/maiconhellmann/796debb4007139d50e39f139be08811c

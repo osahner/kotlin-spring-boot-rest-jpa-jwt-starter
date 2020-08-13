@@ -40,11 +40,9 @@ class AddressController(private val addressService: AddressService) {
   }
 
   @GetMapping(value = ["", "/"])
-  @PreAuthorize("hasAnyAuthority('ADMIN_USER', 'STANDARD_USER')")
   fun list() = addressService.list().map { it.toDTO() }
 
   @GetMapping(value = ["/{id}"])
-  @PreAuthorize("hasAuthority('ADMIN_USER')")
   fun edit(@PathVariable id: Int): ResponseEntity<AddressDto> = addressService.findById(id).map {
     ResponseEntity.ok(it.toDTO())
   }.orElse(ResponseEntity.notFound().build())
