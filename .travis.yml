@@ -1,8 +1,8 @@
 language: java
-dist: xenial
+dist: bionic
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-jdk: oraclejdk11
+jdk: openjdk11
 services:
   - mysql
 sudo: required
