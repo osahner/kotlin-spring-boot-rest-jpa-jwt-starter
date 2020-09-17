@@ -5,17 +5,22 @@ import org.apache.poi.hssf.usermodel.HSSFDataFormat
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.Workbook
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
+
 @Component
 class PoiExportService(
-  private val mapper: ObjectMapper
 ) {
+  private val mapper = Jackson2ObjectMapperBuilder().build<ObjectMapper>()
+  private val dotRegex = Regex("\\.")
+
   fun buildExcelDocument(
     titel: String? = "Export",
     header: Collection<String>,
@@ -54,7 +59,7 @@ class PoiExportService(
 
     result.forEach { entity ->
       val list = header.keys.map {
-        readInstanceProperty(entity, it)
+        readDeepInstanceProperty(entity, it)
       }
       row = sheet.createRow(rowNo++)
       list.withIndex().forEach { (cellNo, cell) ->
@@ -64,12 +69,15 @@ class PoiExportService(
               setCellValue(Date.from(cell.atStartOfDay(ZoneId.systemDefault()).toInstant()) as Date)
               setCellStyle(dateStyle)
             }
+            is LocalDateTime -> {
+              setCellValue(Date.from(cell.atZone(ZoneId.systemDefault()).toInstant()) as Date)
+              setCellStyle(dateStyle)
+            }
             is Number -> setCellValue(cell.toDouble())
             is String -> setCellValue(cell as String?)
             is Boolean -> setCellValue((cell as Boolean?)!!)
             is Collection<*> -> setCellValue(cell.joinToString("; "))
-            is Any -> setCellValue(mapper.writeValueAsString(cell))
-            else -> setCellValue("") // null -> empty text field
+            else -> setCellValue(mapper.writeValueAsString(cell))
           }
         }
       }
@@ -77,9 +85,24 @@ class PoiExportService(
   }
 
   @Suppress("UNCHECKED_CAST")
-  private fun readInstanceProperty(instance: Any, propertyName: String): Any? {
+  private fun readDeepInstanceProperty(instance: Any, propertyName: String): Any {
+    var prob = propertyName
+    var obj = instance
+    if (dotRegex.containsMatchIn(propertyName)) {
+      do {
+        val (o, p) = prob.split(dotRegex, 2)
+        prob = p
+        obj = readInstanceProperty(obj, o)
+      } while (dotRegex.matches(prob))
+    }
+    return readInstanceProperty(obj, prob)
+  }
+
+  @Suppress("UNCHECKED_CAST")
+  private fun readInstanceProperty(instance: Any, propertyName: String): Any {
     return try {
-      (instance::class.memberProperties.first { it.name == propertyName } as KProperty1<Any, *>).get(instance)
+      (instance::class.memberProperties
+        .first { it.name == propertyName } as KProperty1<Any, *>).get(instance)!!
     } catch (e: Exception) {
       ""
     }
