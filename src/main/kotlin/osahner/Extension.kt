@@ -4,36 +4,26 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.util.*
 
-fun Any?.writeValueAsString(): String? {
-  return if (this != null) {
-    val mapper = jacksonObjectMapper()
-    mapper.writeValueAsString(this)
-  } else {
-    null
-  }
+fun Any?.writeValueAsString(): String? = when {
+  (this != null) -> jacksonObjectMapper().writeValueAsString(this)
+  else -> null
 }
 
 fun String?.toStringArray(): Collection<String>? = when {
-  (this != null && this.isNotEmpty()) -> {
-    val mapper = jacksonObjectMapper()
-    try {
-      mapper.readValue<Collection<String>?>(this)
-    } catch (e: Exception) {
-      null
-    }
+  (this != null && this.isNotEmpty()) -> try {
+    jacksonObjectMapper().readValue(this)
+  } catch (e: Exception) {
+    null
   }
   else -> null
 }
 
 
 fun String?.toMap(): Map<String, Any>? = when {
-  (this != null && this.isNotEmpty()) -> {
-    val mapper = jacksonObjectMapper()
-    try {
-      mapper.readValue<Map<String, Any>?>(this)
-    } catch (e: Exception) {
-      null
-    }
+  (this != null && this.isNotEmpty()) -> try {
+    jacksonObjectMapper().readValue(this)
+  } catch (e: Exception) {
+    null
   }
   else -> null
 }
