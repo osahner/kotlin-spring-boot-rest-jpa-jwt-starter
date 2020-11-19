@@ -5,6 +5,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       ddl-auto: update
+      use-new-id-generator-mappings: false
     database-platform: org.hibernate.dialect.MySQL57Dialect
     open-in-view: true
     properties:
@@ -14,7 +15,6 @@ spring:
     password: starterspringkotlin
     username: starterspringkotlin
     url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
-    # init app_user, app_role
     initialization-mode: always
     continue-on-error: true
 server:
@@ -30,38 +30,39 @@ jwt-security:
   expiration-time: 365
 ---
 spring:
-  profiles: test
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate.show_sql: true
+  datasource:
+    initialization-mode: always
+    continue-on-error: true
+  config:
+    activate:
+      on-profile: test
+---
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.show_sql: true
+  datasource:
+    initialization-mode: always
+    continue-on-error: false
+  config:
+    activate:
+      on-profile: development
+---
+spring:
   datasource:
     password: starterspringkotlin
     username: starterspringkotlin
-    url: jdbc:mysql://localhost:3307/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
-    # init app_user, app_role
-    initialization-mode: always
-    continue-on-error: true
----
-spring:
-  profiles: development
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate.show_sql: true
-  datasource:
-    # init app_user, app_role
-    initialization-mode: always
-    continue-on-error: true
----
-spring:
-  profiles: docker
-  datasource:
-    password: root
-    username: starterspringkotlin
-    url: jdbc:mysql://local-mysql-database:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+  config:
+    activate:
+      on-profile: docker
 server:
   port: 8888
   servlet:

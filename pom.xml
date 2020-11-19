@@ -1,47 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>osahner</groupId>
-  <artifactId>kotlin-spring-boot-rest-jpa-jwt-starter</artifactId>
-  <version>0.6.5-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>kotlin spring-boot 2 rest/jpa/jwt starter</name>
-
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.2.6.RELEASE</version>
-    <relativePath/>
+    <version>2.4.0</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
+
+  <groupId>osahner</groupId>
+  <artifactId>kotlin-spring-boot-rest-jpa-jwt-starter</artifactId>
+  <version>0.7.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>kotlin spring-boot 2 rest/jpa/jwt starter</name>
 
   <properties>
     <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <java.version>11</java.version>
-
-    <jar_file>${project.basedir}/target/${project.build.finalName}.jar</jar_file>
-    <docker.image.mysql.database>starterspringkotlin</docker.image.mysql.database>
-    <docker.image.mysql.root.password>root</docker.image.mysql.root.password>
-    <docker.image.mysql.user>starterspringkotlin</docker.image.mysql.user>
-    <docker.image.mysql.password>starterspringkotlin</docker.image.mysql.password>
-
-    <kotlin.version>1.3.72</kotlin.version>
-    <kotlinx-coroutines.version>1.3.5</kotlinx-coroutines.version>
+    <kotlin.version>1.4.10</kotlin.version>
 
     <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
-    <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
-    <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
-    <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
-    <jjwt.version>0.11.1</jjwt.version>
+    <jjwt.version>0.11.2</jjwt.version>
     <poi.version>4.1.2</poi.version>
     <jasypt.version>1.9.3</jasypt.version>
-    <opencsv.version>5.1</opencsv.version>
-    <commons-io.version>2.6</commons-io.version>
+    <opencsv.version>5.3</opencsv.version>
+    <commons-io.version>2.8.0</commons-io.version>
   </properties>
 
   <dependencies>
@@ -101,14 +91,6 @@
       <artifactId>jackson-module-kotlin</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-parameter-names</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jdk8</artifactId>
-    </dependency>
-    <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <scope>runtime</scope>
@@ -159,65 +141,6 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>build</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <version>${docker-maven-plugin.version}</version>
-            <configuration>
-              <verbose>true</verbose>
-              <images>
-                <image>
-                  <name>mysql:5.7</name>
-                  <alias>local-mysql-database</alias>
-                  <run>
-                    <env>
-                      <MYSQL_ROOT_PASSWORD>${docker.image.mysql.root.password}</MYSQL_ROOT_PASSWORD>
-                      <MYSQL_DATABASE>${docker.image.mysql.database}</MYSQL_DATABASE>
-                      <MYSQL_USER>${docker.image.mysql.user}</MYSQL_USER>
-                      <MYSQL_PASSWORD>${docker.image.mysql.password}</MYSQL_PASSWORD>
-                    </env>
-                    <ports>
-                      <port>3307:3306</port>
-                    </ports>
-                    <wait>
-                      <log>MySQL init process done. Ready for start up.</log>
-                      <time>60000</time>
-                    </wait>
-                  </run>
-                </image>
-              </images>
-            </configuration>
-            <executions>
-              <execution>
-                <id>start</id>
-                <phase>initialize</phase>
-                <goals>
-                  <goal>start</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>stop</id>
-                <phase>post-integration-test</phase>
-                <goals>
-                  <goal>stop</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-  </profiles>
-
   <build>
     <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
     <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
@@ -255,15 +178,6 @@
             <SPRING_PROFILES_ACTIVE>test</SPRING_PROFILES_ACTIVE>
           </systemPropertyVariables>
         </configuration>
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <phase>integration-test</phase>
-          </execution>
-        </executions>
         <dependencies>
           <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -343,73 +257,85 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>${docker-maven-plugin.version}</version>
-        <configuration>
-          <verbose>true</verbose>
-          <images>
-            <image>
-              <name>%g/%a:%t</name>
-              <build>
-                <contextDir>${project.basedir}</contextDir>
-                <assembly>
-                  <descriptorRef>artifact</descriptorRef>
-                </assembly>
-                <tags>
-                  <tag>${project.version}</tag>
-                </tags>
-                <labels>
-                  <maven.project.groupId>${project.groupId}</maven.project.groupId>
-                  <maven.project.artifactId>${project.artifactId}</maven.project.artifactId>
-                  <maven.project.version>${project.version}</maven.project.version>
-                </labels>
-              </build>
-            </image>
-          </images>
-        </configuration>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <version>${dockerfile-maven.version}</version>
         <executions>
           <execution>
-            <id>docker-clean</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>remove</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>docker-build</id>
+            <id>build-image</id>
             <goals>
               <goal>build</goal>
             </goals>
+            <phase>package</phase>
+            <configuration>
+              <buildArgs>
+                <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                <SPRING_BOOT_VERSION>${project.parent.version}</SPRING_BOOT_VERSION>
+              </buildArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>tag-image-latest</id>
+            <goals>
+              <goal>tag</goal>
+            </goals>
+            <configuration>
+              <tag>latest</tag>
+            </configuration>
+          </execution>
+          <execution>
+            <id>tag-image-version</id>
+            <goals>
+              <goal>tag</goal>
+            </goals>
+            <configuration>
+              <tag>${project.version}</tag>
+            </configuration>
+          </execution>
+          <execution>
+            <id>push-image-latest</id>
+            <goals>
+              <goal>push</goal>
+            </goals>
+            <phase>deploy</phase>
+            <configuration>
+              <tag>latest</tag>
+            </configuration>
+          </execution>
+          <execution>
+            <id>push-image-version</id>
+            <goals>
+              <goal>push</goal>
+            </goals>
+            <phase>deploy</phase>
+            <configuration>
+              <tag>${project.version}</tag>
+            </configuration>
           </execution>
         </executions>
+        <configuration>
+          <repository>osahner/kotlin-spring-boot-rest-jpa-jwt-starter</repository>
+          <noCache/>
+          <verbose/>
+        </configuration>
       </plugin>
     </plugins>
   </build>
 
   <repositories>
     <repository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
+      <id>repository.spring.release</id>
+      <name>Spring GA Repository</name>
+      <url>https://repo.spring.io/release</url>
       <snapshots>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
       </snapshots>
     </repository>
     <repository>
-      <id>spring-libs-snapshot</id>
-      <name>Spring Snapshot Repository</name>
-      <url>http://repo.spring.io/libs-snapshot</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
+      <id>bintray</id>
+      <name>jfrog bintray</name>
+      <url>https://dl.bintray.com/kittinunf/maven</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
@@ -418,17 +344,9 @@
 
   <pluginRepositories>
     <pluginRepository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </pluginRepository>
-    <pluginRepository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
+      <id>repository.spring.release</id>
+      <name>Spring GA Repository</name>
+      <url>https://repo.spring.io/release</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>

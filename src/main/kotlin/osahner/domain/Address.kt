@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.Lob
 
 @Entity
 data class Address(
@@ -31,9 +32,9 @@ data class Address(
 
   var lastModified: LocalDateTime?,
 
-  var options: String?,
+  @Lob var options: String?,
 
-  var things: String?
+  @Lob var things: String?
 ) {
   fun toDTO() = AddressDto(
     id = this.id,

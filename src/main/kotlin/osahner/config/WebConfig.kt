@@ -80,11 +80,4 @@ class WebConfig(
       cors.registerCorsConfiguration("/**", this)
     }
   }
-
-  @Bean
-  @Primary
-  fun objectMapper(builder: Jackson2ObjectMapperBuilder): ObjectMapper = builder.build<ObjectMapper>().apply {
-    registerModule(JavaTimeModule())
-    configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-  }
 }
