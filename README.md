@@ -5,7 +5,7 @@
 
 
 **Features**:
-* spring-boot 2.3.x.RELEASE
+* spring-boot 2.4.x
 * kotlin 1.4.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql / OpenCVS / POI
@@ -62,6 +62,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * Found an error -> please tell me.
 
 ### Changelog
+* _v0.7.0-SNAPSHOT_: spring-boot 2.4.0
 * _v0.6.6-SNAPSHOT_: spring-boot 2.3.4, kotlin 1.4.10, update docker build
 * _v0.6.5-SNAPSHOT_: spring-boot 2.3.2, kotlin 1.3.72, fix JPA uneccessary creation of hibernate_sequence and join tables without primary key, enhanced PoiExportService
 * _v0.6.4-SNAPSHOT_: spring-boot 2.2.4, kotlin 1.3.70, fix REST API naming convention

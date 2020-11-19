@@ -30,7 +30,6 @@ jwt-security:
   expiration-time: 365
 ---
 spring:
-  profiles: test
   jpa:
     hibernate:
       ddl-auto: update
@@ -39,9 +38,11 @@ spring:
   datasource:
     initialization-mode: always
     continue-on-error: true
+  config:
+    activate:
+      on-profile: test
 ---
 spring:
-  profiles: development
   jpa:
     hibernate:
       ddl-auto: update
@@ -50,13 +51,18 @@ spring:
   datasource:
     initialization-mode: always
     continue-on-error: false
+  config:
+    activate:
+      on-profile: development
 ---
 spring:
-  profiles: docker
   datasource:
     password: starterspringkotlin
     username: starterspringkotlin
     url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+  config:
+    activate:
+      on-profile: docker
 server:
   port: 8888
   servlet:

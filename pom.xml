@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>osahner</groupId>
-  <artifactId>kotlin-spring-boot-rest-jpa-jwt-starter</artifactId>
-  <version>0.6.6-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>kotlin spring-boot 2 rest/jpa/jwt starter</name>
-
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.4.RELEASE</version>
-    <relativePath/>
+    <version>2.4.0</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
+
+  <groupId>osahner</groupId>
+  <artifactId>kotlin-spring-boot-rest-jpa-jwt-starter</artifactId>
+  <version>0.7.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>kotlin spring-boot 2 rest/jpa/jwt starter</name>
 
   <properties>
     <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+    <java.version>11</java.version>
     <kotlin.version>1.4.10</kotlin.version>
 
     <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
@@ -30,7 +30,7 @@
     <jjwt.version>0.11.2</jjwt.version>
     <poi.version>4.1.2</poi.version>
     <jasypt.version>1.9.3</jasypt.version>
-    <opencsv.version>5.2</opencsv.version>
+    <opencsv.version>5.3</opencsv.version>
     <commons-io.version>2.8.0</commons-io.version>
   </properties>
 
@@ -271,7 +271,7 @@
             <configuration>
               <buildArgs>
                 <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                <SPRING_BOOT_VERSION>${spring-boot.version}</SPRING_BOOT_VERSION>
+                <SPRING_BOOT_VERSION>${project.parent.version}</SPRING_BOOT_VERSION>
               </buildArgs>
             </configuration>
           </execution>
@@ -322,7 +322,6 @@
       </plugin>
     </plugins>
   </build>
-
 
   <repositories>
     <repository>
