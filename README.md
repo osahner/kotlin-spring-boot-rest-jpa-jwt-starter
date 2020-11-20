@@ -1,7 +1,7 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
 [![Build Status](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=develop)](https://travis-ci.org/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
-[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/develop/master/)
+[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/)
 
 
 **Features**:
@@ -62,7 +62,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * Found an error -> please tell me.
 
 ### Changelog
-* _v0.7.0-SNAPSHOT_: spring-boot 2.4.0
+* _v0.7.1-SNAPSHOT_: spring-boot 2.4.0
 * _v0.6.6-SNAPSHOT_: spring-boot 2.3.4, kotlin 1.4.10, update docker build
 * _v0.6.5-SNAPSHOT_: spring-boot 2.3.2, kotlin 1.3.72, fix JPA uneccessary creation of hibernate_sequence and join tables without primary key, enhanced PoiExportService
 * _v0.6.4-SNAPSHOT_: spring-boot 2.2.4, kotlin 1.3.70, fix REST API naming convention

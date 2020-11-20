@@ -13,4 +13,4 @@ USER spring
 
 ADD target/${JAR_FILE} /opt/app/api.jar
 ENTRYPOINT ["java", "-Djava.awt.headless=true", "-Dfile.encoding=UTF-8", "-Dspring.profiles.active=docker", "-jar", "/opt/app/api.jar"]
-EXPOSE 4080/tcp
+EXPOSE 8888/tcp
