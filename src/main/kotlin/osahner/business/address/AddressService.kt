@@ -1,16 +1,15 @@
-package osahner.service
+package osahner.business.address
 
 import org.apache.poi.ss.usermodel.Workbook
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
-import osahner.domain.Address
-import osahner.dto.AddressDto
+import osahner.service.PoiExportService
 import java.util.*
 
 @Component
 class AddressService(
   private val addressRepository: AddressRepository,
-  private val csvImportService: CsvImportService,
+  private val addressImportService: AddressImportService,
   private val poiExportService: PoiExportService
 ) {
   fun list(): Collection<Address> = addressRepository.findAll()
@@ -22,7 +21,7 @@ class AddressService(
   fun delete(id: Int) = addressRepository.deleteById(id)
 
   fun import(file: MultipartFile): Collection<Address> =
-    csvImportService.importAddress(file).also { addressRepository.saveAll(it) }
+    addressImportService.importAddress(file).also { addressRepository.saveAll(it) }
 
   fun toWorkbook(): Workbook {
     val result = addressRepository.findAll().map { it.toDTO() }

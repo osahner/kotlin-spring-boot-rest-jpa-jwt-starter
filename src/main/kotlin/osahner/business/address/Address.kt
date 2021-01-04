@@ -1,6 +1,5 @@
-package osahner.domain
+package osahner.business.address
 
-import osahner.dto.AddressDto
 import osahner.toMap
 import osahner.toStringArray
 import osahner.writeValueAsString

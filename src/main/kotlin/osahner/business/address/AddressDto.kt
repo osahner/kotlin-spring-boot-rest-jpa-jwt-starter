@@ -1,4 +1,4 @@
-package osahner.dto
+package osahner.business.address
 
 import java.time.LocalDateTime
 
@@ -25,3 +25,4 @@ data class AddressDto(
 
   var things: Collection<String>?
 )
+

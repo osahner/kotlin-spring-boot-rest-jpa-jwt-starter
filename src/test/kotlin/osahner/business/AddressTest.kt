@@ -1,4 +1,4 @@
-package osahner
+package osahner.business
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -20,7 +20,7 @@ import org.springframework.http.*
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.util.LinkedMultiValueMap
-import osahner.dto.AddressDto
+import osahner.business.address.AddressDto
 import java.io.ByteArrayInputStream
 
 
@@ -28,7 +28,7 @@ import java.io.ByteArrayInputStream
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @ActiveProfiles("test")
-internal class AddressControllerTest(
+internal class AddressTest(
   @Autowired private val restTemplate: TestRestTemplate,
   @Autowired private val mapper: ObjectMapper
 ) {

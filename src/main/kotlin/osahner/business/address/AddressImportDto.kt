@@ -1,7 +1,6 @@
-package osahner.dto
+package osahner.business.address
 
 import com.opencsv.bean.CsvBindByName
-import osahner.domain.Address
 import java.time.LocalDateTime
 
 class AddressImportDto {

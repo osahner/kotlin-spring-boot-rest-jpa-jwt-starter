@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.*
 
-internal class ExtensionKtTest {
+internal class ExtensionTest {
   private val listVal = listOf("test1", "test2")
   private val listValAsString = """["test1","test2"]"""
   private val mapVal = mapOf("stringProperty" to "theProperty", "numberProperty" to 42)
