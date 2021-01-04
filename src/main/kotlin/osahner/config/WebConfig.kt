@@ -1,13 +1,8 @@
 package osahner.config
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Primary
 import org.springframework.http.HttpMethod
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -71,11 +66,12 @@ class WebConfig(
         "Access-Control-Request-Method",
         "Access-Control-Request-Headers"
       )
-      exposedHeaders =
-        listOf(
-          "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization", "Content-Disposition"
-        )
-      allowCredentials = true
+      exposedHeaders = listOf(
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+        "Authorization",
+        "Content-Disposition"
+      )
       maxAge = 3600
       cors.registerCorsConfiguration("/**", this)
     }

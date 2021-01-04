@@ -16,8 +16,7 @@ import kotlin.reflect.full.memberProperties
 
 
 @Component
-class PoiExportService(
-) {
+class PoiExportService {
   private val mapper = Jackson2ObjectMapperBuilder().build<ObjectMapper>()
   private val dotRegex = Regex("\\.")
 
