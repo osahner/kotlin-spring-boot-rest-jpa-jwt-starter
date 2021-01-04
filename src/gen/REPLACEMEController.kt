@@ -1,4 +1,4 @@
-package osahner.business.replaceme
+package osahner.api.replaceme
 
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders

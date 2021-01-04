@@ -1,4 +1,4 @@
-package osahner.business.address
+package osahner.api.address
 
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders

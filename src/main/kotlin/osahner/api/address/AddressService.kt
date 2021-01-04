@@ -1,4 +1,4 @@
-package osahner.business.address
+package osahner.api.address
 
 import org.apache.poi.ss.usermodel.Workbook
 import org.springframework.stereotype.Component

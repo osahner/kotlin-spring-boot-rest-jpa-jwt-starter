@@ -1,4 +1,4 @@
-package osahner.business.replaceme
+package osahner.api.replaceme
 
 import org.apache.poi.ss.usermodel.Workbook
 import org.springframework.stereotype.Component

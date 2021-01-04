@@ -1,4 +1,4 @@
-package osahner.business
+package osahner.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -20,7 +20,7 @@ import org.springframework.http.*
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.util.LinkedMultiValueMap
-import osahner.business.address.AddressDto
+import osahner.api.address.AddressDto
 import java.io.ByteArrayInputStream
 
 

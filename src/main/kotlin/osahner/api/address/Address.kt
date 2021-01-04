@@ -1,4 +1,4 @@
-package osahner.business.address
+package osahner.api.address
 
 import osahner.toMap
 import osahner.toStringArray

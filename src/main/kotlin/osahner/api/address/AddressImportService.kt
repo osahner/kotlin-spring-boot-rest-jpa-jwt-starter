@@ -1,4 +1,4 @@
-package osahner.business.address
+package osahner.api.address
 
 import com.opencsv.bean.CsvToBeanBuilder
 import org.apache.commons.io.input.BOMInputStream

@@ -1,4 +1,4 @@
-package osahner.business.replaceme
+package osahner.api.replaceme
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
