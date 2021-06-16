@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused")
+
 package osahner.domain
 
 import javax.persistence.*
@@ -6,12 +8,12 @@ import javax.persistence.*
 @Table(name = "app_role")
 class Role(
   @Id
-  @GeneratedValue()
+  @GeneratedValue
   val id: Int,
 
-  @Column(name = "role_name")
+  @Column(name = "role_name", updatable = false)
   var roleName: String? = null,
 
-  @Column(name = "description")
+  @Column(name = "description", updatable = false)
   var description: String? = null
 )
