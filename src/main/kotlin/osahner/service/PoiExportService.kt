@@ -24,7 +24,7 @@ class PoiExportService {
     titel: String? = "Export",
     header: Collection<String>,
     result: Collection<Any>
-  ) = buildExcelDocument(titel, header.map { it to it.capitalize() }.toMap(), result)
+  ) = buildExcelDocument(titel, header.associateWith { it.replaceFirstChar { c -> c.titlecase() } }, result)
 
   fun buildExcelDocument(
     titel: String? = "Export",

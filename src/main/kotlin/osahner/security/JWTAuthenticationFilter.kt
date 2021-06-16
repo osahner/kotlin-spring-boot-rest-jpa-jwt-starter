@@ -10,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import osahner.add
@@ -42,7 +41,7 @@ class JWTAuthenticationFilter(
         UsernamePasswordAuthenticationToken(
           creds.username,
           creds.password,
-          ArrayList<GrantedAuthority>()
+          ArrayList()
         )
       )
     } catch (e: IOException) {
@@ -57,13 +56,14 @@ class JWTAuthenticationFilter(
     chain: FilterChain?,
     auth: Authentication
   ) {
-    val claims: MutableList<String> = mutableListOf()
-    if (auth.authorities.isNotEmpty())
-      auth.authorities.forEach { a -> claims.add(a.toString()) }
+    val authClaims: MutableList<String> = mutableListOf()
+    auth.authorities?.let {
+      it.forEach { claim -> authClaims.add(claim.toString()) }
+    }
 
     val token = Jwts.builder()
       .setSubject((auth.principal as User).username)
-      .claim("auth", claims)
+      .claim("auth", authClaims)
       .setExpiration(Date().add(Calendar.DAY_OF_MONTH, securityProperties.expirationTime))
       .signWith(Keys.hmacShaKeyFor(securityProperties.secret.toByteArray()), SignatureAlgorithm.HS512)
       .compact()
