@@ -21,17 +21,17 @@ FLUSH PRIVILEGES;
 ```
 
 * **compile & integration tests**
-```sh
+```shell
 mvn -Ddockerfile.skip clean compile test
 ```
 
 * **run app**
-```sh
+```shell
 mvn spring-boot:run
 ```
 
 * **some CLI tests**
-```sh
+```shell
 curl http://localhost:4080/starter-test/api/v1/test
 # result: Pong!%
 
@@ -47,7 +47,7 @@ curl  -H "Authorization: Bearer ***"  http://localhost:4080/starter-test/api/v1/
 
 ### Docker
 
-```sh
+```shell
 mvn clean package -Dmaven.test.skip=true
 docker run -it -p 8888:8888 --rm osahner/kotlin-spring-boot-rest-jpa-jwt-starter:latest
 
@@ -62,6 +62,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * Found an error -> please tell me.
 
 ### Changelog
+* _v0.8.0-SNAPSHOT_: [renamed default branch to main](#rename-local-master-branch-to-main), spring-boot 2.5.x, kotlin 1.4.10
 * _v0.7.1-SNAPSHOT_: spring-boot 2.4.0
 * _v0.6.6-SNAPSHOT_: spring-boot 2.3.4, kotlin 1.4.10, update docker build
 * _v0.6.5-SNAPSHOT_: spring-boot 2.3.2, kotlin 1.3.72, fix JPA uneccessary creation of hibernate_sequence and join tables without primary key, enhanced PoiExportService
@@ -73,6 +74,13 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * _v0.3.1-SNAPSHOT_: update jdk11, spring-boot 2.1.2 and kotlin 1.3.20
 * _v0.1.0-SNAPSHOT_: switch to jar packaging standalone app, update kotlin 1.2.61, jwt 0.10.5
 * _v0.0.5-SNAPSHOT_: update spring-boot 2.0.4.RELEASE, kotlin 1.2.60, jwt 0.10.1
+
+#### Rename local master branch to main
+```shell
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
+```
 
 ## LICENCE
 

@@ -15,8 +15,10 @@ spring:
     password: starterspringkotlin
     username: starterspringkotlin
     url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
-    initialization-mode: always
-    continue-on-error: true
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
 server:
   compression:
     enabled: false
@@ -35,12 +37,13 @@ spring:
       ddl-auto: update
     properties:
       hibernate.show_sql: true
-  datasource:
-    initialization-mode: always
-    continue-on-error: true
   config:
     activate:
       on-profile: test
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
 ---
 spring:
   jpa:
@@ -48,12 +51,13 @@ spring:
       ddl-auto: update
     properties:
       hibernate.show_sql: true
-  datasource:
-    initialization-mode: always
-    continue-on-error: false
   config:
     activate:
       on-profile: development
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
 ---
 spring:
   datasource:
