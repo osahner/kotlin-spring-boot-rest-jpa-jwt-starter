@@ -5,7 +5,7 @@
 
 
 **Features**:
-* spring-boot 2.4.x
+* spring-boot 2.5.x
 * kotlin 1.4.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql / OpenCVS / POI
