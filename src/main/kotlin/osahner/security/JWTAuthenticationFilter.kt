@@ -57,8 +57,8 @@ class JWTAuthenticationFilter(
     auth: Authentication
   ) {
     val authClaims: MutableList<String> = mutableListOf()
-    auth.authorities?.let {
-      it.forEach { claim -> authClaims.add(claim.toString()) }
+    auth.authorities?.let { authorities ->
+      authorities.forEach { claim -> authClaims.add(claim.toString()) }
     }
 
     val token = Jwts.builder()

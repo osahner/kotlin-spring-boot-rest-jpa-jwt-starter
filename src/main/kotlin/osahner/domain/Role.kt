@@ -12,8 +12,8 @@ class Role(
   val id: Int,
 
   @Column(name = "role_name", updatable = false)
-  var roleName: String? = null,
+  val roleName: String? = null,
 
   @Column(name = "description", updatable = false)
-  var description: String? = null
+  val description: String? = null
 )

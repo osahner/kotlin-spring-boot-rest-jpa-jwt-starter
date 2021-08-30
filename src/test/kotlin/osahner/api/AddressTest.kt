@@ -168,11 +168,11 @@ internal class AddressTest(
       HttpMethod.GET,
       requestEntity,
       ByteArray::class.java
-    ).also {
-      assertNotNull(it)
-      assertEquals(HttpStatus.OK, it.statusCode)
-      assertNotNull(it.body)
-      ByteArrayInputStream(it.body).let { bai ->
+    ).also { response ->
+      assertNotNull(response)
+      assertEquals(HttpStatus.OK, response.statusCode)
+      assertNotNull(response.body)
+      ByteArrayInputStream(response.body).let { bai ->
         val pkg = POIFSFileSystem(bai)
         val wb = HSSFWorkbook(pkg)
         assertEquals("Export Address List", wb.getSheetAt(0).sheetName)

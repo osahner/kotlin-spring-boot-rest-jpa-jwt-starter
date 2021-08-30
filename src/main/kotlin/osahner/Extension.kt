@@ -9,7 +9,7 @@ fun Any?.writeValueAsString(): String? = when {
   else -> null
 }
 
-fun String?.toStringArray(): Collection<String>? = when {
+fun <T> String?.toArray(): Collection<T>? = when {
   (this != null && this.isNotEmpty()) -> try {
     jacksonObjectMapper().readValue(this)
   } catch (e: Exception) {
@@ -17,7 +17,6 @@ fun String?.toStringArray(): Collection<String>? = when {
   }
   else -> null
 }
-
 
 fun String?.toMap(): Map<String, Any>? = when {
   (this != null && this.isNotEmpty()) -> try {

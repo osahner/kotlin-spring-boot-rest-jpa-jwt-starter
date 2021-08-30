@@ -1,7 +1,7 @@
 package osahner.api.address
 
+import osahner.toArray
 import osahner.toMap
-import osahner.toStringArray
 import osahner.writeValueAsString
 import java.time.LocalDateTime
 import javax.persistence.Entity
@@ -46,7 +46,7 @@ data class Address(
     enabled = this.enabled,
     lastModfied = lastModified,
     options = this.options.toMap(),
-    things = this.things.toStringArray()
+    things = this.things.toArray()
   )
 
   companion object {

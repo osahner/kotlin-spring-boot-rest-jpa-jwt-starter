@@ -29,21 +29,21 @@ internal class ExtensionTest {
 
   @Test
   fun toStringArray() {
-    listValAsString.toStringArray().also {
+    listValAsString.toArray<String>().also {
       assertNotNull(it)
       assertEquals(2, it?.size)
       assertEquals(listVal, it)
     }
 
-    (null as String?).toStringArray().also {
+    (null as String?).toArray<String>().also {
       assertNull(it)
     }
 
-    "".toStringArray().also {
+    "".toArray<String>().also {
       assertNull(it)
     }
 
-    "this [ is no string array}".toStringArray().also {
+    "this [ is no string array}".toArray<String>().also {
       assertNull(it)
     }
   }
@@ -59,7 +59,7 @@ internal class ExtensionTest {
       assertNull(it)
     }
 
-    "".toStringArray().also {
+    "".toArray<String>().also {
       assertNull(it)
     }
 

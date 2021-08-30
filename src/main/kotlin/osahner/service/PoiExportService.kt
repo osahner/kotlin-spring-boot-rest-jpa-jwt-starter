@@ -22,13 +22,17 @@ class PoiExportService {
 
   fun buildExcelDocument(
     titel: String? = "Export",
-    header: Collection<String>,
+    headers: Collection<String>,
     result: Collection<Any>
-  ) = buildExcelDocument(titel, header.associateWith { it.replaceFirstChar { c -> c.titlecase() } }, result)
+  ) = buildExcelDocument(
+    titel,
+    headers.associateWith { header -> header.replaceFirstChar { c -> c.titlecase() } },
+    result
+  )
 
   fun buildExcelDocument(
     titel: String? = "Export",
-    header: Map<String, String>,
+    headers: Map<String, String>,
     result: Collection<Any>
   ): Workbook = HSSFWorkbook().apply {
     val sheet = createSheet(titel).apply {
@@ -49,16 +53,16 @@ class PoiExportService {
     var rowNo = 0
     var row = sheet.createRow(rowNo++)
 
-    header.values.withIndex().forEach { (cellNo, it) ->
+    headers.values.withIndex().forEach { (cellNo, header) ->
       row.createCell(cellNo).apply {
-        setCellValue(createHelper.createRichTextString(it))
+        setCellValue(createHelper.createRichTextString(header))
         setCellStyle(headerCellStyle)
       }
     }
 
     result.forEach { entity ->
-      val list = header.keys.map {
-        readDeepInstanceProperty(entity, it)
+      val list = headers.keys.map { key ->
+        readDeepInstanceProperty(entity, key)
       }
       row = sheet.createRow(rowNo++)
       list.withIndex().forEach { (cellNo, cell) ->
