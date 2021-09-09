@@ -31,17 +31,5 @@ class AddressImportDto {
   @CsvBindByName(required = false)
   var things: String? = null
 
-  fun toAddress() = Address(
-    id = id,
-    name = name,
-    street = street,
-    zip = zip,
-    city = city,
-    email = email,
-    tel = tel,
-    enabled = false,
-    options = options,
-    things = things,
-    lastModified = LocalDateTime.now()
-  )
+  fun toAddress() = Address(id, name, street, zip, city, email, tel, false, LocalDateTime.now(), options, things)
 }

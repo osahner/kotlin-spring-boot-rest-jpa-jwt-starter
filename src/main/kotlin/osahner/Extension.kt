@@ -2,6 +2,9 @@ package osahner
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 fun Any?.writeValueAsString(): String? = when {
@@ -34,4 +37,22 @@ fun Date.add(field: Int, amount: Int): Date {
     add(field, amount)
     return time
   }
+}
+
+fun LocalDate?.toDate(): Date? = when {
+  (this != null) -> try {
+    Date.from(atStartOfDay(ZoneId.systemDefault()).toInstant())
+  } catch (e: Exception) {
+    null
+  }
+  else -> null
+}
+
+fun LocalDateTime?.toDate(): Date? = when {
+  (this != null) -> try {
+    Date.from(atZone(ZoneId.systemDefault()).toInstant())
+  } catch (e: Exception) {
+    null
+  }
+  else -> null
 }

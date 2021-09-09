@@ -60,7 +60,6 @@ class JWTAuthenticationFilter(
     auth.authorities?.let { authorities ->
       authorities.forEach { claim -> authClaims.add(claim.toString()) }
     }
-
     val token = Jwts.builder()
       .setSubject((auth.principal as User).username)
       .claim("auth", authClaims)

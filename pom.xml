@@ -29,7 +29,7 @@
     <jjwt.version>0.11.2</jjwt.version>
     <poi.version>5.0.0</poi.version>
     <jasypt.version>1.9.3</jasypt.version>
-    <opencsv.version>5.5.1</opencsv.version>
+    <opencsv.version>5.5.2</opencsv.version>
     <commons-io.version>2.11.0</commons-io.version>
   </properties>
 

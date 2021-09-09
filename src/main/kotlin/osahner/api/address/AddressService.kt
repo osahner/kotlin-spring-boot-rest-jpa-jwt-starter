@@ -1,6 +1,7 @@
 package osahner.api.address
 
-import org.apache.poi.ss.usermodel.Workbook
+import org.springframework.core.io.ByteArrayResource
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import osahner.service.PoiExportService
@@ -23,12 +24,13 @@ class AddressService(
   fun import(file: MultipartFile): Collection<Address> =
     addressImportService.importAddress(file).also { addressRepository.saveAll(it) }
 
-  fun toWorkbook(): Workbook {
+  fun export(): ResponseEntity<ByteArrayResource> {
     val result = addressRepository.findAll().map { it.toDTO() }
-    return poiExportService.buildExcelDocument(
+    val wb = poiExportService.buildExcelDocument(
       "Export Address List",
       listOf("id", "name", "street", "zip", "city", "email", "tel", "enabled", "things", "options", "lastModified"),
       result
     )
+    return poiExportService.toResponseEntity(wb, "Address-List")
   }
 }

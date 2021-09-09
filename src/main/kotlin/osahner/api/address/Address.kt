@@ -36,32 +36,32 @@ data class Address(
   @Lob var things: String?
 ) {
   fun toDTO() = AddressDto(
-    id = this.id,
-    name = this.name,
-    street = this.street,
-    zip = this.zip,
-    city = this.city,
-    email = this.email,
-    tel = this.tel,
-    enabled = this.enabled,
-    lastModfied = lastModified,
-    options = this.options.toMap(),
-    things = this.things.toArray()
+    id,
+    name,
+    street,
+    zip,
+    city,
+    email,
+    tel,
+    enabled,
+    lastModified,
+    options.toMap(),
+    things.toArray()
   )
 
   companion object {
     fun fromDTO(dto: AddressDto) = Address(
-      id = dto.id,
-      name = dto.name,
-      street = dto.street,
-      zip = dto.zip,
-      city = dto.city,
-      email = dto.email,
-      tel = dto.tel,
-      enabled = dto.enabled,
-      lastModified = LocalDateTime.now(),
-      options = dto.options.writeValueAsString(),
-      things = dto.things.writeValueAsString()
+      dto.id,
+      dto.name,
+      dto.street,
+      dto.zip,
+      dto.city,
+      dto.email,
+      dto.tel,
+      dto.enabled,
+      LocalDateTime.now(),
+      dto.options.writeValueAsString(),
+      dto.things.writeValueAsString()
     )
   }
 }
