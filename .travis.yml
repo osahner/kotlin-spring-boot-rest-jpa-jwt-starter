@@ -3,6 +3,12 @@ dist: bionic
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 jdk: openjdk11
+script:
+  - jdk_switcher use openjdk11
+  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
+  - chmod +x $TRAVIS_BUILD_DIR/install-jdk.sh
+  - export JAVA_HOME=$HOME/openjdk11
+  - $TRAVIS_BUILD_DIR/install-jdk.sh -F 11 --target $JAVA_HOME
 services:
   - mysql
 sudo: required

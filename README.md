@@ -5,8 +5,8 @@
 
 
 **Features**:
-* spring-boot 2.5.x
-* kotlin 1.4.x
+* spring-boot 2.6.x
+* kotlin 1.6.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql / OpenCVS / POI
 * Travis CI / codecov
@@ -15,10 +15,17 @@
 
 * **create a mysql db**
 ```sql
+-- for mysql 5.7
 CREATE DATABASE starterspringkotlin;
 GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';
 FLUSH PRIVILEGES;
+-- for mysql 8
+CREATE DATABASE starterspringkotlin;
+CREATE USER 'starterspringkotlin'@'localhost' IDENTIFIED BY 'starterspringkotlin';
+GRANT ALL PRIVILEGES ON starterspringkotlin.* TO 'starterspringkotlin'@'localhost';
+FLUSH PRIVILEGES;
 ```
+> check `src/main/resources/application.yaml` for mysql 5.7 or 8 support (keys are `spring.jpa.database-platform` and `spring.datasource.url`)
 
 * **compile & integration tests**
 ```shell
