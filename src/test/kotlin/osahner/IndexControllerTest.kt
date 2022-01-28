@@ -22,8 +22,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @ActiveProfiles("test")
 internal class IndexControllerTest(@Autowired private val restTemplate: TestRestTemplate) {
-  val loginForm = hashMapOf("username" to "john.doe", "password" to "test1234")
-
   @Test
   @Order(1)
   fun ping() {
@@ -36,33 +34,6 @@ internal class IndexControllerTest(@Autowired private val restTemplate: TestRest
 
   @Test
   @Order(2)
-  fun `ping restricted`() {
-    restTemplate.getForEntity<String>("/api/v1/restricted").also {
-      assertNotNull(it)
-      assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
-    }
-  }
-
-  @Test
-  @Order(3)
-  fun `ping restricted again`() {
-    val expected = "Pong!"
-    val headers = HttpHeaders()
-    headers.contentType = MediaType.APPLICATION_JSON
-    restTemplate.postForEntity<String>("/login", loginForm).also {
-      headers["Authorization"] = it.headers["authorization"]?.get(0).orEmpty()
-    }
-    val requestEntity = HttpEntity<String>(headers)
-
-    restTemplate.exchange("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
-      assertNotNull(it)
-      assertEquals(HttpStatus.OK, it.statusCode)
-      assertEquals(expected, it.body)
-    }
-  }
-
-  @Test
-  @Order(4)
   fun `test required`() {
     val msg = "Required Test"
     val expected = """Echo "$msg"!"""

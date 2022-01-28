@@ -12,8 +12,11 @@ class Role(
   val id: Int,
 
   @Column(name = "role_name", updatable = false)
-  val roleName: String? = null,
+  var roleName: String? = null,
 
   @Column(name = "description", updatable = false)
-  val description: String? = null
+  var description: String? = null,
+
+  @ManyToMany(mappedBy = "roles")
+  var users: MutableSet<User>? = null
 )

@@ -7,8 +7,8 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       ddl-auto: update
       use-new-id-generator-mappings: false
-#    database-platform: org.hibernate.dialect.MySQL8Dialect
-    database-platform: org.hibernate.dialect.MySQL57Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    #    database-platform: org.hibernate.dialect.MySQL57Dialect
     open-in-view: true
     properties:
       hibernate.show_sql: false
@@ -16,8 +16,8 @@ spring:
   datasource:
     password: starterspringkotlin
     username: starterspringkotlin
-#    url: jdbc:mysql://localhost:3306/starterspringkotlin?ssl-mode=REQUIRED
-    url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/starterspringkotlin?ssl-mode=REQUIRED
+#    url: jdbc:mysql://localhost:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
   sql:
     init:
       mode: always
@@ -66,8 +66,8 @@ spring:
   datasource:
     password: starterspringkotlin
     username: starterspringkotlin
-#    url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?ssl-mode=REQUIRED
-    url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?ssl-mode=REQUIRED
+  #  url: jdbc:mysql://host.docker.internal:3306/starterspringkotlin?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
   config:
     activate:
       on-profile: docker

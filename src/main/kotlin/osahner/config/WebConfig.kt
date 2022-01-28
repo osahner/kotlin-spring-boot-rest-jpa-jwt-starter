@@ -37,7 +37,7 @@ class WebConfig(
       .anyRequest().authenticated()
       .and()
       .addFilter(JWTAuthenticationFilter(authenticationManager(), securityProperties))
-      .addFilter(JWTAuthorizationFilter(authenticationManager(), securityProperties))
+      .addFilter(JWTAuthorizationFilter(authenticationManager(), userDetailsService, securityProperties))
   }
 
   @Throws(Exception::class)

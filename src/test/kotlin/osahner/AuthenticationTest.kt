@@ -16,12 +16,16 @@ import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.http.*
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import osahner.service.UserRepository
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @ActiveProfiles("test")
-internal class AuthenticationTest(@Autowired private val restTemplate: TestRestTemplate) {
+internal class AuthenticationTest(
+  @Autowired private val restTemplate: TestRestTemplate,
+  @Autowired private val userRepository: UserRepository
+) {
   private val loginForm = hashMapOf("username" to "john.doe", "password" to "test1234")
 
   @Test
@@ -90,7 +94,6 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
     }
   }
 
-
   @Test
   @Order(6)
   fun `ping restricted again`() {
@@ -129,6 +132,26 @@ internal class AuthenticationTest(@Autowired private val restTemplate: TestRestT
 
     headers["Authorization"] = "TOTALYWRONG"
     requestEntity = HttpEntity(headers)
+
+    restTemplate.exchange("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
+      assertNotNull(it)
+      assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
+    }
+  }
+
+  @Test
+  @Order(8)
+  fun `ping restricted again delete user before`() {
+
+    val login = restTemplate.postForEntity<String>("/login", loginForm)
+    val bearer = login.headers["authorization"]?.get(0).orEmpty()
+    val headers = HttpHeaders()
+    headers.contentType = MediaType.APPLICATION_JSON
+    headers["Authorization"] = bearer
+    val requestEntity = HttpEntity<String>(headers)
+
+    userRepository.deleteById(2)
+    userRepository.flush()
 
     restTemplate.exchange("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
       assertNotNull(it)

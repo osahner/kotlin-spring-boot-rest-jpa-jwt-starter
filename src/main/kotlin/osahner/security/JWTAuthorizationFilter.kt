@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import osahner.config.SecurityProperties
+import osahner.service.AppUserDetailsService
 import java.io.IOException
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse
 
 class JWTAuthorizationFilter(
   authManager: AuthenticationManager,
+  private val userDetailsService: AppUserDetailsService,
   private val securityProperties: SecurityProperties
 ) : BasicAuthenticationFilter(authManager) {
 
@@ -43,6 +45,8 @@ class JWTAuthorizationFilter(
         .setSigningKey(Keys.hmacShaKeyFor(securityProperties.secret.toByteArray()))
         .build()
         .parseClaimsJws(token.replace(securityProperties.tokenPrefix, ""))
+      // will throw exception if username is not found
+      userDetailsService.loadUserByUsername(claims.body.subject)
       val authorities = ArrayList<GrantedAuthority>()
       (claims.body["auth"] as List<*>).forEach { role -> authorities.add(SimpleGrantedAuthority(role.toString())) }
 
