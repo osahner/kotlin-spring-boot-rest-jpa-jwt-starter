@@ -1,0 +1,101 @@
+### Login and get Bearer
+POST http://localhost:4080/starter-test/login
+Content-Type: application/json
+
+{
+  "username": "admin.admin",
+  "password": "test1234"
+}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+  client.global.set("auth_token", response.headers.valueOf("Authorization").replace("Bearer ", ""));
+%}
+
+### Get all
+GET http://localhost:4080/starter-test/api/v1/address
+Content-Type: application/json
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
+### Get 1
+GET http://localhost:4080/starter-test/api/v1/address/1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
+### Add / Update
+POST http://localhost:4080/starter-test/api/v1/address
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "id": 3,
+  "name": "Someone",
+  "street": "Somestreet",
+  "zip": "1234",
+  "city": "Somecity",
+  "email": "another@fakemailgenerator.net",
+  "tel": "520-891-3434",
+  "enabled": true,
+  "lastModfied": "2022-01-01T00:00:00",
+  "options": {
+    "option2": "value2"
+  },
+  "things": []
+}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
+### Import
+POST http://localhost:4080/starter-test/api/v1/address/import
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer {{auth_token}}
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="address-import.csv"
+Content-Type: text/csv
+
+< ./address-import.csv
+--WebAppBoundary--
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
+### Export
+GET http://localhost:4080/starter-test/api/v1/address/export
+Authorization: Bearer {{auth_token}}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
+### Delete
+DELETE  http://localhost:4080/starter-test/api/v1/address/3
+Authorization: Bearer {{auth_token}}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
