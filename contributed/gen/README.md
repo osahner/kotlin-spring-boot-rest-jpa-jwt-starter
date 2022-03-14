@@ -2,7 +2,7 @@
 
 #### Usage:
 ```shell
-./gen.zsh adress
+./gen.zsh address
 ```
 
 Will generate ```src/main/kotlin/osahner/api/address```
