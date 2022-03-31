@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 
 @RestController
-@RequestMapping("/api/v1/replacemes")
+@RequestMapping("/api/v1/ReplacePluralLowercase")
 class REPLACEMEController(private val replacemeService: REPLACEMEService) {
   @PostMapping(value = ["/import"])
   @PreAuthorize("hasAuthority('ADMIN_USER')")
