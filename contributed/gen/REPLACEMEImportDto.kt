@@ -1,12 +1,13 @@
 package osahner.api.replaceme
 
 import com.opencsv.bean.CsvBindByName
+import osahner.service.CsvImportDto
 
-class REPLACEMEImportDto {
+class REPLACEMEImportDto : CsvImportDto<REPLACEME> {
   @CsvBindByName(required = true)
   var id: Int? = null
 
-  fun toREPLACEME() = REPLACEME(
+  override fun toEntity() = REPLACEME(
     id = id,
   )
 }

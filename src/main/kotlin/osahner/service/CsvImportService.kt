@@ -1,4 +1,4 @@
-package osahner.api.replaceme
+package osahner.service
 
 import com.opencsv.bean.CsvToBeanBuilder
 import org.apache.commons.io.input.BOMInputStream
@@ -6,15 +6,19 @@ import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 
 @Component
-class REPLACEMEImportService {
-  fun importREPLACEME(file: MultipartFile): Collection<REPLACEME> =
+class CsvImportService {
+  final inline fun <reified T : CsvImportDto<S>, S> import(file: MultipartFile): Collection<S> =
     BOMInputStream(file.inputStream).bufferedReader().use { stream ->
-      CsvToBeanBuilder<REPLACEMEImportDto>(stream)
-        .withType(REPLACEMEImportDto::class.java)
+      CsvToBeanBuilder<T>(stream)
+        .withType(T::class.java)
         .withIgnoreLeadingWhiteSpace(true)
         .withSeparator(';')
         .build()
         .parse()
-        .map { it.toREPLACEME() }
+        .map { it.toEntity() }
     }
+}
+
+interface CsvImportDto<S> {
+  fun toEntity(): S
 }

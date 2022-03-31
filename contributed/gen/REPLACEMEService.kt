@@ -22,7 +22,7 @@ class REPLACEMEService(
   fun delete(id: Int) = replacemeRepository.deleteById(id)
 
   fun import(file: MultipartFile): Collection<REPLACEME> =
-    csvImportService.importREPLACEME(file).also { replacemeRepository.saveAll(it) }
+    csvImportService.import<REPLACEMEImportDto, REPLACEME>(file).also { replacemeRepository.saveAll(it) }
 
   fun toWorkbook(): Workbook {
     val result = replacemeRepository.findAll().map { it.toDTO() }

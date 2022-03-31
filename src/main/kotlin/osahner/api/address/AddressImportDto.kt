@@ -1,9 +1,10 @@
 package osahner.api.address
 
 import com.opencsv.bean.CsvBindByName
+import osahner.service.CsvImportDto
 import java.time.LocalDateTime
 
-class AddressImportDto {
+class AddressImportDto : CsvImportDto<Address> {
   @CsvBindByName(required = true)
   var id: Int? = null
 
@@ -31,5 +32,6 @@ class AddressImportDto {
   @CsvBindByName(required = false)
   var things: String? = null
 
-  fun toAddress() = Address(id, name, street, zip, city, email, tel, false, LocalDateTime.now(), options, things)
+  override fun toEntity() =
+    Address(id, name, street, zip, city, email, tel, false, LocalDateTime.now(), options, things)
 }
