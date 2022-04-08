@@ -4,8 +4,6 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import osahner.config.SecurityProperties
@@ -45,12 +43,8 @@ class JWTAuthorizationFilter(
         .setSigningKey(Keys.hmacShaKeyFor(securityProperties.secret.toByteArray()))
         .build()
         .parseClaimsJws(token.replace(securityProperties.tokenPrefix, ""))
-      // will throw exception if username is not found
-      userDetailsService.loadUserByUsername(claims.body.subject)
-      val authorities = ArrayList<GrantedAuthority>()
-      (claims.body["auth"] as List<*>).forEach { role -> authorities.add(SimpleGrantedAuthority(role.toString())) }
-
-      UsernamePasswordAuthenticationToken(claims.body.subject, null, authorities)
+      val userDetail = userDetailsService.loadUserByUsername(claims.body.subject)
+      UsernamePasswordAuthenticationToken(claims.body.subject, null, userDetail.authorities)
     } catch (e: Exception) {
       return null
     }
