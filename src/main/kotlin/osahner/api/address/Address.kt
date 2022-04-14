@@ -1,5 +1,6 @@
 package osahner.api.address
 
+import org.hibernate.Hibernate
 import osahner.toArray
 import osahner.toMap
 import osahner.writeValueAsString
@@ -63,5 +64,20 @@ data class Address(
       dto.options.writeValueAsString(),
       dto.things.writeValueAsString()
     )
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
+    other as Address
+
+    return id != null && id == other.id
+  }
+
+  override fun hashCode(): Int = javaClass.hashCode()
+
+  @Override
+  override fun toString(): String {
+    return this::class.simpleName + "(id = $id )"
   }
 }
