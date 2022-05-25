@@ -62,7 +62,7 @@ curl http://localhost:8888/starter-test/api/v1/test
 # result: Pong!%
 ```
 
-:exclamation: If you develop on Apple Silicon you can use the simple script `contributed/buildDocker.sh`. 
+:exclamation: If you develop on Apple Silicon you can use the simple script `contributed/buildDocker.sh`. Option `-p` is for **production** build (`--platform=linux/amd64` instead of `--platform=linux/arm64/v8` without)
 
 ### Why
 
@@ -71,7 +71,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * Found an error -> please tell me.
 
 ### Changelog
-* _v0.8.3-SNAPSHOT_: spring-boot 2.7.x
+* _v0.8.3-SNAPSHOT_: spring-boot 2.7.x, java 17
 * _v0.8.1-SNAPSHOT_: spring-boot 2.6.x
 * _v0.8.0-SNAPSHOT_: [renamed default branch to main](#rename-local-master-branch-to-main), spring-boot 2.5.x, kotlin 1.4.10
 * _v0.7.1-SNAPSHOT_: spring-boot 2.4.0

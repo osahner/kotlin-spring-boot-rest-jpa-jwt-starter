@@ -3,12 +3,10 @@ package osahner.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -22,7 +20,6 @@ import osahner.service.AppUserDetailsService
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebConfig(
-  val bCryptPasswordEncoder: BCryptPasswordEncoder,
   val userDetailsService: AppUserDetailsService,
   val securityProperties: SecurityProperties,
   val authenticationManager: AppAuthenticationManager
@@ -44,12 +41,6 @@ class WebConfig(
       .addFilter(JWTAuthenticationFilter(authenticationManager, securityProperties))
       .addFilter(JWTAuthorizationFilter(authenticationManager, userDetailsService, securityProperties))
       .build()
-  }
-
-  @Bean
-  fun authProvider(): DaoAuthenticationProvider = DaoAuthenticationProvider().apply {
-    setUserDetailsService(userDetailsService)
-    setPasswordEncoder(bCryptPasswordEncoder)
   }
 
   @Bean
