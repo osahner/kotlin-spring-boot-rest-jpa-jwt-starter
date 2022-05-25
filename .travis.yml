@@ -2,7 +2,7 @@ language: java
 dist: bionic
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-jdk: openjdk11
+jdk: openjdk17
 services:
   - mysql
 sudo: required
