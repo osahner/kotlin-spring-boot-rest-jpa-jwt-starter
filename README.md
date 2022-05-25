@@ -5,7 +5,7 @@
 
 
 **Features**:
-* spring-boot 2.6.x
+* spring-boot 2.7.x
 * kotlin 1.6.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql / OpenCVS / POI
@@ -69,6 +69,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * Found an error -> please tell me.
 
 ### Changelog
+* _v0.8.3-SNAPSHOT_: spring-boot 2.7.x
 * _v0.8.1-SNAPSHOT_: spring-boot 2.6.x
 * _v0.8.0-SNAPSHOT_: [renamed default branch to main](#rename-local-master-branch-to-main), spring-boot 2.5.x, kotlin 1.4.10
 * _v0.7.1-SNAPSHOT_: spring-boot 2.4.0
@@ -76,7 +77,7 @@ This is my tiny backend cookbook. I need and use it on regular basis for differe
 * _v0.6.5-SNAPSHOT_: spring-boot 2.3.2, kotlin 1.3.72, fix JPA uneccessary creation of hibernate_sequence and join tables without primary key, enhanced PoiExportService
 * _v0.6.4-SNAPSHOT_: spring-boot 2.2.4, kotlin 1.3.70, fix REST API naming convention
 * _v0.6.1-SNAPSHOT_: add Docker
-* _v0.6.0-SNAPSHOT_: update spring-boot 2.2.0.RELEASE, add address controller with csv import an xls export
+* _v0.6.0-SNAPSHOT_: update spring-boot 2.2.0.RELEASE, add address controller with csv import and xls export
 * _v0.5.0-SNAPSHOT_: spring-boot 2.1.9, and kotlin 1.3.50
 * _v0.4.1-SNAPSHOT_: spring-boot 2.1.3 and kotlin 1.3.21, add codecov, fixed code style, fix tests, add coverage
 * _v0.3.1-SNAPSHOT_: update jdk11, spring-boot 2.1.2 and kotlin 1.3.20

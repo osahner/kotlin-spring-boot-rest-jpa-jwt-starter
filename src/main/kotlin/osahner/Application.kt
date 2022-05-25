@@ -1,10 +1,9 @@
 package osahner
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
 
-@SpringBootApplication(exclude = [(RepositoryRestMvcAutoConfiguration::class)])
+@SpringBootApplication
 class Application
 
 fun main(args: Array<String>) {
