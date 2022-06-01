@@ -1,13 +1,9 @@
 package osahner.security
 
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.security.Keys
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import osahner.config.SecurityProperties
-import osahner.service.AppUserDetailsService
 import java.io.IOException
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
@@ -16,8 +12,9 @@ import javax.servlet.http.HttpServletResponse
 
 class JWTAuthorizationFilter(
   authManager: AuthenticationManager,
-  private val userDetailsService: AppUserDetailsService,
-  private val securityProperties: SecurityProperties
+  private val securityProperties: SecurityProperties,
+  private val tokenProvider: TokenProvider
+
 ) : BasicAuthenticationFilter(authManager) {
 
   @Throws(IOException::class, ServletException::class)
@@ -31,22 +28,9 @@ class JWTAuthorizationFilter(
       chain.doFilter(req, res)
       return
     }
-    getAuthentication(header)?.also {
-      SecurityContextHolder.getContext().authentication = it
+    tokenProvider.getAuthentication(header)?.also { authentication ->
+      SecurityContextHolder.getContext().authentication = authentication
     }
     chain.doFilter(req, res)
-  }
-
-  private fun getAuthentication(token: String): UsernamePasswordAuthenticationToken? {
-    return try {
-      val claims = Jwts.parserBuilder()
-        .setSigningKey(Keys.hmacShaKeyFor(securityProperties.secret.toByteArray()))
-        .build()
-        .parseClaimsJws(token.replace(securityProperties.tokenPrefix, ""))
-      val userDetail = userDetailsService.loadUserByUsername(claims.body.subject)
-      UsernamePasswordAuthenticationToken(claims.body.subject, null, userDetail.authorities)
-    } catch (e: Exception) {
-      return null
-    }
   }
 }

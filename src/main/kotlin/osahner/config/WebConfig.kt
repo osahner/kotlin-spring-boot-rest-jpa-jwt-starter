@@ -13,16 +13,16 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import osahner.security.JWTAuthenticationFilter
 import osahner.security.JWTAuthorizationFilter
+import osahner.security.TokenProvider
 import osahner.service.AppAuthenticationManager
-import osahner.service.AppUserDetailsService
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebConfig(
-  val userDetailsService: AppUserDetailsService,
   val securityProperties: SecurityProperties,
-  val authenticationManager: AppAuthenticationManager
+  val authenticationManager: AppAuthenticationManager,
+  val tokenProvider: TokenProvider
 ) {
   @Bean
   @Throws(Exception::class)
@@ -38,8 +38,8 @@ class WebConfig(
       .antMatchers(HttpMethod.POST, "/login").permitAll()
       .anyRequest().authenticated()
       .and()
-      .addFilter(JWTAuthenticationFilter(authenticationManager, securityProperties))
-      .addFilter(JWTAuthorizationFilter(authenticationManager, userDetailsService, securityProperties))
+      .addFilter(JWTAuthenticationFilter(authenticationManager, securityProperties, tokenProvider))
+      .addFilter(JWTAuthorizationFilter(authenticationManager, securityProperties, tokenProvider))
       .build()
   }
 
