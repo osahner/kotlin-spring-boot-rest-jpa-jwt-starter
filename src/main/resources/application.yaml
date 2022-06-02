@@ -31,7 +31,7 @@ server:
   servlet:
     context-path: /starter-test
 jwt-security:
-  secret: PseudoSecret-Pseudosecret-Please-Use-Ur-Own-Key-PseudoSecret-Pseudosecret
+  secret: PseudoSecret-Pseudosecret-Please-Use-Ur-Own-Key
   expiration-time: 365
 ---
 spring:
