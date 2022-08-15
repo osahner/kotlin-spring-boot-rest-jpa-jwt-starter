@@ -13,20 +13,22 @@ fun Any?.writeValueAsString(): String? = when {
 }
 
 fun <T> String?.toArray(): Collection<T>? = when {
-  (this != null && this.isNotEmpty()) -> try {
+  !this.isNullOrEmpty() -> try {
     jacksonObjectMapper().readValue(this)
   } catch (e: Exception) {
     null
   }
+
   else -> null
 }
 
 fun String?.toMap(): Map<String, Any>? = when {
-  (this != null && this.isNotEmpty()) -> try {
+  !this.isNullOrEmpty() -> try {
     jacksonObjectMapper().readValue(this)
   } catch (e: Exception) {
     null
   }
+
   else -> null
 }
 
@@ -45,6 +47,7 @@ fun LocalDate?.toDate(): Date? = when {
   } catch (e: Exception) {
     null
   }
+
   else -> null
 }
 
@@ -54,5 +57,6 @@ fun LocalDateTime?.toDate(): Date? = when {
   } catch (e: Exception) {
     null
   }
+
   else -> null
 }

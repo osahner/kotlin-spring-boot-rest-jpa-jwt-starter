@@ -110,7 +110,6 @@ class PoiExportService {
     }
   }
 
-  @Suppress("UNCHECKED_CAST")
   private fun readDeepInstanceProperty(instance: Any, propertyName: String): Any {
     var prob = propertyName
     var obj = instance

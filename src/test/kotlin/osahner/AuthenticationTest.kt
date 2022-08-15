@@ -105,7 +105,7 @@ internal class AuthenticationTest(
     headers["Authorization"] = bearer
     val requestEntity = HttpEntity<String>(headers)
 
-    restTemplate.exchange<String>(
+    restTemplate.exchange(
       "/api/v1/restricted",
       HttpMethod.GET,
       requestEntity,

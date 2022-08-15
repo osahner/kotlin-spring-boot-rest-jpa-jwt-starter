@@ -1,4 +1,4 @@
-@file:Suppress("unused", "unused")
+@file:Suppress("unused")
 
 package osahner.domain
 

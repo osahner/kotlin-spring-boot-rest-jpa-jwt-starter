@@ -51,6 +51,7 @@ curl -s -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.d
 curl  -H "Authorization: Bearer ***"  http://localhost:4080/starter-test/api/v1/restricted
 # result: Pong!%
 ```
+some more test can be found in [address.http](contributed/requests/address.http) if you are using intelli j.
 
 ### Docker
 
@@ -62,13 +63,13 @@ curl http://localhost:8888/starter-test/api/v1/test
 # result: Pong!%
 ```
 
-:exclamation: If you develop on Apple Silicon you can use the simple script `contributed/buildDocker.sh`. Option `-p` is for **production** build (`--platform=linux/amd64` instead of `--platform=linux/arm64/v8` without)
+:exclamation: If you develop on Apple Silicon (like me) you can use the simple script `contributed/buildDocker.sh`. Option `-p` is for **production** build (`--platform=linux/amd64` instead of `--platform=linux/arm64/v8` without)
 
 ### Why
 
-This is my tiny backend cookbook. I need and use it on regular basis for different small to midsized projects.
+This is my little backend cookbook. I need and use it regularly for various small to medium-sized projects.
 * Like it -> use it.
-* Found an error -> please tell me.
+* Found an error -> please [report](https://github.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/issues).
 
 ### Changelog
 * _v0.8.3-SNAPSHOT_: spring-boot 2.7.x, java 17

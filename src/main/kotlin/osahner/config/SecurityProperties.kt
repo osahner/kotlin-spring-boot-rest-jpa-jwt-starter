@@ -10,7 +10,7 @@ import javax.validation.constraints.Size
 @Validated
 class SecurityProperties {
   @field:NotBlank
-  @field:Size(min = 32)
+  @field:Size(min = 64)
   var secret = ""
 
   @field:Positive
