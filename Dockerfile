@@ -13,6 +13,7 @@ RUN chown spring:spring /opt/app
 USER spring
 
 ADD target/${JAR_FILE} /opt/app/api.jar
-ENTRYPOINT ["java", "-Djava.awt.headless=true", "-Dfile.encoding=UTF-8", "-Dspring.profiles.active=docker", "-jar", "/opt/app/api.jar"]
+ENTRYPOINT ["java", "-Djava.awt.headless=true", "-XX:MaxRAMPercentage=75", "-XX:+UseSerialGC", "-Xlog:gc", "-XshowSettings:vm", "-Dfile.encoding=UTF-8", "-Dspring.profiles.active=docker", "-jar", "/opt/app/api.jar"]
+#ENTRYPOINT ["java", "-Djava.awt.headless=true", "-Dfile.encoding=UTF-8", "-Dspring.profiles.active=docker", "-jar", "/opt/app/api.jar"]
 
 EXPOSE 8888/tcp
