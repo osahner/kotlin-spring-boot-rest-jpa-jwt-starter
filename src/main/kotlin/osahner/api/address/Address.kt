@@ -1,14 +1,14 @@
 package osahner.api.address
 
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.Lob
 import org.hibernate.Hibernate
 import osahner.toArray
 import osahner.toMap
 import osahner.writeValueAsString
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Lob
 
 @Entity
 data class Address(

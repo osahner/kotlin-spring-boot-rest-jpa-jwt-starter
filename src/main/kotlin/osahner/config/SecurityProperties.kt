@@ -1,10 +1,10 @@
 package osahner.config
 
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Positive
+import jakarta.validation.constraints.Size
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.validation.annotation.Validated
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Positive
-import javax.validation.constraints.Size
 
 @ConfigurationProperties(prefix = "jwt-security")
 @Validated
