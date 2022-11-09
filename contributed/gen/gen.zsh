@@ -16,7 +16,7 @@ if [[ $pluralLowercase =~ .*sss$ ]]; then pluralLowercase="${lowercase}"; fi
 
 if [[ -d "${CANONICAL}/${lowercase}" ]]; then echo "feature: ${lowercase} already exists"; exit; fi
 
-mkdir "${CANONICAL}/${lowercase}"
+mkdir -p "${CANONICAL}/${lowercase}"
 zcp "${SCRIPT_PATH}/REPLACEME(*)" "${CANONICAL}/${lowercase}/${capitalized}\$1"
 perl -pi -e "s/REPLACEME/${capitalized}/g" "${CANONICAL}/${lowercase}/"*
 perl -pi -e "s/replaceme/${lowercase}/g" "${CANONICAL}/${lowercase}/"*
