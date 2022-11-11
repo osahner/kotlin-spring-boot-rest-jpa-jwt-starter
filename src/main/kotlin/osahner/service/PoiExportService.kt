@@ -6,12 +6,16 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.Workbook
 import org.springframework.core.io.ByteArrayResource
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.stereotype.Component
 import osahner.toDate
 import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.*
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
@@ -21,18 +25,29 @@ class PoiExportService {
   private val mapper = Jackson2ObjectMapperBuilder().build<ObjectMapper>()
   private val dotRegex = Regex("\\.")
 
-  fun toByteArrayResource(wb: Workbook): ByteArrayResource = ByteArrayOutputStream().use { baos ->
-    wb.apply {
-      write(baos)
+  fun toResponseEntity(wb: Workbook, name: String): ResponseEntity<ByteArrayResource> {
+    val headers = HttpHeaders().apply {
+      add("Content-Disposition", "filename=\"Export-${name}-${Date().time}.xls\"")
     }
-    ByteArrayResource(baos.toByteArray())
+    val bos = ByteArrayOutputStream()
+    bos.use {
+      wb.apply {
+        write(bos)
+      }
+    }
+    val resource = ByteArrayResource(bos.toByteArray())
+    return ResponseEntity.ok()
+      .headers(headers)
+      .contentLength(resource.contentLength())
+      .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+      .body(resource)
   }
 
   fun buildExcelDocument(
     titel: String? = "Export",
     headers: Collection<String>,
     result: Collection<Any>
-  ): Workbook = buildExcelDocument(
+  ) = buildExcelDocument(
     titel,
     headers.associateWith { header -> header.replaceFirstChar { c -> c.titlecase() } },
     result
