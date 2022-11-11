@@ -15,7 +15,7 @@ class User(
     name = "sequence-generator",
     strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
     parameters = [
-      Parameter(name = "sequence_name", value = "user_SEQ"),
+      Parameter(name = "sequence_name", value = "app_user_SEQ"),
       Parameter(name = "initial_value", value = "100"),
       Parameter(name = "increment_size", value = "1")
     ]
