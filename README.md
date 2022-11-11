@@ -5,8 +5,8 @@
 
 
 **Features**:
-* spring-boot 2.7.x
-* kotlin 1.6.x
+* spring-boot 3.0.x
+* kotlin 1.7.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * JPA mysql / OpenCVS / POI
 * Travis CI / codecov
@@ -72,6 +72,7 @@ This is my little backend cookbook. I need and use it regularly for various smal
 * Found an error -> please [report](https://github.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/issues).
 
 ### Changelog
+* _v0.8.7-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.7.x
 * _v0.8.3-SNAPSHOT_: spring-boot 2.7.x, java 17
 * _v0.8.1-SNAPSHOT_: spring-boot 2.6.x
 * _v0.8.0-SNAPSHOT_: [renamed default branch to main](#rename-local-master-branch-to-main), spring-boot 2.5.x, kotlin 1.4.10
