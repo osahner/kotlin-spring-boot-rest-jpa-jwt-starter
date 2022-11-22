@@ -33,8 +33,8 @@ class WebConfig(
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // no sessions
       .and()
       .authorizeHttpRequests()
-      .requestMatchers("/api/**").permitAll()
-      .requestMatchers("/error/**").permitAll()
+      .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
+      .requestMatchers(HttpMethod.GET, "/actuator/info/**").permitAll()
       .requestMatchers(HttpMethod.POST, "/login").permitAll()
       .anyRequest().authenticated()
       .and()

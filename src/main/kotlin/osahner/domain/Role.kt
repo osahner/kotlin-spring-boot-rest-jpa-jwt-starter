@@ -10,9 +10,9 @@ import org.hibernate.annotations.Parameter
 @Table(name = "app_role")
 class Role(
   @Id
-  @GeneratedValue(generator = "sequence-generator")
+  @GeneratedValue(generator = "app_role-sequence-generator")
   @GenericGenerator(
-    name = "sequence-generator",
+    name = "app_role-sequence-generator",
     strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
     parameters = [
       Parameter(name = "sequence_name", value = "app_role_SEQ"),

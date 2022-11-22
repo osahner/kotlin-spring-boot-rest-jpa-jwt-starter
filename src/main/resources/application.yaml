@@ -6,7 +6,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: true
     properties:
       hibernate.show_sql: false
@@ -30,6 +30,11 @@ server:
 jwt-security:
   secret: PseudoSecret-Pseudosecret-IMPORTANT-Please-Use-Ur-Own-Key-IMPORTANT
   expiration-time: 365
+management:
+  endpoints:
+    web:
+    exposure:
+      include: "health,info"
 ---
 spring:
   jpa:

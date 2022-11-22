@@ -1,13 +1,21 @@
-version: '2'
+version: '3.7'
 services:
+
   spring-boot-rest-jpa-jwt-starter:
     image: osahner/kotlin-spring-boot-rest-jpa-jwt-starter
-    depends_on:
-      - local-mysql-database
+    #depends_on:
+    #  - local-mysql-database
     ports:
-    - 8888:8888
+      - '8888:8888'
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider localhost:8888/starter-test/actuator/health || exit 1
+      interval: 60s
+      retries: 5
+      timeout: 10s
+      start_period: 5s
+
   local-mysql-database:
-    image: mysql/mysql-server:5.7
+    image: mysql/mysql-server:8
     container_name: local-mysql-database
     expose:
       - 3306

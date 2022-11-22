@@ -13,9 +13,9 @@ import java.time.LocalDateTime
 @Table(name = "address")
 data class Address(
   @Id
-  @GeneratedValue(generator = "sequence-generator")
+  @GeneratedValue(generator = "address-sequence-generator")
   @GenericGenerator(
-    name = "sequence-generator",
+    name = "address-sequence-generator",
     strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
     parameters = [
       Parameter(name = "sequence_name", value = "address_SEQ"),

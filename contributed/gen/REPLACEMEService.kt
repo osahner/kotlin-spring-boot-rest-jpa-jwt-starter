@@ -17,7 +17,7 @@ class REPLACEMEService(
 
   fun findById(id: Int): Optional<REPLACEME> = replacemeRepository.findById(id)
 
-  fun save(dto: REPLACEMEDto): REPLACEME = replacemeRepository.saveAndFlush(REPLACEME.fromDTO(dto))
+  fun save(dto: REPLACEMEDto): REPLACEME = replacemeRepository.save(REPLACEME.fromDTO(dto))
 
   fun delete(id: Int) = replacemeRepository.deleteById(id)
 
