@@ -1,6 +1,6 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
-[![Build Status](https://api.travis-ci.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=develop)](https://app.travis-ci.com/github/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
+[![Build Status](https://api.travis-ci.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=main)](https://app.travis-ci.com/github/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
 [![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/main/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/main/)
 
 
@@ -72,7 +72,7 @@ This is my little backend cookbook. I need and use it regularly for various smal
 * Found an error -> please [report](https://github.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/issues).
 
 ### Changelog
-* _v0.8.7-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.7.x
+* _v0.9.0-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.7.x
 * _v0.8.3-SNAPSHOT_: spring-boot 2.7.x, java 17
 * _v0.8.1-SNAPSHOT_: spring-boot 2.6.x
 * _v0.8.0-SNAPSHOT_: [renamed default branch to main](#rename-local-master-branch-to-main), spring-boot 2.5.x, kotlin 1.4.10
