@@ -3,7 +3,7 @@ package osahner.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -18,7 +18,7 @@ import osahner.service.AppAuthenticationManager
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
 class WebConfig(
   val securityProperties: SecurityProperties,
   val authenticationManager: AppAuthenticationManager,
@@ -32,10 +32,11 @@ class WebConfig(
       .csrf().disable()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // no sessions
       .and()
-      .authorizeRequests()
-      .antMatchers("/api/**").permitAll()
-      .antMatchers("/error/**").permitAll()
-      .antMatchers(HttpMethod.POST, "/login").permitAll()
+      .authorizeHttpRequests()
+      .requestMatchers("/api/**").permitAll()
+      .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
+      .requestMatchers(HttpMethod.GET, "/actuator/info/**").permitAll()
+      .requestMatchers(HttpMethod.POST, "/login").permitAll()
       .anyRequest().authenticated()
       .and()
       .addFilter(JWTAuthenticationFilter(authenticationManager, securityProperties, tokenProvider))

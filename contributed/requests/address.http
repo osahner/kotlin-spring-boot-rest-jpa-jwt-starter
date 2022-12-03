@@ -1,5 +1,13 @@
+### Fake Request to set global port 4080 (local) 8888 (docker)
+GET https://postman-echo.com/get?foo1=bar1&foo2=bar2
+
+> {%
+  client.global.set("port", "4080");
+  // client.global.set("port", "8888");
+%}
+
 ### Login and get Bearer
-POST http://localhost:4080/starter-test/login
+POST http://localhost:{{port}}/starter-test/login
 Content-Type: application/json
 
 {
@@ -14,34 +22,13 @@ Content-Type: application/json
   client.global.set("auth_token", response.headers.valueOf("Authorization").replace("Bearer ", ""));
 %}
 
-### Get all
-GET http://localhost:4080/starter-test/api/v1/address
-Content-Type: application/json
-
-> {%
-  client.test("Request executed successfully", function() {
-    client.assert(response.status === 200, "Response status is not 200");
-  });
-%}
-
-### Get 1
-GET http://localhost:4080/starter-test/api/v1/address/1
-Content-Type: application/json
-Authorization: Bearer {{auth_token}}
-
-> {%
-  client.test("Request executed successfully", function() {
-    client.assert(response.status === 200, "Response status is not 200");
-  });
-%}
 
 ### Add / Update
-POST http://localhost:4080/starter-test/api/v1/address
+POST http://localhost:{{port}}/starter-test/api/v1/address
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-  "id": 3,
   "name": "Someone",
   "street": "Somestreet",
   "zip": "1234",
@@ -60,10 +47,35 @@ Authorization: Bearer {{auth_token}}
   client.test("Request executed successfully", function() {
     client.assert(response.status === 200, "Response status is not 200");
   });
+  const body = response.body;
+  client.global.set("test_address_id", body['id']);
 %}
 
+### Get all
+GET http://localhost:{{port}}/starter-test/api/v1/address
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
+### Get 1
+GET http://localhost:{{port}}/starter-test/api/v1/address/{{test_address_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
+
 ### Import
-POST http://localhost:4080/starter-test/api/v1/address/import
+POST http://localhost:{{port}}/starter-test/api/v1/address/import
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 Authorization: Bearer {{auth_token}}
 
@@ -81,7 +93,7 @@ Content-Type: text/csv
 %}
 
 ### Export
-GET http://localhost:4080/starter-test/api/v1/address/export
+GET http://localhost:{{port}}/starter-test/api/v1/address/export
 Authorization: Bearer {{auth_token}}
 
 > {%
@@ -91,7 +103,7 @@ Authorization: Bearer {{auth_token}}
 %}
 
 ### Delete
-DELETE  http://localhost:4080/starter-test/api/v1/address/3
+DELETE  http://localhost:{{port}}/starter-test/api/v1/address/{{test_address_id}}
 Authorization: Bearer {{auth_token}}
 
 > {%

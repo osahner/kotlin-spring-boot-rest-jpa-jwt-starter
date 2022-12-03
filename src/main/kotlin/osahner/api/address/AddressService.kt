@@ -18,7 +18,7 @@ class AddressService(
 
   fun findById(id: Int): Optional<Address> = addressRepository.findById(id)
 
-  fun save(dto: AddressDto): Address = addressRepository.saveAndFlush(Address.fromDTO(dto))
+  fun save(dto: AddressDto): Address = addressRepository.save(Address.fromDTO(dto))
 
   fun delete(id: Int) = addressRepository.deleteById(id)
 

@@ -1,19 +1,28 @@
 package osahner.api.address
 
+import jakarta.persistence.*
 import org.hibernate.Hibernate
+import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.Parameter
 import osahner.toArray
 import osahner.toMap
 import osahner.writeValueAsString
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Lob
 
 @Entity
+@Table(name = "address")
 data class Address(
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "address-sequence-generator")
+  @GenericGenerator(
+    name = "address-sequence-generator",
+    strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = [
+      Parameter(name = "sequence_name", value = "address_SEQ"),
+      Parameter(name = "initial_value", value = "100"),
+      Parameter(name = "increment_size", value = "1")
+    ]
+  )
   var id: Int?,
 
   var name: String?,

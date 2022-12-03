@@ -2,13 +2,24 @@
 
 package osahner.domain
 
-import javax.persistence.*
+import jakarta.persistence.*
+import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.Parameter
 
 @Entity
 @Table(name = "app_user")
 class User(
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "app_user-sequence-generator")
+  @GenericGenerator(
+    name = "app_user-sequence-generator",
+    strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = [
+      Parameter(name = "sequence_name", value = "app_user_SEQ"),
+      Parameter(name = "initial_value", value = "100"),
+      Parameter(name = "increment_size", value = "1")
+    ]
+  )
   val id: Int,
 
   @Column(name = "username", unique = true)
