@@ -47,7 +47,7 @@ internal class AuthenticationTest(
     try {
       restTemplate.postForEntity<Any>("/login", falseLoginForm).also {
         assertNotNull(it)
-        assertEquals(HttpStatus.UNAUTHORIZED, it.statusCode)
+        assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
       }
     } catch (e: Exception) {
       print("Fixme RestTemplate with HttpStatus.UNAUTHORIZED result")
@@ -61,7 +61,7 @@ internal class AuthenticationTest(
     try {
       restTemplate.postForEntity<Any>("/login", falseLoginForm).also {
         assertNotNull(it)
-        assertEquals(HttpStatus.UNAUTHORIZED, it.statusCode)
+        assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
       }
     } catch (e: Exception) {
       print("Fixme RestTemplate with HttpStatus.UNAUTHORIZED result")
@@ -75,7 +75,7 @@ internal class AuthenticationTest(
     try {
       restTemplate.postForEntity<Any>("/login", falseLoginForm).also {
         assertNotNull(it)
-        assertEquals(HttpStatus.UNAUTHORIZED, it.statusCode)
+        assertEquals(HttpStatus.FORBIDDEN, it.statusCode)
       }
     } catch (e: Exception) {
       print("Fixme RestTemplate with HttpStatus.UNAUTHORIZED result")

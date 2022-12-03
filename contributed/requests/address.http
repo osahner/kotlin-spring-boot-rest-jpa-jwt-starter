@@ -2,8 +2,8 @@
 GET https://postman-echo.com/get?foo1=bar1&foo2=bar2
 
 > {%
-  // client.global.set("port", "4080");
-  client.global.set("port", "8888");
+  client.global.set("port", "4080");
+  // client.global.set("port", "8888");
 %}
 
 ### Login and get Bearer
@@ -48,7 +48,7 @@ Authorization: Bearer {{auth_token}}
     client.assert(response.status === 200, "Response status is not 200");
   });
   const body = response.body;
-  client.global.set("test_address", body['id']);
+  client.global.set("test_address_id", body['id']);
 %}
 
 ### Get all
@@ -63,7 +63,7 @@ Authorization: Bearer {{auth_token}}
 %}
 
 ### Get 1
-GET http://localhost:{{port}}/starter-test/api/v1/address/{{test_address}}
+GET http://localhost:{{port}}/starter-test/api/v1/address/{{test_address_id}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
@@ -103,7 +103,7 @@ Authorization: Bearer {{auth_token}}
 %}
 
 ### Delete
-DELETE  http://localhost:{{port}}/starter-test/api/v1/address/{{test_address}}
+DELETE  http://localhost:{{port}}/starter-test/api/v1/address/{{test_address_id}}
 Authorization: Bearer {{auth_token}}
 
 > {%
