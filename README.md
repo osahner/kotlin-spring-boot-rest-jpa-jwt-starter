@@ -72,7 +72,7 @@ This is my little backend cookbook. I need and use it regularly for various smal
 * Found an error -> please [report](https://github.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/issues).
 
 ### Changelog
-* _v0.9.0-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.7.x
+* _v0.9.1-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.8.x, [migrated to SEQ tables](#migrate-to-seq-tables) 
 * _v0.8.3-SNAPSHOT_: spring-boot 2.7.x, java 17
 * _v0.8.1-SNAPSHOT_: spring-boot 2.6.x
 * _v0.8.0-SNAPSHOT_: [renamed default branch to main](#rename-local-master-branch-to-main), spring-boot 2.5.x, kotlin 1.4.10
@@ -93,6 +93,24 @@ This is my little backend cookbook. I need and use it regularly for various smal
 git branch -m master main
 git fetch origin
 git branch -u origin/main main
+```
+
+#### Migrate to SEQ tables
+```sql
+-- migrate existing autoincrement tables to SEQ tables after table update
+SET FOREIGN_KEY_CHECKS = 0;
+USE starterspringkotlin;
+
+UPDATE app_user_SEQ SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'app_user') + 1;
+ALTER TABLE app_user MODIFY id INT NOT NULL;
+
+UPDATE app_role_SEQ SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'app_role') + 1;
+ALTER TABLE app_role MODIFY id INT NOT NULL;
+
+UPDATE address_SEQ SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'address') + 1;
+ALTER TABLE address MODIFY id INT NOT NULL;
+
+SET FOREIGN_KEY_CHECKS = 1;
 ```
 
 ## LICENCE
