@@ -12,7 +12,8 @@ Content-Type: application/json
 
 {
   "username": "admin.admin",
-  "password": "test1234"
+  "password": "test1234",
+  "verificationCode": ""
 }
 
 > {%
@@ -21,6 +22,23 @@ Content-Type: application/json
   });
   client.global.set("auth_token", response.headers.valueOf("Authorization").replace("Bearer ", ""));
 %}
+
+### Login as user
+POST http://localhost:{{port}}/starter-test/login
+Content-Type: application/json
+
+{
+  "username": "john.doe",
+  "password": "test1234",
+  "verificationCode": "479346"
+}
+
+> {%
+  client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+  });
+%}
+
 
 
 ### Add / Update

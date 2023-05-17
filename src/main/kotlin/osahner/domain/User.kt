@@ -5,6 +5,7 @@ package osahner.domain
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.Parameter
+import org.jboss.aerogear.security.otp.api.Base32
 
 @Entity
 @Table(name = "app_user")
@@ -33,6 +34,10 @@ class User(
 
   @Column(name = "last_name")
   var lastName: String? = null,
+
+  var isUsing2FA: Boolean = false,
+
+  var secret: String = Base32.random(),
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
   @JoinTable(

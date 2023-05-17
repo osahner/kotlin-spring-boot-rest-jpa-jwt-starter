@@ -6,17 +6,17 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import osahner.config.SecurityProperties
+import osahner.service.AppAuthenticationManager
 import java.io.IOException
 
 class JWTAuthenticationFilter(
-  private val authManager: AuthenticationManager,
+  private val authManager: AppAuthenticationManager,
   private val securityProperties: SecurityProperties,
   private val tokenProvider: TokenProvider
 ) : UsernamePasswordAuthenticationFilter() {
@@ -29,15 +29,16 @@ class JWTAuthenticationFilter(
     return try {
       val mapper = jacksonObjectMapper()
 
-      val creds = mapper
-        .readValue<osahner.domain.User>(req.inputStream)
+      val creds = mapper.readValue<UserLoginDTO>(req.inputStream)
 
       authManager.authenticate(
         UsernamePasswordAuthenticationToken(
           creds.username,
           creds.password,
           ArrayList()
-        )
+        ).apply {
+          details = mapOf("verificationCode" to creds.verificationCode)
+        }
       )
     } catch (e: IOException) {
       throw AuthenticationServiceException(e.message)

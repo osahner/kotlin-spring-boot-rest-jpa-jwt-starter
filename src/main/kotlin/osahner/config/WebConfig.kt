@@ -11,10 +11,9 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import osahner.security.JWTAuthenticationFilter
-import osahner.security.JWTAuthorizationFilter
-import osahner.security.TokenProvider
+import osahner.security.*
 import osahner.service.AppAuthenticationManager
+
 
 @Configuration
 @EnableWebSecurity
@@ -65,4 +64,5 @@ class WebConfig(
       cors.registerCorsConfiguration("/**", this)
     }
   }
+
 }

@@ -8,11 +8,11 @@ VALUES (2, 'STANDARD_USER', 'Standard User - Has no admin rights');
 
 TRUNCATE TABLE app_user;
 -- password test1234
-INSERT INTO app_user (id, first_name, last_name, password, username)
-VALUES (1, 'Admin', 'Admin', '$2a$10$5AWyzymSnNypg9BkMOyKE.zA05GtRKHCoWimh.q2w.KAO5koBYPM6', 'admin.admin');
+INSERT INTO app_user (id, first_name, last_name, password, username, isUsing2FA, secret)
+VALUES (1, 'Admin', 'Admin', '$2a$10$5AWyzymSnNypg9BkMOyKE.zA05GtRKHCoWimh.q2w.KAO5koBYPM6', 'admin.admin', false, '5TPFV3VGX3EKYAET');
 -- password test1234
-INSERT INTO app_user (id, first_name, last_name, password, username)
-VALUES (2, 'John', 'Doe', '$2a$10$5AWyzymSnNypg9BkMOyKE.zA05GtRKHCoWimh.q2w.KAO5koBYPM6', 'john.doe');
+INSERT INTO app_user (id, first_name, last_name, password, username, isUsing2FA, secret)
+VALUES (2, 'John', 'Doe', '$2a$10$5AWyzymSnNypg9BkMOyKE.zA05GtRKHCoWimh.q2w.KAO5koBYPM6', 'john.doe', true, '5TPFV3VGX3EKYAET');
 
 TRUNCATE TABLE user_role;
 INSERT INTO user_role(user_id, role_id)
