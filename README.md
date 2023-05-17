@@ -1,15 +1,15 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
-[![Build Status](https://api.travis-ci.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=main)](https://app.travis-ci.com/github/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
-[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/main/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/main/)
+[![Build Status](https://api.travis-ci.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=develop)](https://app.travis-ci.com/github/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
+[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/)
 
 
 **Features**:
 * spring-boot 3.0.x
-* kotlin 1.7.x
+* kotlin 1.8.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
+* 2FA with TOTP (Google Authenticator)
 * JPA mysql / OpenCVS / POI
-* Travis CI / codecov
 
 ### Install & play
 
