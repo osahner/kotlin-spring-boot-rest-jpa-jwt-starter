@@ -185,14 +185,14 @@ internal class AuthenticationTest(
   @Test
   @Order(11)
   fun `ping restricted but delete user before`() {
-    val login = restTemplate.postForEntity<String>("/login", loginForm)
+    val login = restTemplate.postForEntity<String>("/login", loginForm2)
     val bearer = login.headers["authorization"]?.get(0).orEmpty()
     val headers = HttpHeaders()
     headers.contentType = MediaType.APPLICATION_JSON
     headers["Authorization"] = bearer
     val requestEntity = HttpEntity<String>(headers)
 
-    userRepository.deleteAll()
+    userRepository.deleteById(2)
     userRepository.flush()
 
     restTemplate.exchange("/api/v1/restricted", HttpMethod.GET, requestEntity, String::class.java).also {
