@@ -24,8 +24,7 @@
     <java.version>17</java.version>
     <kotlin.version>1.8.21</kotlin.version>
 
-    <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
-    <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
     <jjwt.version>0.11.5</jjwt.version>
     <poi.version>5.2.3</poi.version>
@@ -255,6 +254,7 @@
         </configuration>
         <executions>
           <execution>
+            <id>prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
@@ -265,72 +265,15 @@
             <goals>
               <goal>report</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.spotify</groupId>
-        <artifactId>dockerfile-maven-plugin</artifactId>
-        <version>${dockerfile-maven.version}</version>
-        <executions>
-          <execution>
-            <id>build-image</id>
-            <goals>
-              <goal>build</goal>
-            </goals>
-            <phase>package</phase>
             <configuration>
-              <buildArgs>
-                <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                <SPRING_BOOT_VERSION>${project.parent.version}</SPRING_BOOT_VERSION>
-              </buildArgs>
-            </configuration>
-          </execution>
-          <execution>
-            <id>tag-image-latest</id>
-            <goals>
-              <goal>tag</goal>
-            </goals>
-            <configuration>
-              <tag>latest</tag>
-            </configuration>
-          </execution>
-          <execution>
-            <id>tag-image-version</id>
-            <goals>
-              <goal>tag</goal>
-            </goals>
-            <configuration>
-              <tag>${project.version}</tag>
-            </configuration>
-          </execution>
-          <execution>
-            <id>push-image-latest</id>
-            <goals>
-              <goal>push</goal>
-            </goals>
-            <phase>deploy</phase>
-            <configuration>
-              <tag>latest</tag>
-            </configuration>
-          </execution>
-          <execution>
-            <id>push-image-version</id>
-            <goals>
-              <goal>push</goal>
-            </goals>
-            <phase>deploy</phase>
-            <configuration>
-              <tag>${project.version}</tag>
+              <formats>
+                <format>XML</format>
+              </formats>
             </configuration>
           </execution>
         </executions>
-        <configuration>
-          <repository>osahner/kotlin-spring-boot-rest-jpa-jwt-starter</repository>
-          <noCache/>
-          <verbose/>
-        </configuration>
       </plugin>
+
     </plugins>
   </build>
 

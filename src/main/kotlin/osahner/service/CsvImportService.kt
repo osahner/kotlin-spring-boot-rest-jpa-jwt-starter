@@ -19,6 +19,6 @@ class CsvImportService {
     }
 }
 
-interface CsvImportDto<S> {
+fun interface CsvImportDto<S> {
   fun toEntity(): S
 }

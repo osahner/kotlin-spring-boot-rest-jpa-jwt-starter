@@ -1,11 +1,13 @@
 # kotlin-spring-boot-rest-jpa-jwt-starter
 
-[![Build Status](https://api.travis-ci.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter.svg?branch=develop)](https://app.travis-ci.com/github/osahner/kotlin-spring-boot-rest-jpa-jwt-starter)
-[![codecov](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/graph/badge.svg)](https://codecov.io/gh/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/branch/develop/)
-
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)](https://sonarcloud.io/summary/new_code?id=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=osahner_kotlin-spring-boot-rest-jpa-jwt-starter&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=osahner_kotlin-spring-boot-rest-jpa-jwt-starter&metric=bugs)](https://sonarcloud.io/summary/new_code?id=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=osahner_kotlin-spring-boot-rest-jpa-jwt-starter&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=osahner_kotlin-spring-boot-rest-jpa-jwt-starter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)
 
 **Features**:
-* spring-boot 3.0.x
+* spring-boot 3.1.x
 * kotlin 1.8.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * 2FA with TOTP (Google Authenticator)
