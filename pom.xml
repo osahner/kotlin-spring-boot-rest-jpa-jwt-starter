@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.4</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <groupId>osahner</groupId>
   <artifactId>kotlin-spring-boot-rest-jpa-jwt-starter</artifactId>
-  <version>0.10.0-SNAPSHOT</version>
+  <version>0.10.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>kotlin spring-boot 2 rest/jpa/jwt starter</name>
@@ -22,15 +22,15 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <java.version>17</java.version>
-    <kotlin.version>1.8.21</kotlin.version>
+    <kotlin.version>1.9.10</kotlin.version>
 
     <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
-    <jjwt.version>0.11.5</jjwt.version>
-    <poi.version>5.2.3</poi.version>
+    <jjwt.version>0.12.3</jjwt.version>
+    <poi.version>5.2.4</poi.version>
     <jasypt.version>1.9.3</jasypt.version>
-    <opencsv.version>5.7.1</opencsv.version>
-    <commons-io.version>2.11.0</commons-io.version>
+    <opencsv.version>5.8</opencsv.version>
+    <commons-io.version>2.14.0</commons-io.version>
     <aerogear-otp-java.version>1.0.0</aerogear-otp-java.version>
   </properties>
 
@@ -276,27 +276,5 @@
 
     </plugins>
   </build>
-
-  <repositories>
-    <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
 
 </project>

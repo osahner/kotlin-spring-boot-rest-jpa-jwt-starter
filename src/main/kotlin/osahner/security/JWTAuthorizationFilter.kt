@@ -28,7 +28,7 @@ class JWTAuthorizationFilter(
       chain.doFilter(req, res)
       return
     }
-    tokenProvider.getAuthentication(header)?.also { authentication ->
+    tokenProvider.getAuthentication(header)?.let { authentication ->
       SecurityContextHolder.getContext().authentication = authentication
     }
     chain.doFilter(req, res)

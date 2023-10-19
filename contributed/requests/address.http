@@ -30,7 +30,7 @@ Content-Type: application/json
 {
   "username": "john.doe",
   "password": "test1234",
-  "verificationCode": "479346"
+  "verificationCode": "650364"
 }
 
 > {%

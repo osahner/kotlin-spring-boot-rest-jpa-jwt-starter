@@ -1,7 +1,6 @@
 package osahner.security
 
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -11,15 +10,16 @@ import org.springframework.stereotype.Component
 import osahner.add
 import osahner.config.SecurityProperties
 import osahner.service.AppUserDetailsService
-import java.security.Key
 import java.util.*
+import javax.crypto.SecretKey
+
 
 @Component
 class TokenProvider(
   private val securityProperties: SecurityProperties,
   private val userDetailsService: AppUserDetailsService,
 ) {
-  private var key: Key? = null
+  private var key: SecretKey? = null
   private var tokenValidity: Date? = null
 
   @PostConstruct
@@ -35,20 +35,23 @@ class TokenProvider(
     }
 
     return Jwts.builder()
-      .setSubject(authentication.name)
+      .subject(authentication.name)
       .claim("auth", authClaims)
-      .setExpiration(tokenValidity)
-      .signWith(key, SignatureAlgorithm.HS512)
+      .expiration(tokenValidity)
+      .signWith(key)
       .compact()
   }
 
   fun getAuthentication(token: String): Authentication? {
+    // val jwk = Jwks.parser().build().parse(securityProperties.secret)
+
     return try {
-      val claims = Jwts.parserBuilder()
-        .setSigningKey(key)
+      val claims = Jwts.parser()
+        .verifyWith(key)
+        .clockSkewSeconds(3 * 60)
         .build()
-        .parseClaimsJws(token.replace(securityProperties.tokenPrefix, ""))
-      val userDetail = userDetailsService.loadUserByUsername(claims.body.subject)
+        .parseSignedClaims(token.replace(securityProperties.tokenPrefix, ""))
+      val userDetail = userDetailsService.loadUserByUsername(claims.payload.subject)
       val principal = User(userDetail.username, "", userDetail.authorities)
       UsernamePasswordAuthenticationToken(principal, token, userDetail.authorities)
     } catch (e: Exception) {
