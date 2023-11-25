@@ -7,8 +7,8 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=osahner_kotlin-spring-boot-rest-jpa-jwt-starter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)
 
 **Features**:
-* spring-boot 3.1.x
-* kotlin 1.8.x
+* spring-boot 3.2.x
+* kotlin 1.9.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
 * 2FA with TOTP (Google Authenticator)
 * JPA mysql / OpenCVS / POI
@@ -31,7 +31,7 @@ FLUSH PRIVILEGES;
 
 * **compile & integration tests**
 ```shell
-mvn -Ddockerfile.skip clean compile test
+mvn clean compile test
 ```
 
 * **run app**
@@ -58,14 +58,16 @@ some more test can be found in [address.http](contributed/requests/address.http)
 ### Docker
 
 ```shell
-mvn clean package -Dmaven.test.skip=true
-docker run -it -p 8888:8888 --rm osahner/kotlin-spring-boot-rest-jpa-jwt-starter:latest
+./contributed/buildDocker.sh (-p) # see below
+docker run -it -p 8888:8888 --rm osahner/kotlin-spring-boot-rest-jpa-jwt-starter:0.11.0-SNAPSHOT
 
 curl http://localhost:8888/starter-test/api/v1/test
 # result: Pong!%
 ```
 
 :exclamation: If you develop on Apple Silicon (like me) you can use the simple script `contributed/buildDocker.sh`. Option `-p` is for **production** build (`--platform=linux/amd64` instead of `--platform=linux/arm64/v8` without)
+
+Modify `Dockerfile` to your needs. 
 
 ### Why
 
@@ -74,6 +76,7 @@ This is my little backend cookbook. I need and use it regularly for various smal
 * Found an error -> please [report](https://github.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/issues).
 
 ### Changelog
+* _v0.11.0-SNAPSHOT_: spring-boot 3.2.x, kotlin 1.9.x, java 21
 * _v0.10.0-SNAPSHOT_: spring-boot 3.1.x, add 2FA, cleanup 
 * _v0.9.1-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.8.x, [migrated to SEQ tables](#migrate-to-seq-tables) 
 * _v0.8.3-SNAPSHOT_: spring-boot 2.7.x, java 17

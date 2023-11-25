@@ -6,7 +6,6 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: true
     properties:
       hibernate.show_sql: false
