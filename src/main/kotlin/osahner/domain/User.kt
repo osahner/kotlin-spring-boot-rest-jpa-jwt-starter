@@ -41,7 +41,7 @@ class User(
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
   @JoinTable(
-    name = "user_role",
+    name = "app_user_role",
     joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
     inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
   )
