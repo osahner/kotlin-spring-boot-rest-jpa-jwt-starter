@@ -34,4 +34,4 @@ if [[ $p -eq 1 ]]; then
 fi
 echo -e " ${color_light_cyan}+ for platform ${PLATFORM}${color_restore}"
 DOCKER_BUILDKIT=1 docker build --build-arg JAR_FILE="${JAR_FILE}" --build-arg SPRING_BOOT_VERSION="${SPRING_BOOT_VERSION}" \
-  --platform=${PLATFORM} --no-cache --pull --rm -f Dockerfile -t "${GROUPID}/${ARTIFACTID}:${VERSION}" .
+  --platform=${PLATFORM} --no-cache --pull --load --rm -f Dockerfile -t "${GROUPID}/${ARTIFACTID}:${VERSION}" .
