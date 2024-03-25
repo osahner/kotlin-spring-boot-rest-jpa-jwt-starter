@@ -20,15 +20,14 @@ class TokenProvider(
   private val userDetailsService: AppUserDetailsService,
 ) {
   private var key: SecretKey? = null
-  private var tokenValidity: Date? = null
 
   @PostConstruct
   fun init() {
     key = Keys.hmacShaKeyFor(securityProperties.secret.toByteArray())
-    tokenValidity = Date().add(Calendar.DAY_OF_MONTH, securityProperties.expirationTime)
   }
 
   fun createToken(authentication: Authentication): String {
+    val tokenValidity = Date().add(Calendar.DAY_OF_MONTH, securityProperties.expirationTime)
     val authClaims: MutableList<String> = mutableListOf()
     authentication.authorities?.let { authorities ->
       authorities.forEach { claim -> authClaims.add(claim.toString()) }
