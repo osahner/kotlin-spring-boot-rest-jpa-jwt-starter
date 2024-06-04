@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile
 
 @Component
 class CsvImportService {
+  @Suppress("RedundantModalityModifier")
   final inline fun <reified T : CsvImportDto<S>, S> import(file: MultipartFile): Collection<S> =
     builder().setInputStream(file.inputStream).get().bufferedReader().use { stream ->
       CsvToBeanBuilder<T>(stream)

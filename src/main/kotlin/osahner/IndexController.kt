@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1")
 class IndexController {
+  @Suppress("SameReturnValue", "SameReturnValue")
   @GetMapping(value = ["", "/", "/test"])
   fun helloWorld() = "Pong!"
 
   @GetMapping(value = ["/required"])
   fun helloRequiredWorld(@RequestParam(value = "msg", required = true) msg: String) = "Echo \"$msg\"!"
 
+  @Suppress("SameReturnValue")
   @GetMapping(value = ["/restricted"])
   @PreAuthorize("hasAuthority('STANDARD_USER')")
   fun helloRestrictedWorld() = "Pong!"

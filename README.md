@@ -76,6 +76,7 @@ This is my little backend cookbook. I need and use it regularly for various smal
 * Found an error -> please [report](https://github.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/issues).
 
 ### Changelog
+* _v0.11.2-SNAPSHOT_: spring-boot 3.3.0, kotlin 2.0.0
 * _v0.11.1-SNAPSHOT_: fix token validity time
 * _v0.11.0-SNAPSHOT_: spring-boot 3.2.x, kotlin 1.9.x, java 21
 * _v0.10.0-SNAPSHOT_: spring-boot 3.1.x, add 2FA, cleanup 
