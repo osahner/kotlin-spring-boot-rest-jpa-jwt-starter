@@ -1,5 +1,7 @@
 package osahner.api.address
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
@@ -14,6 +16,8 @@ class AddressService(
   private val csvImportService: CsvImportService,
   private val poiExportService: PoiExportService
 ) {
+  var log: Logger = LoggerFactory.getLogger(AddressService::class.java)
+
   fun list(): Collection<Address> = addressRepository.findAll()
 
   fun findById(id: Int): Optional<Address> = addressRepository.findById(id)

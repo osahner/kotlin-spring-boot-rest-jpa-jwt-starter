@@ -12,14 +12,11 @@ import org.jboss.aerogear.security.otp.api.Base32
 class User(
   @Id
   @GeneratedValue(generator = "app_user-sequence-generator")
-  @GenericGenerator(
+  @SequenceGenerator(
     name = "app_user-sequence-generator",
-    strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-    parameters = [
-      Parameter(name = "sequence_name", value = "app_user_SEQ"),
-      Parameter(name = "initial_value", value = "100"),
-      Parameter(name = "increment_size", value = "1")
-    ]
+    sequenceName = "app_user_SEQ",
+    allocationSize = 1,
+    initialValue = 100,
   )
   val id: Int,
 
@@ -42,8 +39,16 @@ class User(
   @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
   @JoinTable(
     name = "app_user_role",
-    joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
-    inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
+    joinColumns = [JoinColumn(
+      name = "user_id",
+      referencedColumnName = "id",
+      foreignKey = ForeignKey(name = "fk_user_role_user_id")
+    )],
+    inverseJoinColumns = [JoinColumn(
+      name = "role_id",
+      referencedColumnName = "id",
+      foreignKey = ForeignKey(name = "fk_user_role_role_id")
+    )]
   )
   var roles: Set<Role>? = null
 )

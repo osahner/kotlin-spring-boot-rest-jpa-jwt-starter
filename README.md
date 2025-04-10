@@ -7,6 +7,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=osahner_kotlin-spring-boot-rest-jpa-jwt-starter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=osahner_kotlin-spring-boot-rest-jpa-jwt-starter)
 
 **Features**:
+
 * spring-boot 3.2.x
 * kotlin 1.9.x
 * JWT Authentication/Authorization with spring-security [inspired by Auth0](https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/)
@@ -16,30 +17,35 @@
 ### Install & play
 
 * **create a mysql db**
+
 ```sql
 -- for mysql 5.7
 CREATE DATABASE starterspringkotlin;
 GRANT ALL ON starterspringkotlin.* TO starterspringkotlin@localhost IDENTIFIED BY 'starterspringkotlin';
 FLUSH PRIVILEGES;
--- for mysql 8
+-- for mysql 8 and 9
 CREATE DATABASE starterspringkotlin;
-CREATE USER 'starterspringkotlin'@'localhost' IDENTIFIED BY 'starterspringkotlin';
-GRANT ALL PRIVILEGES ON starterspringkotlin.* TO 'starterspringkotlin'@'localhost';
+CREATE USER 'starterspringkotlin'@'%' IDENTIFIED BY 'starterspringkotlin';
+GRANT ALL PRIVILEGES ON starterspringkotlin.* TO 'starterspringkotlin'@'%';
 FLUSH PRIVILEGES;
 ```
+
 > check `src/main/resources/application.yaml` for mysql 5.7 or 8 support (keys are `spring.jpa.database-platform` and `spring.datasource.url`)
 
 * **compile & integration tests**
+
 ```shell
 mvn clean compile test
 ```
 
 * **run app**
+
 ```shell
 mvn spring-boot:run
 ```
 
 * **some CLI tests**
+
 ```shell
 curl http://localhost:4080/starter-test/api/v1/test
 # result: Pong!%
@@ -53,6 +59,7 @@ curl -s -i -H "Content-Type: application/json" -X POST -d '{ "username": "john.d
 curl  -H "Authorization: Bearer ***"  http://localhost:4080/starter-test/api/v1/restricted
 # result: Pong!%
 ```
+
 some more test can be found in [address.http](contributed/requests/address.http) if you are using intelli j.
 
 ### Docker
@@ -67,20 +74,23 @@ curl http://localhost:8888/starter-test/api/v1/test
 
 :exclamation: If you develop on Apple Silicon (like me) you can use the simple script `contributed/buildDocker.sh`. Option `-p` is for **production** build (`--platform=linux/amd64` instead of `--platform=linux/arm64/v8` without)
 
-Modify `Dockerfile` to your needs. 
+Modify `Dockerfile` to your needs.
 
 ### Why
 
 This is my little backend cookbook. I need and use it regularly for various small to medium-sized projects.
+
 * Like it -> use it.
 * Found an error -> please [report](https://github.com/osahner/kotlin-spring-boot-rest-jpa-jwt-starter/issues).
 
 ### Changelog
+
+* _v0.11.3-SNAPSHOT_: spring-boot 3.4, kotlin 2.1.20
 * _v0.11.2-SNAPSHOT_: spring-boot 3.3.0, kotlin 2.0.0
 * _v0.11.1-SNAPSHOT_: fix token validity time
 * _v0.11.0-SNAPSHOT_: spring-boot 3.2.x, kotlin 1.9.x, java 21
-* _v0.10.0-SNAPSHOT_: spring-boot 3.1.x, add 2FA, cleanup 
-* _v0.9.1-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.8.x, [migrated to SEQ tables](#migrate-to-seq-tables) 
+* _v0.10.0-SNAPSHOT_: spring-boot 3.1.x, add 2FA, cleanup
+* _v0.9.1-SNAPSHOT_: spring-boot 3.0.x, kotlin 1.8.x, [migrated to SEQ tables](#migrate-to-seq-tables)
 * _v0.8.3-SNAPSHOT_: spring-boot 2.7.x, java 17
 * _v0.8.1-SNAPSHOT_: spring-boot 2.6.x
 * _v0.8.0-SNAPSHOT_: [renamed default branch to main](#rename-local-master-branch-to-main), spring-boot 2.5.x, kotlin 1.4.10
@@ -97,6 +107,7 @@ This is my little backend cookbook. I need and use it regularly for various smal
 * _v0.0.5-SNAPSHOT_: update spring-boot 2.0.4.RELEASE, kotlin 1.2.60, jwt 0.10.1
 
 #### Rename local master branch to main
+
 ```shell
 git branch -m master main
 git fetch origin
@@ -104,19 +115,26 @@ git branch -u origin/main main
 ```
 
 #### Migrate to SEQ tables
+
 ```sql
 -- migrate existing autoincrement tables to SEQ tables after table update
 SET FOREIGN_KEY_CHECKS = 0;
 USE starterspringkotlin;
 
-UPDATE app_user_SEQ SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'app_user') + 1;
-ALTER TABLE app_user MODIFY id INT NOT NULL;
+UPDATE app_user_SEQ
+SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'app_user') + 1;
+ALTER TABLE app_user
+  MODIFY id INT NOT NULL;
 
-UPDATE app_role_SEQ SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'app_role') + 1;
-ALTER TABLE app_role MODIFY id INT NOT NULL;
+UPDATE app_role_SEQ
+SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'app_role') + 1;
+ALTER TABLE app_role
+  MODIFY id INT NOT NULL;
 
-UPDATE address_SEQ SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'address') + 1;
-ALTER TABLE address MODIFY id INT NOT NULL;
+UPDATE address_SEQ
+SET next_val = (SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'starterspringkotlin' AND TABLE_NAME = 'address') + 1;
+ALTER TABLE address
+  MODIFY id INT NOT NULL;
 
 SET FOREIGN_KEY_CHECKS = 1;
 ```

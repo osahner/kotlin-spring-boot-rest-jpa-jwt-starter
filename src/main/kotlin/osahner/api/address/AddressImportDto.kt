@@ -6,9 +6,6 @@ import java.time.LocalDateTime
 
 class AddressImportDto : CsvImportDto<Address> {
   @CsvBindByName(required = true)
-  var id: Int? = null
-
-  @CsvBindByName(required = true)
   var name: String? = null
 
   @CsvBindByName(required = true)
@@ -33,5 +30,5 @@ class AddressImportDto : CsvImportDto<Address> {
   var things: String? = null
 
   override fun toEntity() =
-    Address(id, name, street, zip, city, email, tel, false, LocalDateTime.now(), options, things)
+    Address(null, name, street, zip, city, email, tel, false, LocalDateTime.now(), options, things)
 }
