@@ -27,7 +27,7 @@
     <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
     <jjwt.version>0.12.5</jjwt.version>
-    <poi.version>5.2.5</poi.version>
+    <poi.version>5.4.0</poi.version>
     <jasypt.version>1.9.3</jasypt.version>
     <opencsv.version>5.9</opencsv.version>
     <commons-io.version>2.16.1</commons-io.version>
